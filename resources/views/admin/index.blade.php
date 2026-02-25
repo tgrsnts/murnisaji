@@ -4,7 +4,7 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div class="bg-white p-5 rounded-3xl shadow-sm flex justify-between items-center">
             <div>
-                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Income Money</p>
+                <p class="text-sm text-gray-400 font-bold uppercase tracking-tighter">Income Money</p>
                 <h2 class="text-xl font-black text-gray-800">Rp. 3.750.000</h2>
             </div>
             <div class="bg-[#8B0000] p-3 rounded-xl text-white shadow-md">
@@ -13,7 +13,7 @@
         </div>
         <div class="bg-white p-5 rounded-3xl shadow-sm flex justify-between items-center">
             <div>
-                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Total Order</p>
+                <p class="text-sm text-gray-400 font-bold uppercase tracking-tighter">Total Order</p>
                 <h2 class="text-xl font-black text-gray-800">40</h2>
             </div>
             <div class="bg-[#8B0000] p-3 rounded-xl text-white shadow-md">
@@ -22,7 +22,7 @@
         </div>
         <div class="bg-white p-5 rounded-3xl shadow-sm flex justify-between items-center">
             <div>
-                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Total Delivered</p>
+                <p class="text-sm text-gray-400 font-bold uppercase tracking-tighter">Total Delivered</p>
                 <h2 class="text-xl font-black text-gray-800">23</h2>
             </div>
             <div class="bg-[#8B0000] p-3 rounded-xl text-white shadow-md">
@@ -31,7 +31,7 @@
         </div>
         <div class="bg-white p-5 rounded-3xl shadow-sm flex justify-between items-center">
             <div>
-                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Total Customer</p>
+                <p class="text-sm text-gray-400 font-bold uppercase tracking-tighter">Total Customer</p>
                 <h2 class="text-xl font-black text-gray-800">23</h2>
             </div>
             <div class="bg-[#8B0000] p-3 rounded-xl text-white shadow-md">
@@ -42,20 +42,20 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm">
-            <p class="text-[10px] text-gray-400 font-bold uppercase">Orders</p>
+            <p class="text-sm text-gray-400 font-bold uppercase">Orders</p>
             <h3 class="text-lg font-bold mb-4">Order Summary</h3>
 
             <div class="grid grid-cols-3 gap-4 mb-6">
                 <div class="border border-gray-100 rounded-2xl p-3 text-center bg-gray-50/50">
-                    <p class="text-[10px] text-gray-400 font-bold">TOTAL ORDER</p>
+                    <p class="text-sm text-gray-400 font-bold">TOTAL ORDER</p>
                     <p class="text-xl font-black">3</p>
                 </div>
                 <div class="border border-gray-100 rounded-2xl p-3 text-center bg-gray-50/50">
-                    <p class="text-[10px] text-blue-500 font-bold">ON DELIVERY</p>
+                    <p class="text-sm text-blue-500 font-bold">ON DELIVERY</p>
                     <p class="text-xl font-black">1</p>
                 </div>
                 <div class="border border-gray-100 rounded-2xl p-3 text-center bg-gray-50/50">
-                    <p class="text-[10px] text-green-500 font-bold">DELIVERED</p>
+                    <p class="text-sm text-green-500 font-bold">DELIVERED</p>
                     <p class="text-xl font-black">2</p>
                 </div>
             </div>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="bg-white p-6 rounded-3xl shadow-sm">
-            <p class="text-[10px] text-gray-400 font-bold uppercase">Performance</p>
+            <p class="text-sm text-gray-400 font-bold uppercase">Performance</p>
             <h3 class="text-lg font-bold mb-4 text-center">Total orders</h3>
             <div class="h-60">
                 <canvas id="barChart"></canvas>
@@ -80,7 +80,7 @@
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left">
-                <thead class="bg-[#8B0000] text-white text-[10px] uppercase">
+                <thead class="bg-[#8B0000] text-white text-sm uppercase">
                     <tr>
                         <th class="px-6 py-4">Order ID</th>
                         <th class="px-6 py-4">Date</th>
@@ -98,7 +98,7 @@
                             <td class="px-6 py-4 font-bold">Rp. 90.000</td>
                             <td class="px-6 py-4">
                                 <span
-                                    class="bg-green-500 text-white text-[10px] font-bold px-3 py-1 rounded-lg block text-center uppercase">Delivered</span>
+                                    class="w-fit bg-green-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Delivered</span>
                             </td>
                         </tr>
                     @endforeach
