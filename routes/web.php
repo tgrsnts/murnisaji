@@ -46,6 +46,6 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::get('/menu', function () {
-    return view('web.menu');
+    return view('web.menu.index');
 })->name('menu');
 
