@@ -19,7 +19,7 @@
     <div class="min-h-screen bg-[#FCFBF5]">
 
         <!-- Navbar -->
-        <nav class="fixed top-0 z-0 w-full h-[120px] bg-[#FCFBF5] flex items-center justify-between py-10 px-6 md:px-20">
+        <nav class="fixed top-0 z-10 w-full h-[120px] bg-[#FCFBF5] flex items-center justify-between py-10 px-6 md:px-20">
 
             <!-- Logo -->
             <a href="{{ route('home') }}">

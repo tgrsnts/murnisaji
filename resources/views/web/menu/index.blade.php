@@ -8,7 +8,7 @@
                 Menu Abon <span class="text-[#7A1F1F]">Murnisaji</span>
             </h1>
         </div>
-        <div class="absolute -bottom-[1px] left-0 w-full h-10 overflow-hidden">
+        <div class="absolute z-0 -bottom-[1px] left-0 w-full h-10 overflow-hidden">
             <div class="w-full h-full"
                 style="
         background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%2240%22 viewBox=%220 0 240 40%22><path d=%22M0 18 C 30 6, 60 6, 90 18 S 150 30, 180 18 S 210 6, 240 18 L240 40 L0 40 Z%22 fill=%22%23ffffff%22/></svg>');
