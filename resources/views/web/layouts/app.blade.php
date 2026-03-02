@@ -62,7 +62,16 @@
                      7.5 7.5 0 0 1 15 0Z" />
                         </svg>
                     </button>
-                    <button class="text-[#000000] hover:opacity-70 transition">
+                    <button class="relative text-black hover:opacity-70 transition">
+                        <!-- Badge -->
+                        <span
+                            class="absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1
+           rounded-full bg-[#7A1F1F] text-white text-[11px]
+           flex items-center justify-center leading-none">
+                            3
+                        </span>
+
+                        <!-- Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 2.25h1.386c.51 0 .955.343
