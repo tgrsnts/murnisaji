@@ -20,7 +20,7 @@
         </div>
     </section>
     <section class="bg-white flex items-center justify-between px-20 py-24">
-        <div class="flex flex-col gap-8">
+        <div class="flex flex-col gap-24">
             {{-- Product 1 --}}
             <div class="flex items-center">
                 <div class="rounded-lg p-4 bg-gray-400">
