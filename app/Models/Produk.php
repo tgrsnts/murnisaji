@@ -13,7 +13,7 @@ class Produk extends Model
         'harga',
         'stok',
         'berat_gram',
-        'gambar'
+        'gambar',
     ];
 
     protected $primaryKey = 'produk_id';
@@ -43,4 +43,4 @@ class Produk extends Model
             ->whereHas('rating')
             ->count();
     }
-} 
+}
