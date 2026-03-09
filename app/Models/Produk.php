@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 
 namespace App\Models;
 
@@ -43,4 +43,4 @@ class Produk extends Model
             ->whereHas('rating')
             ->count();
     }
-}
+} 
