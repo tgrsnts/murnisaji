@@ -10,7 +10,7 @@
     </div>
 
     <nav class="mt-4 flex-1 px-4 space-y-2">      
-        <a href="#" class="flex items-center px-6 py-3 {{ request()->is('admin') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
+        <a href="{{ route('admin.dashboard') }}" class="flex items-center px-6 py-3 {{ request()->is('admin') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
             <i class="fas fa-home mr-4"></i> Dashboard
         </a>
         <a href="{{ route('admin.produk.index') }}" class="flex items-center px-6 py-3 {{ request()->is('admin/produk*') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
