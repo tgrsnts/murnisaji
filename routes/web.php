@@ -82,6 +82,7 @@ use App\Http\Controllers\ProdukController; // frontend produk
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\AlamatController; // frontend alamat
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ApiCoIdController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 Route::get('/', function () {
@@ -136,3 +137,10 @@ Route::post('/payments/midtrans/callback', [PaymentController::class, 'callback'
 // alamat – add new address (AJAX)
 Route::post('/alamat/store', [AlamatController::class, 'store'])
     ->name('alamat.store');
+
+// API.co.id endpoints
+Route::prefix('api/apicoid')->name('apicoid.')->group(function () {
+    Route::get('/provinces', [ApiCoIdController::class, 'getProvinces'])->name('provinces');
+    Route::get('/cities', [ApiCoIdController::class, 'getCities'])->name('cities');
+    Route::post('/cost', [ApiCoIdController::class, 'calculateCost'])->name('cost');
+});

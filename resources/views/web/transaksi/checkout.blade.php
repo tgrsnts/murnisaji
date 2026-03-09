@@ -59,6 +59,22 @@
                                 <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3">Alamat Pengiriman</h3>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
+                                        <select name="province_id" id="province_id" required 
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                            <option value="">Pilih Provinsi</option>
+                                        </select>
+                                        <input type="hidden" name="provinsi" id="provinsi">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Kota/Kabupaten</label>
+                                        <select name="city_id" id="city_id" required 
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm" disabled>
+                                            <option value="">Pilih Kota</option>
+                                        </select>
+                                        <input type="hidden" name="kabupaten" id="kabupaten">
+                                    </div>
+                                    <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Label Alamat</label>
                                         <input type="text" name="label_alamat" required value="{{ old('label_alamat') }}"
                                             placeholder="Contoh: Rumah"
@@ -71,27 +87,7 @@
                                     </div>
                                     <div class="md:col-span-2">
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Detail Alamat</label>
-                                        <textarea name="detail" rows="3" required class="w-full border border-gray-300 rounded-lg p-2 text-sm">{{ old('detail') }}</textarea>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
-                                        <input type="text" name="provinsi" required value="{{ old('provinsi') }}"
-                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">ID Provinsi</label>
-                                        <input type="number" name="province_id" min="1" required value="{{ old('province_id') }}"
-                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Kabupaten/Kota</label>
-                                        <input type="text" name="kabupaten" required value="{{ old('kabupaten') }}"
-                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">ID Kota</label>
-                                        <input type="number" name="city_id" min="1" required value="{{ old('city_id') }}"
-                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                        <textarea name="detail" rows="3" required class="w-full border border-gray-300 rounded-lg p-2 text-sm" placeholder="Jalan, nomor rumah, patokan">{{ old('detail') }}</textarea>
                                     </div>
                                     <div class="md:col-span-2">
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
@@ -101,6 +97,7 @@
                                     <div class="md:col-span-2">
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Catatan Kurir (opsional)</label>
                                         <input type="text" name="catatan_kurir" value="{{ old('catatan_kurir') }}"
+                                            placeholder="Contoh: Rumah cat hijau, dekat masjid"
                                             class="w-full border border-gray-300 rounded-lg p-2 text-sm">
                                     </div>
                                 </div>
@@ -113,29 +110,32 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Kurir</label>
-                                        <select name="kurir" required onchange="updateShipping()"
-                                            class="w-full border border-[#D4AF5A] rounded-lg p-2 text-sm">
+                                        <select name="kurir" id="courier" required disabled
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
                                             <option value="">Pilih Kurir</option>
-                                            <option value="JNE">JNE</option>
-                                            <option value="JNT">J&T Express</option>
-                                            <option value="SiCepat">SiCepat</option>
-                                            <option value="Pos Indonesia">Pos Indonesia</option>
+                                            <option value="jne">JNE</option>
+                                            <option value="pos">POS Indonesia</option>
+                                            <option value="tiki">TIKI</option>
                                         </select>
                                     </div>
 
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Layanan</label>
-                                        <select name="layanan_kurir" required onchange="updateShipping()"
-                                            class="w-full border border-[#D4AF5A] rounded-lg p-2 text-sm">
+                                        <select name="layanan_kurir" id="service" required disabled
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
                                             <option value="">Pilih Layanan</option>
-                                            <option value="REG" data-cost="15000">REG (Rp 15.000)</option>
-                                            <option value="YES" data-cost="25000">YES (Rp 25.000)</option>
-                                            <option value="OKE" data-cost="10000">OKE (Rp 10.000)</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <input type="hidden" name="ongkir" id="ongkir" value="0">
+                                
+                                <div id="shippingInfo" class="hidden mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                    <p class="text-sm text-blue-800">
+                                        <i class="fas fa-info-circle mr-1"></i>
+                                        <span id="shippingDetails"></span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
@@ -217,18 +217,219 @@
 
     <script>
         const subtotal = {{ $subtotal }};
+        const cartWeight = {{ count($cartItems) * 1000 }}; // Assume 1kg per item, adjust as needed
 
-        function updateShipping() {
-            const layananSelect = document.querySelector('select[name="layanan_kurir"]');
-            const selectedOption = layananSelect.options[layananSelect.selectedIndex];
-            const cost = parseInt(selectedOption.getAttribute('data-cost')) || 0;
+        // State
+        let provinces = [];
+        let cities = [];
+        let shippingServices = [];
 
-            document.getElementById('ongkir').value = cost;
-            document.getElementById('ongkirDisplay').textContent = 'Rp ' + cost.toLocaleString('id-ID');
+        // DOM Elements
+        const provinceSelect = document.getElementById('province_id');
+        const citySelect = document.getElementById('city_id');
+        const courierSelect = document.getElementById('courier');
+        const serviceSelect = document.getElementById('service');
+        const provinceHidden = document.getElementById('provinsi');
+        const kabupatenHidden = document.getElementById('kabupaten');
+        const ongkirInput = document.getElementById('ongkir');
+        const ongkirDisplay = document.getElementById('ongkirDisplay');
+        const totalDisplay = document.getElementById('totalDisplay');
+        const shippingInfo = document.getElementById('shippingInfo');
+        const shippingDetails = document.getElementById('shippingDetails');
 
-            const total = subtotal + cost;
-            document.getElementById('totalDisplay').textContent = 'Rp ' + total.toLocaleString('id-ID');
+        // Load provinces on page load
+        async function loadProvinces() {
+            try {
+                const response = await fetch('/api/apicoid/provinces');
+                const data = await response.json();
+                
+                if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+                    provinces = data.data;
+                    populateProvinces();
+                } else {
+                    provinceSelect.innerHTML = '<option value="">Provinsi tidak tersedia</option>';
+                    console.error('Failed to load provinces', data);
+                }
+            } catch (error) {
+                console.error('Error loading provinces:', error);
+            }
         }
 
+        function populateProvinces() {
+            provinceSelect.innerHTML = '<option value="">Pilih Provinsi</option>';
+            provinces.forEach(province => {
+                const option = document.createElement('option');
+                option.value = province.province_id || province.id || province.code || province.province_code;
+                option.textContent = province.province || province.name || province.province_name;
+                option.dataset.name = province.province || province.name || province.province_name;
+                provinceSelect.appendChild(option);
+            });
+        }
+
+        // Handle province change
+        provinceSelect.addEventListener('change', async function() {
+            const selectedOption = this.options[this.selectedIndex];
+            provinceHidden.value = selectedOption.dataset.name || '';
+            
+            // Reset dependent fields
+            citySelect.innerHTML = '<option value="">Pilih Kota</option>';
+            citySelect.disabled = true;
+            kabupatenHidden.value = '';
+            resetCourier();
+            
+            if (this.value) {
+                await loadCities(this.value);
+            }
+        });
+
+        async function loadCities(provinceId) {
+            try {
+                citySelect.innerHTML = '<option value="">Memuat...</option>';
+            const response = await fetch(`/api/apicoid/cities?province_id=${provinceId}`);
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    cities = data.data;
+                    populateCities();
+                    citySelect.disabled = false;
+                } else {
+                    console.error('Failed to load cities');
+                    citySelect.innerHTML = '<option value="">Gagal memuat kota</option>';
+                }
+            } catch (error) {
+                console.error('Error loading cities:', error);
+                citySelect.innerHTML = '<option value="">Error memuat kota</option>';
+            }
+        }
+
+        function populateCities() {
+            citySelect.innerHTML = '<option value="">Pilih Kota</option>';
+            cities.forEach(city => {
+                const option = document.createElement('option');
+                const cityName = city.city_name || city.name || '';
+                const cityType = city.type || '';
+
+                option.value = city.city_id || city.id || city.code || city.city_code;
+                option.textContent = `${cityType} ${cityName}`.trim();
+                option.dataset.name = cityName;
+                citySelect.appendChild(option);
+            });
+        }
+
+        // Handle city change
+        citySelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            kabupatenHidden.value = selectedOption.dataset.name || '';
+            
+            resetCourier();
+            
+            if (this.value) {
+                courierSelect.disabled = false;
+            } else {
+                courierSelect.disabled = true;
+            }
+        });
+
+        // Handle courier change
+        courierSelect.addEventListener('change', async function() {
+            resetService();
+            
+            if (this.value && citySelect.value) {
+                await loadShippingCost();
+            }
+        });
+
+        // Handle service change
+        serviceSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const cost = parseInt(selectedOption.dataset.cost) || 0;
+            const etd = selectedOption.dataset.etd || '';
+            
+            updatePrice(cost);
+            
+            if (cost > 0) {
+                shippingDetails.textContent = `Estimasi ${etd}`;
+                shippingInfo.classList.remove('hidden');
+            } else {
+                shippingInfo.classList.add('hidden');
+            }
+        });
+
+        async function loadShippingCost() {
+            try {
+                serviceSelect.innerHTML = '<option value="">Memuat layanan...</option>';
+                serviceSelect.disabled = true;
+                
+                const response = await fetch('/api/apicoid/cost', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        destination: citySelect.value,
+                        weight: cartWeight,
+                        courier: courierSelect.value
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.data && data.data.length > 0) {
+                    shippingServices = data.data[0]?.costs || data.data;
+                    populateServices();
+                    serviceSelect.disabled = false;
+                } else {
+                    serviceSelect.innerHTML = '<option value="">Tidak ada layanan tersedia</option>';
+                }
+            } catch (error) {
+                console.error('Error loading shipping cost:', error);
+                serviceSelect.innerHTML = '<option value="">Error memuat layanan</option>';
+            }
+        }
+
+        function populateServices() {
+            serviceSelect.innerHTML = '<option value="">Pilih Layanan</option>';
+            shippingServices.forEach(service => {
+                const cost = service.cost?.[0]?.value || service.rate || service.price || service.cost || 0;
+                const etd = service.cost?.[0]?.etd || service.etd || service.estimation || '';
+                const serviceName = service.service_name || service.service || service.name;
+                
+                const option = document.createElement('option');
+                option.value = serviceName;
+                option.textContent = `${serviceName} - Rp ${cost.toLocaleString('id-ID')}${etd ? ' (' + etd + ')' : ''}`;
+                option.dataset.cost = cost;
+                option.dataset.etd = etd;
+                serviceSelect.appendChild(option);
+            });
+        }
+
+        function resetCourier() {
+            courierSelect.value = '';
+            courierSelect.disabled = true;
+            resetService();
+        }
+
+        function resetService() {
+            serviceSelect.innerHTML = '<option value="">Pilih Layanan</option>';
+            serviceSelect.value = '';
+            serviceSelect.disabled = true;
+            shippingServices = [];
+            updatePrice(0);
+            shippingInfo.classList.add('hidden');
+        }
+
+        function updatePrice(cost) {
+            ongkirInput.value = cost;
+            ongkirDisplay.textContent = 'Rp ' + cost.toLocaleString('id-ID');
+            
+            const total = subtotal + cost;
+            totalDisplay.textContent = 'Rp ' + total.toLocaleString('id-ID');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProvinces();
+        });
     </script>
 @endsection

@@ -44,4 +44,13 @@ return [
         'is_3ds' => env('MIDTRANS_IS_3DS', true),
     ],
 
+    'apicoid' => [
+        'api_key' => env('APICOID_API_KEY'),
+        'base_url' => env('APICOID_BASE_URL', 'https://use.api.co.id'),
+        'origin_city_id' => env('APICOID_ORIGIN_CITY_ID', 501),
+        'provinces_endpoint' => env('APICOID_PROVINCES_ENDPOINT', '/regional/indonesia/provinces'),
+        'cities_endpoint' => env('APICOID_CITIES_ENDPOINT', '/regional/indonesia/regencies'),
+        'cost_endpoint' => env('APICOID_COST_ENDPOINT', '/expedition/shipping-cost'),
+    ],
+
 ];
