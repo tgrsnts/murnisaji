@@ -50,7 +50,7 @@
     <section class="bg-white py-24 px-20 text-center">
 
         <h2 class="text-3xl font-bold text-[#2B2B2B]">
-            Kenapa Pilih Abon <span class="text-gray-300">Murnisaji?</span>
+            Kenapa Pilih Abon <span class="text-[#D4AF5A]">Murnisaji?</span>
         </h2>
 
         <div class="grid md:grid-cols-4 gap-8 mt-16">
@@ -82,12 +82,12 @@
     <section class="bg-[#F7F4EF] py-24 px-20 text-center">
 
         <h2 class="text-3xl font-bold text-[#2B2B2B]">
-            Pilihan Menu Abon <span class="text-gray-300">Murnisaji</span>
+            Pilihan Menu Abon <span class="text-[#D4AF5A]">Murnisaji</span>
         </h2>
 
         <div class="grid md:grid-cols-3 gap-12 mt-40">
 
-            <div class="bg-[#DDDDDD] p-6 pt-28 rounded-xl shadow relative">
+            <div class="bg-[#D4AF5A] p-6 pt-28 rounded-xl shadow relative">
                 <img src="{{ asset('images/menu/menu1.png') }}"
                     class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px]">
                 <h3 class="mt-6 text-[#ffffff] font-semibold">Abon Ayam</h3>
@@ -105,7 +105,7 @@
                 </button>
             </div>
 
-            <div class="bg-[#DDDDDD] p-6 pt-28 rounded-xl shadow relative">
+            <div class="bg-[#D4AF5A] p-6 pt-28 rounded-xl shadow relative">
                 <img src="{{ asset('images/menu/menu2.png') }}"
                     class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px]">
                 <h3 class="mt-6 text-[#ffffff] font-semibold">Abon Sapi</h3>
@@ -123,7 +123,7 @@
                 </button>
             </div>
 
-            <div class="bg-[#DDDDDD] p-6 pt-28 rounded-xl shadow relative">
+            <div class="bg-[#D4AF5A] p-6 pt-28 rounded-xl shadow relative">
                 <img src="{{ asset('images/menu/menu3.png') }}"
                     class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px]">
                 <h3 class="mt-6 text-[#ffffff] font-semibold">Abon Tuna</h3>
@@ -149,7 +149,7 @@
     <section class="bg-white py-24 px-20 text-center">
 
         <h2 class="text-3xl font-bold text-[#2B2B2B]">
-            Pendapat Mereka Tentang Abon <span class="text-gray-300">Murnisaji</span>
+            Pendapat Mereka Tentang Abon <span class="text-[#D4AF5A]">Murnisaji</span>
         </h2>
 
         <div class="grid md:grid-cols-3 gap-10 mt-16">
@@ -164,7 +164,7 @@
                     <img src="{{ asset('images/profile/user1.png') }}" class="w-12 h-12 rounded-full">
                     <div>
                         <p class="font-semibold">Ciput</p>
-                        <p class="text-xs text-gray-400">Happy Client</p>
+                        <p class="text-xs text-[#D4AF5A]">Happy Client</p>
                     </div>
                 </div>
             </div>
@@ -178,7 +178,7 @@
                     <img src="{{ asset('images/profile/user2.png') }}" class="w-12 h-12 rounded-full">
                     <div>
                         <p class="font-semibold">Asep</p>
-                        <p class="text-xs text-gray-400">Happy Client</p>
+                        <p class="text-xs text-[#D4AF5A]">Happy Client</p>
                     </div>
                 </div>
             </div>
@@ -192,7 +192,7 @@
                     <img src="{{ asset('images/profile/user3.png') }}" class="w-12 h-12 rounded-full">
                     <div>
                         <p class="font-semibold">Maman</p>
-                        <p class="text-xs text-gray-400">Happy Client</p>
+                        <p class="text-xs text-[#D4AF5A]">Happy Client</p>
                     </div>
                 </div>
             </div>

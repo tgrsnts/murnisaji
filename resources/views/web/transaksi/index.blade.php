@@ -52,16 +52,16 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="button" onclick="decreaseQty{{ $item['produk']->produk_id }}()"
-                                                class="w-8 h-8 border border-gray-300 rounded hover:bg-gray-100 cursor-pointer">
+                                                class="w-8 h-8 border border-[#D4AF5A] rounded hover:bg-gray-100 cursor-pointer">
                                                 <i class="fas fa-minus text-xs text-gray-600"></i>
                                             </button>
                                             <input type="number" name="qty" id="qty{{ $item['produk']->produk_id }}"
                                                 value="{{ $item['qty'] }}" min="1"
                                                 max="{{ $item['produk']->stok }}"
-                                                class="w-16 text-center border border-gray-300 rounded py-1"
+                                                class="w-16 text-center border border-[#D4AF5A] rounded py-1"
                                                 onchange="this.form.submit()">
                                             <button type="button" onclick="increaseQty{{ $item['produk']->produk_id }}()"
-                                                class="w-8 h-8 border border-gray-300 rounded hover:bg-gray-100 cursor-pointer">
+                                                class="w-8 h-8 border border-[#D4AF5A] rounded hover:bg-gray-100 cursor-pointer">
                                                 <i class="fas fa-plus text-xs text-gray-600"></i>
                                             </button>
                                         </form>
@@ -138,7 +138,7 @@
                             <form action="{{ route('cart.clear') }}" method="POST" class="mt-3">
                                 @csrf
                                 <button type="submit"
-                                    class="w-full border-2 border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition text-sm cursor-pointer">
+                                    class="w-full border-2 border-[#D4AF5A] text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition text-sm cursor-pointer">
                                     Kosongkan Keranjang
                                 </button>
                             </form>
@@ -147,7 +147,7 @@
                 </div>
             @else
                 <div class="text-center py-20">
-                    <i class="fas fa-shopping-cart text-gray-300 text-6xl mb-4"></i>
+                    <i class="fas fa-shopping-cart text-[#D4AF5A] text-6xl mb-4"></i>
                     <h2 class="text-2xl font-semibold text-gray-700 mb-2">Keranjang Kosong</h2>
                     <p class="text-gray-500 mb-6">Belum ada produk yang ditambahkan ke keranjang</p>
                     <a href="{{ route('menu.index') }}"

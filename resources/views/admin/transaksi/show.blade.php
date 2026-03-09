@@ -67,7 +67,7 @@
                             @method('PATCH')
                             <label class="text-gray-600 text-sm">Status Transaksi:</label>
                             <div class="flex gap-2 mt-1">
-                                <select name="status" class="flex-1 p-2 border border-gray-300 rounded-lg text-sm">
+                                <select name="status" class="flex-1 p-2 border border-[#D4AF5A] rounded-lg text-sm">
                                     <option value="PENDING" {{ $transaksi->status == 'PENDING' ? 'selected' : '' }}>
                                         PENDING
                                     </option>
@@ -99,7 +99,7 @@
                             <div class="flex gap-2 mt-1">
                                 <input type="text" name="resi" value="{{ $transaksi->resi }}"
                                     placeholder="Masukkan nomor resi"
-                                    class="flex-1 p-2 border border-gray-300 rounded-lg text-sm">
+                                    class="flex-1 p-2 border border-[#D4AF5A] rounded-lg text-sm">
                                 <button type="submit"
                                     class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
                                     Simpan

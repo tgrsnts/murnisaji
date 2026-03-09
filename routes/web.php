@@ -89,8 +89,9 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/about', function () {
-    return view('web.about');
+    return view('web.about.about'); 
 })->name('about');
+
 
 Route::prefix('menu')->name('menu.')->group(function () {
     Route::get('/', [ProdukController::class, 'index'])->name('index');

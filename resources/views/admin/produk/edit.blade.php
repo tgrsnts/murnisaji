@@ -79,7 +79,7 @@
 
             <div class="mb-6">
                 <label class="block text-red-800 font-medium mb-2">Foto</label>
-                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                <div class="border-2 border-dashed border-[#D4AF5A] rounded-lg p-8 text-center">
                     <input type="file" id="fileInput" name="gambar" accept="image/*" class="hidden">
 
                     <button type="button" id="triggerFile" class="bg-red-800 text-white px-4 py-2 rounded-lg mb-3">

@@ -6,7 +6,7 @@
             <!-- Breadcrumb -->
             <div class="mb-6">
                 <a href="{{ route('menu.index') }}" class="text-gray-500 hover:text-[#7A1F1F]">Menu</a>
-                <span class="text-gray-400 mx-2">/</span>
+                <span class="text-[#D4AF5A] mx-2">/</span>
                 <span class="text-gray-800">{{ $produk->nama_produk }}</span>
             </div>
 
@@ -17,7 +17,7 @@
                         <img src="{{ asset('storage/' . $produk->gambar) }}" alt="{{ $produk->nama_produk }}"
                             class="w-full h-auto object-contain max-h-96">
                     @else
-                        <img src="/images/Abon Sapi.png" alt="{{ $produk->nama_produk }}"
+                        <img src="/images/logo/Abon Sapi.png" alt="{{ $produk->nama_produk }}"
                             class="w-full h-auto object-contain max-h-96">
                     @endif
                 </div>
@@ -38,7 +38,7 @@
                                 @elseif($i - 0.5 <= $produk->average_rating)
                                     <i class="fas fa-star-half-alt text-yellow-400"></i>
                                 @else
-                                    <i class="far fa-star text-gray-300"></i>
+                                    <i class="far fa-star text-[#D4AF5A]"></i>
                                 @endif
                             @endfor
                         </div>
@@ -54,11 +54,11 @@
                     <!-- Product Details -->
                     <div class="space-y-3">
                         <div class="flex items-center gap-2">
-                            <i class="fas fa-weight text-gray-400"></i>
+                            <i class="fas fa-weight text-[#D4AF5A]"></i>
                             <span class="text-gray-700">Berat: <strong>{{ $produk->berat_gram }}g</strong></span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <i class="fas fa-box text-gray-400"></i>
+                            <i class="fas fa-box text-[#D4AF5A]"></i>
                             <span class="text-gray-700">Stok: <strong>{{ $produk->stok }}</strong></span>
                         </div>
                     </div>
@@ -89,12 +89,12 @@
                         <div>
                             <label class="block text-gray-700 font-medium mb-2">Jumlah</label>
                             <div class="flex items-center gap-3">
-                                <button type="button" onclick="decreaseQty()" class="w-10 h-10 border border-gray-300 rounded-lg hover:bg-gray-100">
+                                <button type="button" onclick="decreaseQty()" class="w-10 h-10 border border-[#D4AF5A] rounded-lg hover:bg-gray-100">
                                     <i class="fas fa-minus text-gray-600"></i>
                                 </button>
                                 <input type="number" name="qty" id="qty" value="1" min="1" max="{{ $produk->stok }}"
-                                    class="w-20 text-center border border-gray-300 rounded-lg py-2 font-semibold">
-                                <button type="button" onclick="increaseQty()" class="w-10 h-10 border border-gray-300 rounded-lg hover:bg-gray-100">
+                                    class="w-20 text-center border border-[#D4AF5A] rounded-lg py-2 font-semibold">
+                                <button type="button" onclick="increaseQty()" class="w-10 h-10 border border-[#D4AF5A] rounded-lg hover:bg-gray-100">
                                     <i class="fas fa-plus text-gray-600"></i>
                                 </button>
                             </div>
@@ -132,7 +132,7 @@
                                 @elseif($i - 0.5 <= $produk->average_rating)
                                     <i class="fas fa-star-half-alt text-yellow-400 text-lg"></i>
                                 @else
-                                    <i class="far fa-star text-gray-300 text-lg"></i>
+                                    <i class="far fa-star text-[#D4AF5A] text-lg"></i>
                                 @endif
                             @endfor
                         </div>
@@ -174,7 +174,7 @@
                                                     @if ($i <= $review['rating'])
                                                         <i class="fas fa-star text-yellow-400"></i>
                                                     @else
-                                                        <i class="far fa-star text-gray-300"></i>
+                                                        <i class="far fa-star text-[#D4AF5A]"></i>
                                                     @endif
                                                 @endfor
                                             </div>
@@ -209,7 +209,7 @@
                     </div>
                 @else
                     <div class="bg-gray-50 rounded-lg p-12 text-center">
-                        <i class="fas fa-comment-slash text-gray-300 text-5xl mb-4"></i>
+                        <i class="fas fa-comment-slash text-[#D4AF5A] text-5xl mb-4"></i>
                         <h3 class="text-lg font-semibold text-gray-700 mb-2">Belum Ada Ulasan</h3>
                         <p class="text-gray-500">Jadilah yang pertama memberikan ulasan untuk produk ini</p>
                     </div>
@@ -224,7 +224,7 @@
         <div class="flex items-center justify-center h-full">
             <div class="relative max-w-4xl max-h-full">
                 <button onclick="closeImageModal()"
-                    class="absolute -top-10 right-0 text-white hover:text-gray-300 text-2xl">
+                    class="absolute -top-10 right-0 text-white hover:text-[#D4AF5A] text-2xl">
                     <i class="fas fa-times"></i>
                 </button>
                 <img id="modalImage" src="" alt="Review image" class="max-w-full max-h-[90vh] rounded-lg">

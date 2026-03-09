@@ -114,7 +114,7 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Kurir</label>
                                         <select name="kurir" required onchange="updateShipping()"
-                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                            class="w-full border border-[#D4AF5A] rounded-lg p-2 text-sm">
                                             <option value="">Pilih Kurir</option>
                                             <option value="JNE">JNE</option>
                                             <option value="JNT">J&T Express</option>
@@ -126,7 +126,7 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Layanan</label>
                                         <select name="layanan_kurir" required onchange="updateShipping()"
-                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                            class="w-full border border-[#D4AF5A] rounded-lg p-2 text-sm">
                                             <option value="">Pilih Layanan</option>
                                             <option value="REG" data-cost="15000">REG (Rp 15.000)</option>
                                             <option value="YES" data-cost="25000">YES (Rp 25.000)</option>
@@ -194,7 +194,7 @@
                                 </button>
 
                                 <a href="{{ route('cart.index') }}"
-                                    class="block w-full text-center border-2 border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition text-sm mt-3 cursor-pointer">
+                                    class="block w-full text-center border-2 border-[#D4AF5A] text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition text-sm mt-3 cursor-pointer">
                                     Kembali ke Keranjang
                                 </a>
                             </div>
@@ -203,7 +203,7 @@
                 </form>
             @else
                 <div class="text-center py-20">
-                    <i class="fas fa-shopping-cart text-gray-300 text-6xl mb-4"></i>
+                    <i class="fas fa-shopping-cart text-[#D4AF5A] text-6xl mb-4"></i>
                     <h2 class="text-2xl font-semibold text-gray-700 mb-2">Keranjang Kosong</h2>
                     <p class="text-gray-500 mb-6">Tidak ada produk untuk di-checkout</p>
                     <a href="{{ route('menu.index') }}"
