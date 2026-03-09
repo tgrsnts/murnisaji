@@ -47,15 +47,33 @@ class ProdukController extends Controller
      */
     public function show($produk_id)
     {
-        $produk = Produk::where('produk_id', $produk_id)->first();
+        $produk = Produk::with(['transaksiItems.rating', 'transaksiItems.transaksi.user'])
+            ->where('produk_id', $produk_id)
+            ->first();
 
         if (!$produk) {
             abort(404);
         }
 
+        // Get reviews with user information
+        $reviews = $produk->transaksiItems()
+            ->whereHas('rating')
+            ->with(['rating', 'transaksi.user'])
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'user' => $item->transaksi->user,
+                    'rating' => $item->rating->rating,
+                    'comment' => $item->rating->comment,
+                    'gambar' => $item->rating->gambar,
+                    'created_at' => $item->rating->created_at,
+                ];
+            });
+
         return view('web.menu.show', [
             'title' => $produk->nama_produk,
-            'produk' => $produk
+            'produk' => $produk,
+            'reviews' => $reviews
         ]);
     }
 

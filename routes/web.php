@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProdukController as AdminProdukController;
-use App\Http\Controllers\Admin\AlamatController;
+use App\Http\Controllers\Admin\AlamatController as AdminAlamatController;
 use App\Http\Controllers\Admin\TransaksiController as AdminTransaksiController;
 use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -38,13 +38,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     Route::prefix('alamat')->name('alamat.')->group(function () {
-        Route::get('/', [AlamatController::class, 'index'])->name('index');
-        Route::get('/create', [AlamatController::class, 'create'])->name('create');
-        Route::post('/', [AlamatController::class, 'store'])->name('store');
-        Route::get('/{alamat}', [AlamatController::class, 'show'])->name('show');
-        Route::get('/{alamat}/edit', [AlamatController::class, 'edit'])->name('edit');
-        Route::put('/{alamat}', [AlamatController::class, 'update'])->name('update');
-        Route::delete('/{alamat}', [AlamatController::class, 'destroy'])->name('destroy');
+        Route::get('/', [AdminAlamatController::class, 'index'])->name('index');
+        Route::get('/create', [AdminAlamatController::class, 'create'])->name('create');
+        Route::post('/', [AdminAlamatController::class, 'store'])->name('store');
+        Route::get('/{alamat}', [AdminAlamatController::class, 'show'])->name('show');
+        Route::get('/{alamat}/edit', [AdminAlamatController::class, 'edit'])->name('edit');
+        Route::put('/{alamat}', [AdminAlamatController::class, 'update'])->name('update');
+        Route::delete('/{alamat}', [AdminAlamatController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('transaksi')->name('transaksi.')->group(function () {
@@ -80,6 +80,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 use App\Http\Controllers\ProdukController; // frontend produk
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\AlamatController; // frontend alamat
 
 Route::get('/', function () {
     return view('web.index');
@@ -110,10 +111,18 @@ Route::delete('/cart/item/{produk_id}', [TransaksiController::class, 'removeCart
 Route::post('/cart/clear', [TransaksiController::class, 'clearCart'])
     ->name('cart.clear');
 
+// checkout page
+Route::get('/checkout', [TransaksiController::class, 'checkout'])
+    ->name('checkout.index');
+
 // checkout – membuat transaksi
-Route::post('/checkout', [TransaksiController::class, 'store'])
-    ->name('checkout');
+Route::post('/checkout/store', [TransaksiController::class, 'store'])
+    ->name('checkout.store');
 
 // detail transaksi (frontend)
 Route::get('/transaksi/{id}', [TransaksiController::class, 'show'])
     ->name('transaksi.show');
+
+// alamat – add new address (AJAX)
+Route::post('/alamat/store', [AlamatController::class, 'store'])
+    ->name('alamat.store');
