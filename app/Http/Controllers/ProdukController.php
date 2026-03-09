@@ -27,7 +27,15 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Produk::create([
+            'nama_produk' => $request->nama_produk,
+            'kategori' => $request->kategori,
+            'deskripsi' => $request->deskripsi,
+            'harga' => $request->harga,
+            'stok' => $request->stok,
+            'berat_gram' => $request->berat_gram,
+            'gambar' => $request->gambar
+        ]);
     }
 
     /**
