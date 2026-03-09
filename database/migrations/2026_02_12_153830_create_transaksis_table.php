@@ -14,24 +14,40 @@ return new class extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id('transaksi_id');
 
-            $table->unsignedBigInteger('id_user');
-            $table->unsignedBigInteger('id_alamat');
+            $table->unsignedBigInteger('id_user')->nullable();
+            $table->unsignedBigInteger('id_alamat')->nullable();
 
+            // Data penerima
+            $table->string('nama_penerima');
+            $table->string('no_telepon');
+            $table->string('email')->nullable();
+
+            // Data alamat lengkap
+            $table->string('label_alamat')->nullable();
+            $table->text('detail');
+            $table->string('provinsi');
+            $table->integer('province_id');
+            $table->string('kabupaten');
+            $table->integer('city_id');
+            $table->string('kecamatan');
+            $table->string('kodepos');
+            $table->string('catatan_kurir')->nullable();
+
+            // Data harga dan kurir
             $table->integer('total_harga_produk');
             $table->integer('ongkir');
             $table->integer('total_bayar');
-
             $table->string('kurir');
             $table->string('layanan_kurir');
 
-            $table->string('status')->default('PENDING'); // PENDING, PAID, PACKED, SHIPPED, DONE, CANCEL
+            // Status dan resi
+            $table->string('status')->default('pending');
             $table->string('resi')->nullable();
 
-            $table->longText('snaptoken')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_user')->references('user_id')->on('users');
-            $table->foreign('id_alamat')->references('alamat_id')->on('alamats');
+            $table->foreign('id_user')->references('user_id')->on('users')->onDelete('set null');
+            $table->foreign('id_alamat')->references('alamat_id')->on('alamats')->onDelete('set null');
         });
     }
 
