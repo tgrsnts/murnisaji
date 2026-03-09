@@ -2,63 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alamat;
 use Illuminate\Http\Request;
 
 class AlamatController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Store a new address via AJAX
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'label' => 'required|string|max:255',
+            'alamat_lengkap' => 'required|string',
+            'catatan' => 'nullable|string|max:255'
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        // For demo, we'll use a dummy user_id = 2 (first customer from seed)
+        // In real app, use Auth::id() after implementing authentication
+        $user_id = 2;
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $alamat = Alamat::create([
+            'id_user' => $user_id,
+            'label' => $request->label,
+            'alamat_lengkap' => $request->alamat_lengkap,
+            'catatan' => $request->catatan
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json([
+            'success' => true,
+            'message' => 'Alamat berhasil ditambahkan',
+            'data' => $alamat
+        ]);
     }
 }

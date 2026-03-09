@@ -13,7 +13,10 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.produk.index', [
+            'title' => 'Produk',
+            'data' => Produk::latest()->paginate(10)
+        ]);
     }
 
     /**
@@ -21,7 +24,9 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.produk.create', [
+            'title' => 'Tambah Produk'
+        ]);
     }
 
     /**
@@ -29,7 +34,23 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nama_produk' => 'required|string|max:255',
+            'kategori' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'harga' => 'required|integer',
+            'stok' => 'required|integer',
+            'berat_gram' => 'required|integer',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('gambar')) {
+            $validatedData['gambar'] = $request->file('gambar')->store('produk', 'public');
+        }
+
+        Produk::create($validatedData);
+
+        return redirect()->route('admin.produk.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
     /**
@@ -45,7 +66,10 @@ class ProdukController extends Controller
      */
     public function edit(Produk $produk)
     {
-        //
+        return view('admin.produk.edit', [
+            'title' => 'Edit Produk',
+            'produk' => $produk
+        ]);
     }
 
     /**
@@ -53,7 +77,23 @@ class ProdukController extends Controller
      */
     public function update(Request $request, Produk $produk)
     {
-        //
+        $validatedData = $request->validate([
+            'nama_produk' => 'required|string|max:255',
+            'kategori' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'harga' => 'required|integer',
+            'stok' => 'required|integer',
+            'berat_gram' => 'required|integer',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('gambar')) {
+            $validatedData['gambar'] = $request->file('gambar')->store('produk', 'public');
+        }
+
+        $produk->update($validatedData);
+
+        return redirect()->route('admin.produk.index')->with('success', 'Produk berhasil diperbarui.');
     }
 
     /**

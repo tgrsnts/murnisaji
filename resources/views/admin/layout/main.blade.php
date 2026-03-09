@@ -37,42 +37,6 @@
         </div>
     </div>
 
-    <script>
-        // Logika Donut Chart
-        new Chart(document.getElementById('donutChart'), {
-            type: 'doughnut',
-            data: {
-                datasets: [{
-                    data: [2, 1, 3],
-                    backgroundColor: ['#22c55e', '#3b82f6', '#ef4444'],
-                    borderWidth: 0,
-                    cutout: '70%'
-                }]
-            },
-            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } }
-        });
-
-        // Logika Bar Chart
-        new Chart(document.getElementById('barChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    data: [22, 18, 30, 20, 15, 28],
-                    backgroundColor: '#8B0000',
-                    borderRadius: 20,
-                    barThickness: 10
-                }]
-            },
-            options: { 
-                maintainAspectRatio: false, 
-                plugins: { legend: { display: false } },
-                scales: { 
-                    y: { display: false }, 
-                    x: { grid: { display: false }, border: { display: false } } 
-                }
-            }
-        });
-    </script>
+    @stack('scripts')
 </body>
 </html>
