@@ -25,7 +25,7 @@
         <a href="{{ route('admin.users.index') }}" class="flex items-center px-6 py-3 {{ request()->is('admin/users*') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
             <i class="fas fa-users mr-4"></i> Customer
         </a>
-        <a href="#" class="flex items-center px-6 py-3 {{ request()->is('admin/profile*') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
+        <a href="{{ route('admin.profile.index') }}" class="flex items-center px-6 py-3 {{ request()->is('admin/profile*') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
             <i class="fas fa-user mr-4"></i> Profile
         </a>
     </nav>

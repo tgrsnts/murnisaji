@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ProdukController as AdminProdukController;
 use App\Http\Controllers\Admin\AlamatController;
 use App\Http\Controllers\Admin\TransaksiController as AdminTransaksiController;
 use App\Http\Controllers\Admin\RatingController;
+use App\Http\Controllers\Admin\ProfileController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -67,6 +68,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         'transaksi/{transaksi}/resi',
         [AdminTransaksiController::class, 'updateResi']
     )->name('transaksi.updateResi');
+
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 
