@@ -89,17 +89,17 @@
                             <td class="py-2 px-3">
                                 <div class="flex justify-center space-x-2">
                                     <a href="{{ route('admin.produk.edit', $item->produk_id) }}"
-                                        class="text-blue-600 hover:text-blue-800" title="Edit menu item">
-                                        ✏️
+                                        class="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-xs" title="Edit produk">
+                                        Edit
                                     </a>
 
                                     <form action="{{ route('admin.produk.destroy', $item->produk_id) }}" method="POST"
-                                        onsubmit="return confirm('Are you sure you want to delete this menu item? This action cannot be undone.');">
+                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-800"
-                                            title="Delete menu item">
-                                            🗑️
+                                        <button type="submit" class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-xs"
+                                            title="Hapus produk">
+                                            Hapus
                                         </button>
                                     </form>
                                 </div>
