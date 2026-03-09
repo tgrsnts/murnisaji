@@ -13,10 +13,10 @@
         <a href="#" class="flex items-center px-6 py-3 {{ request()->is('admin') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
             <i class="fas fa-home mr-4"></i> Dashboard
         </a>
-        <a href="#" class="flex items-center px-6 py-3 {{ request()->is('admin/product') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
+        <a href="{{ route('admin.produk.index') }}" class="flex items-center px-6 py-3 {{ request()->is('admin/produk') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
             <i class="fas fa-shopping-bag mr-4"></i> Product
         </a>
-        <a href="#" class="flex items-center px-6 py-3 {{ request()->is('admin/order') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
+        <a href="{{ route('admin.transaksi.index') }}" class="flex items-center px-6 py-3 {{ request()->is('admin/transaksi') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
             <i class="fas fa-shopping-cart mr-4"></i> Order
         </a>
         <a href="#" class="flex items-center px-6 py-3 {{ request()->is('admin/review') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
