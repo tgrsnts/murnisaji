@@ -81,6 +81,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 use App\Http\Controllers\ProdukController; // frontend produk
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\AlamatController; // frontend alamat
+use App\Http\Controllers\PaymentController;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 Route::get('/', function () {
     return view('web.index');
@@ -122,6 +124,13 @@ Route::post('/checkout/store', [TransaksiController::class, 'store'])
 // detail transaksi (frontend)
 Route::get('/transaksi/{id}', [TransaksiController::class, 'show'])
     ->name('transaksi.show');
+
+Route::post('/transaksi/{transaksi}/pay', [PaymentController::class, 'createSnap'])
+    ->name('payment.createSnap');
+
+Route::post('/payments/midtrans/callback', [PaymentController::class, 'callback'])
+    ->withoutMiddleware([VerifyCsrfToken::class])
+    ->name('payment.midtrans.callback');
 
 // alamat – add new address (AJAX)
 Route::post('/alamat/store', [AlamatController::class, 'store'])

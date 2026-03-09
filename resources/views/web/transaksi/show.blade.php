@@ -13,6 +13,12 @@
                 </div>
             @endif
 
+            @if (session('error'))
+                <div class="mb-6 p-4 bg-red-100 border border-red-300 text-red-800 rounded-lg">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
                 <!-- Header -->
                 <div class="bg-[#7A1F1F] text-white p-6">
@@ -59,10 +65,11 @@
                 <div class="p-6 border-b border-gray-200">
                     <h3 class="font-bold text-gray-900 mb-3">Alamat Pengiriman</h3>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <p class="font-semibold text-gray-900 mb-1">{{ $transaksi->user->name }}</p>
-                        <p class="text-gray-700">{{ $transaksi->alamat->alamat_lengkap }}</p>
-                        <p class="text-gray-700">{{ $transaksi->alamat->kota }}, {{ $transaksi->alamat->kode_pos }}</p>
-                        <p class="text-gray-700 mt-2">{{ $transaksi->alamat->no_telp }}</p>
+                        <p class="font-semibold text-gray-900 mb-1">{{ $transaksi->nama_penerima ?? optional($transaksi->user)->name ?? '-' }}</p>
+                        <p class="text-gray-700">{{ $transaksi->detail ?? optional($transaksi->alamat)->alamat_lengkap ?? '-' }}</p>
+                        <p class="text-gray-700">{{ $transaksi->kecamatan ?? '-' }}, {{ $transaksi->kabupaten ?? optional($transaksi->alamat)->kota ?? '-' }}</p>
+                        <p class="text-gray-700">{{ $transaksi->provinsi ?? '-' }} {{ $transaksi->kodepos ?? optional($transaksi->alamat)->kode_pos ?? '-' }}</p>
+                        <p class="text-gray-700 mt-2">{{ $transaksi->no_telepon ?? optional($transaksi->alamat)->no_telp ?? '-' }}</p>
                     </div>
                 </div>
 
@@ -72,7 +79,7 @@
                     <div class="space-y-4">
                         @foreach ($transaksi->items as $item)
                             <div class="flex gap-4">
-                                <div class="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0">
+                                <div class="w-20 h-20 bg-gray-100 rounded-lg shrink-0">
                                     @if ($item->produk->gambar)
                                         <img src="{{ asset('storage/' . $item->produk->gambar) }}"
                                             alt="{{ $item->produk->nama_produk }}"
@@ -118,6 +125,21 @@
                         <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                             <p class="text-sm text-yellow-800 mb-2"><i class="fas fa-info-circle"></i> <strong>Menunggu Pembayaran</strong></p>
                             <p class="text-sm text-yellow-700">Silakan lakukan pembayaran untuk melanjutkan pesanan Anda.</p>
+
+                            @if ($transaksi->payment && $transaksi->payment->snap_token)
+                                <button type="button" id="pay-button"
+                                    class="mt-4 w-full bg-[#7A1F1F] text-white py-2 rounded-lg font-semibold hover:bg-[#5A0F0F] transition cursor-pointer">
+                                    Bayar Dengan Midtrans
+                                </button>
+                            @else
+                                <form action="{{ route('payment.createSnap', $transaksi->transaksi_id) }}" method="POST" class="mt-4">
+                                    @csrf
+                                    <button type="submit"
+                                        class="w-full bg-[#7A1F1F] text-white py-2 rounded-lg font-semibold hover:bg-[#5A0F0F] transition cursor-pointer">
+                                        Buat Pembayaran Midtrans
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                     @endif
 
@@ -151,4 +173,43 @@
             </div>
         </div>
     </section>
+
+    @if ($transaksi->payment && $transaksi->payment->snap_token)
+        <script src="{{ config('services.midtrans.is_production') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}"
+            data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+        <script>
+            const snapToken = @json($transaksi->payment->snap_token);
+            const shouldOpenSnap = @json(session('open_snap', false));
+            const payButton = document.getElementById('pay-button');
+
+            function openSnapPopup() {
+                if (!window.snap || !snapToken) {
+                    return;
+                }
+
+                window.snap.pay(snapToken, {
+                    onSuccess: function() {
+                        window.location.reload();
+                    },
+                    onPending: function() {
+                        window.location.reload();
+                    },
+                    onError: function() {
+                        alert('Pembayaran gagal diproses, silakan coba lagi.');
+                    },
+                    onClose: function() {
+                        // User closed popup without finishing payment.
+                    }
+                });
+            }
+
+            if (payButton) {
+                payButton.addEventListener('click', openSnapPopup);
+            }
+
+            if (shouldOpenSnap) {
+                openSnapPopup();
+            }
+        </script>
+    @endif
 @endsection

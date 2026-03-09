@@ -17,6 +17,16 @@
                 </div>
             @endif
 
+            @if ($errors->any())
+                <div class="mb-6 p-4 bg-red-100 text-red-800 rounded-lg">
+                    <ul class="list-disc pl-5 text-sm space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             @if (count($cartItems) > 0)
                 <form action="{{ route('checkout.store') }}" method="POST" id="checkoutForm">
                     @csrf
@@ -26,80 +36,72 @@
                         <div class="lg:col-span-2 space-y-6">
                             <!-- Shipping Address Section -->
                             <div class="bg-white border border-gray-200 rounded-lg p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <h2 class="text-xl font-bold text-gray-900">Alamat Pengiriman</h2>
-                                    <button type="button" onclick="toggleAddressForm()"
-                                        class="text-[#7A1F1F] hover:text-[#5A0F0F] text-sm font-medium cursor-pointer">
-                                        <i class="fas fa-plus mr-1"></i> Tambah Alamat Baru
-                                    </button>
+                                <h2 class="text-xl font-bold text-gray-900 mb-4">Data Penerima</h2>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Penerima</label>
+                                        <input type="text" name="nama_penerima" required value="{{ old('nama_penerima') }}"
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">No. Telepon</label>
+                                        <input type="text" name="no_telepon" required value="{{ old('no_telepon') }}"
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Email (opsional)</label>
+                                        <input type="email" name="email" value="{{ old('email') }}"
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                    </div>
                                 </div>
 
-                                <!-- Address Selection -->
-                                <div id="addressSelection">
-                                    @if ($alamats->count() > 0)
-                                        <div class="space-y-3">
-                                            @foreach ($alamats as $alamat)
-                                                <label
-                                                    class="flex items-start gap-3 p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-[#7A1F1F] transition">
-                                                    <input type="radio" name="id_alamat" value="{{ $alamat->alamat_id }}"
-                                                        required class="mt-1">
-                                                    <div class="flex-1">
-                                                        <p class="font-medium text-gray-900">{{ $alamat->label }}</p>
-                                                        <p class="text-sm text-gray-600 mt-1">
-                                                            {{ $alamat->alamat_lengkap }}</p>
-                                                        @if ($alamat->catatan)
-                                                            <p class="text-xs text-gray-500 mt-1">Catatan:
-                                                                {{ $alamat->catatan }}</p>
-                                                        @endif
-                                                    </div>
-                                                </label>
-                                            @endforeach
-                                        </div>
-                                    @else
-                                        <div class="text-center py-6 bg-gray-50 rounded-lg">
-                                            <i class="fas fa-map-marker-alt text-gray-300 text-4xl mb-2"></i>
-                                            <p class="text-gray-600 mb-3">Belum ada alamat tersimpan</p>
-                                            <button type="button" onclick="toggleAddressForm()"
-                                                class="text-[#7A1F1F] hover:text-[#5A0F0F] font-medium cursor-pointer">
-                                                <i class="fas fa-plus mr-1"></i> Tambah Alamat Baru
-                                            </button>
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <!-- Add New Address Form (Hidden by default) -->
-                                <div id="addAddressForm" class="hidden mt-4 p-4 bg-gray-50 rounded-lg">
-                                    <h3 class="font-semibold text-gray-900 mb-3">Alamat Baru</h3>
-                                    <div class="space-y-3">
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Label
-                                                Alamat</label>
-                                            <input type="text" name="new_label"
-                                                placeholder="Contoh: Rumah, Kantor, Apartemen"
-                                                class="w-full border border-gray-300 rounded-lg p-2 text-sm">
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Alamat
-                                                Lengkap</label>
-                                            <textarea name="new_alamat_lengkap" rows="3" placeholder="Masukkan alamat lengkap"
-                                                class="w-full border border-gray-300 rounded-lg p-2 text-sm"></textarea>
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Catatan
-                                                (opsional)</label>
-                                            <input type="text" name="new_catatan" placeholder="Contoh: Dekat masjid"
-                                                class="w-full border border-gray-300 rounded-lg p-2 text-sm">
-                                        </div>
-                                        <div class="flex gap-2">
-                                            <button type="button" onclick="saveNewAddress()"
-                                                class="px-4 py-2 bg-[#7A1F1F] text-white rounded-lg hover:bg-[#5A0F0F] text-sm cursor-pointer">
-                                                Simpan
-                                            </button>
-                                            <button type="button" onclick="toggleAddressForm()"
-                                                class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-sm cursor-pointer">
-                                                Batal
-                                            </button>
-                                        </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3">Alamat Pengiriman</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Label Alamat</label>
+                                        <input type="text" name="label_alamat" required value="{{ old('label_alamat') }}"
+                                            placeholder="Contoh: Rumah"
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Kode Pos</label>
+                                        <input type="text" name="kodepos" required value="{{ old('kodepos') }}"
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Detail Alamat</label>
+                                        <textarea name="detail" rows="3" required class="w-full border border-gray-300 rounded-lg p-2 text-sm">{{ old('detail') }}</textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
+                                        <input type="text" name="provinsi" required value="{{ old('provinsi') }}"
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">ID Provinsi</label>
+                                        <input type="number" name="province_id" min="1" required value="{{ old('province_id') }}"
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Kabupaten/Kota</label>
+                                        <input type="text" name="kabupaten" required value="{{ old('kabupaten') }}"
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">ID Kota</label>
+                                        <input type="number" name="city_id" min="1" required value="{{ old('city_id') }}"
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
+                                        <input type="text" name="kecamatan" required value="{{ old('kecamatan') }}"
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Catatan Kurir (opsional)</label>
+                                        <input type="text" name="catatan_kurir" value="{{ old('catatan_kurir') }}"
+                                            class="w-full border border-gray-300 rounded-lg p-2 text-sm">
                                     </div>
                                 </div>
                             </div>
@@ -228,46 +230,5 @@
             document.getElementById('totalDisplay').textContent = 'Rp ' + total.toLocaleString('id-ID');
         }
 
-        function toggleAddressForm() {
-            const form = document.getElementById('addAddressForm');
-            form.classList.toggle('hidden');
-        }
-
-        function saveNewAddress() {
-            const label = document.querySelector('input[name="new_label"]').value;
-            const alamat = document.querySelector('textarea[name="new_alamat_lengkap"]').value;
-            const catatan = document.querySelector('input[name="new_catatan"]').value;
-
-            if (!label || !alamat) {
-                alert('Mohon isi label dan alamat lengkap');
-                return;
-            }
-
-            // Create FormData
-            const formData = new FormData();
-            formData.append('label', label);
-            formData.append('alamat_lengkap', alamat);
-            formData.append('catatan', catatan);
-            formData.append('_token', '{{ csrf_token() }}');
-
-            // Send AJAX request
-            fetch('{{ route('alamat.store') }}', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Reload page to show new address
-                        window.location.reload();
-                    } else {
-                        alert('Gagal menyimpan alamat: ' + (data.message || 'Unknown error'));
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Terjadi kesalahan saat menyimpan alamat');
-                });
-        }
     </script>
 @endsection

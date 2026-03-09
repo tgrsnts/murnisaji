@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Produk;
 use App\Models\Transaksi;
 use App\Models\TransaksiItem;
-use App\Models\Alamat;
 use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
@@ -64,16 +63,10 @@ class TransaksiController extends Controller
             }
         }
 
-        // For demo, we'll use a dummy user_id = 2 (first customer from seed)
-        // In real app, use Auth::id() after implementing authentication
-        $user_id = 2;
-        $alamats = Alamat::where('id_user', $user_id)->get();
-
         return view('web.transaksi.checkout', [
             'title' => 'Checkout',
             'cartItems' => $cartItems,
-            'subtotal' => $subtotal,
-            'alamats' => $alamats
+            'subtotal' => $subtotal
         ]);
     }
 
@@ -171,7 +164,18 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_alamat' => 'required|exists:alamats,alamat_id',
+            'nama_penerima' => 'required|string|max:255',
+            'no_telepon' => 'required|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'label_alamat' => 'required|string|max:255',
+            'detail' => 'required|string',
+            'provinsi' => 'required|string|max:255',
+            'province_id' => 'required|integer|min:1',
+            'kabupaten' => 'required|string|max:255',
+            'city_id' => 'required|integer|min:1',
+            'kecamatan' => 'required|string|max:255',
+            'kodepos' => 'required|string|max:10',
+            'catatan_kurir' => 'nullable|string|max:255',
             'kurir' => 'required|string',
             'layanan_kurir' => 'required|string',
             'ongkir' => 'required|numeric|min:0'
@@ -194,14 +198,22 @@ class TransaksiController extends Controller
 
         $total_bayar = $total_harga_produk + $request->ongkir;
 
-        // For demo, we'll use a dummy user_id = 2 (first customer from seed)
-        // In real app, use Auth::id() after implementing authentication
-        $user_id = 2;
-
         // Create transaction
         $transaksi = Transaksi::create([
-            'id_user' => $user_id,
-            'id_alamat' => $request->id_alamat,
+            'id_user' => null,
+            'id_alamat' => null,
+            'nama_penerima' => $request->nama_penerima,
+            'no_telepon' => $request->no_telepon,
+            'email' => $request->email,
+            'label_alamat' => $request->label_alamat,
+            'detail' => $request->detail,
+            'provinsi' => $request->provinsi,
+            'province_id' => $request->province_id,
+            'kabupaten' => $request->kabupaten,
+            'city_id' => $request->city_id,
+            'kecamatan' => $request->kecamatan,
+            'kodepos' => $request->kodepos,
+            'catatan_kurir' => $request->catatan_kurir,
             'total_harga_produk' => $total_harga_produk,
             'ongkir' => $request->ongkir,
             'total_bayar' => $total_bayar,
@@ -209,7 +221,6 @@ class TransaksiController extends Controller
             'layanan_kurir' => $request->layanan_kurir,
             'status' => 'PENDING',
             'resi' => null,
-            'snaptoken' => null
         ]);
 
         // Create transaction items
@@ -242,7 +253,7 @@ class TransaksiController extends Controller
      */
     public function show($id)
     {
-        $transaksi = Transaksi::with(['items.produk', 'alamat', 'user'])
+        $transaksi = Transaksi::with(['items.produk', 'alamat', 'user', 'payment'])
             ->where('transaksi_id', $id)
             ->first();
 
