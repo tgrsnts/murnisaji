@@ -17,7 +17,7 @@
                         <img src="{{ asset('storage/' . $produk->gambar) }}" alt="{{ $produk->nama_produk }}"
                             class="w-full h-auto object-contain max-h-96">
                     @else
-                        <img src="/images/Abon Sapi.png" alt="{{ $produk->nama_produk }}"
+                        <img src="/images/logo/Abon Sapi.png" alt="{{ $produk->nama_produk }}"
                             class="w-full h-auto object-contain max-h-96">
                     @endif
                 </div>
