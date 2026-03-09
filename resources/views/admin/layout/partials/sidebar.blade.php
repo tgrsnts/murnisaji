@@ -19,7 +19,7 @@
         <a href="{{ route('admin.transaksi.index') }}" class="flex items-center px-6 py-3 {{ request()->is('admin/transaksi') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
             <i class="fas fa-shopping-cart mr-4"></i> Order
         </a>
-        <a href="#" class="flex items-center px-6 py-3 {{ request()->is('admin/review') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
+        <a href="{{ route('admin.review.index') }}" class="flex items-center px-6 py-3 {{ request()->is('admin/review') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">
             <i class="fas fa-comment-alt mr-4"></i> Review
         </a>
         <a href="#" class="flex items-center px-6 py-3 {{ request()->is('admin/customer') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-gray-400 hover:text-[#8B0000]' }} transition">

@@ -13,23 +13,14 @@ class RatingController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $ratings = Rating::with(['transaksiItem.produk', 'transaksiItem.transaksi.alamat.user'])
+            ->latest()
+            ->paginate(20);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('admin.rating.index', [
+            'title' => 'Daftar Review',
+            'ratings' => $ratings
+        ]);
     }
 
     /**
@@ -37,23 +28,12 @@ class RatingController extends Controller
      */
     public function show(Rating $rating)
     {
-        //
-    }
+        $rating->load(['transaksiItem.produk', 'transaksiItem.transaksi.alamat.user']);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Rating $rating)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Rating $rating)
-    {
-        //
+        return view('admin.rating.show', [
+            'title' => 'Detail Review',
+            'rating' => $rating
+        ]);
     }
 
     /**
@@ -61,6 +41,9 @@ class RatingController extends Controller
      */
     public function destroy(Rating $rating)
     {
-        //
+        $rating->delete();
+
+        return redirect()->route('admin.rating.index')
+            ->with('success', 'Review berhasil dihapus.');
     }
 }

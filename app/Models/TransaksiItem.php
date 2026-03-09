@@ -25,4 +25,9 @@ class TransaksiItem extends Model
     {
         return $this->belongsTo(Transaksi::class, 'id_transaksi', 'transaksi_id');
     }
+
+    public function rating()
+    {
+        return $this->hasOne(Rating::class, 'id_transaksi_item', 'transaksi_item_id');
+    }
 }

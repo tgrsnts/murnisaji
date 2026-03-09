@@ -52,7 +52,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{transaksi}', [AdminTransaksiController::class, 'destroy'])->name('destroy');
     });
 
-    Route::prefix('rating')->name('rating.')->group(function () {
+    Route::prefix('review')->name('review.')->group(function () {
         Route::get('/', [RatingController::class, 'index'])->name('index');
         Route::get('/{rating}', [RatingController::class, 'show'])->name('show');
         Route::delete('/{rating}', [RatingController::class, 'destroy'])->name('destroy');

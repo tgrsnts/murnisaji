@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ProdukSeeder::class,
             AlamatSeeder::class,
+            TransaksiSeeder::class,
+            RatingSeeder::class,
         ]);
     }
 }
