@@ -30,7 +30,7 @@
                                             alt="{{ $item['produk']->nama_produk }}"
                                             class="w-full h-full object-cover rounded-lg">
                                     @else
-                                        <img src="/images/Abon Sapi.png" alt="{{ $item['produk']->nama_produk }}"
+                                        <img src="/images/menu/menu1.png" alt="{{ $item['produk']->nama_produk }}"
                                             class="w-full h-full object-contain rounded-lg">
                                     @endif
                                 </div>
