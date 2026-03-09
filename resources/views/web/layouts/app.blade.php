@@ -62,14 +62,22 @@
                      7.5 7.5 0 0 1 15 0Z" />
                         </svg>
                     </button>
-                    <button class="relative text-black hover:opacity-70 transition">
+                    
+                    <a href="{{ route('cart.index') }}" class="relative text-black hover:opacity-70 transition">
+                        @php
+                            $cart = session()->get('cart', []);
+                            $cartCount = count($cart);
+                        @endphp
+                        
                         <!-- Badge -->
+                        @if($cartCount > 0)
                         <span
                             class="absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1
            rounded-full bg-[#7A1F1F] text-white text-[11px]
            flex items-center justify-center leading-none">
-                            3
+                            {{ $cartCount }}
                         </span>
+                        @endif
 
                         <!-- Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -86,7 +94,7 @@
                      1-3 0 1.5 1.5 0 0 1
                      3 0Z" />
                         </svg>
-                    </button>
+                    </a>
                 </div>
                 <!-- Login Button -->
                 <button class="bg-[#7A1F1F] text-white px-6 py-2 rounded-full">
