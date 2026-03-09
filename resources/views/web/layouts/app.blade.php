@@ -45,8 +45,8 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('menu') }}"
-                            class="{{ request()->routeIs('menu') ? 'text-red-600 font-semibold' : 'text-[#7A1F1F]' }}">
+                        <a href="{{ route('menu.index') }}"
+                            class="{{ request()->routeIs('menu.index') ? 'text-red-600 font-semibold' : 'text-[#7A1F1F]' }}">
                             Menu
                         </a>
                     </li>

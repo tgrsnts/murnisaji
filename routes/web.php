@@ -26,7 +26,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/{user}', [UserController::class, 'update'])->name('update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
-    
+
     Route::prefix('produk')->name('produk.')->group(function () {
         Route::get('/', [AdminProdukController::class, 'index'])->name('index');
         Route::get('/create', [AdminProdukController::class, 'create'])->name('create');
@@ -36,7 +36,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/{produk}', [AdminProdukController::class, 'update'])->name('update');
         Route::delete('/{produk}', [AdminProdukController::class, 'destroy'])->name('destroy');
     });
-    
+
     Route::prefix('alamat')->name('alamat.')->group(function () {
         Route::get('/', [AlamatController::class, 'index'])->name('index');
         Route::get('/create', [AlamatController::class, 'create'])->name('create');
@@ -89,11 +89,10 @@ Route::get('/about', function () {
     return view('web.about');
 })->name('about');
 
-Route::get('/menu', [ProdukController::class, 'index'])
-    ->name('menu.index');
-
-Route::get('/menu/{produk_id}', [ProdukController::class, 'show'])
-    ->name('menu.show');
+Route::prefix('menu')->name('menu.')->group(function () {
+    Route::get('/', [ProdukController::class, 'index'])->name('index');
+    Route::get('/{produk}', [ProdukController::class, 'show'])->name('show');
+});
 
 // --------- cart & checkout ---------
 Route::get('/cart', [TransaksiController::class, 'index'])
