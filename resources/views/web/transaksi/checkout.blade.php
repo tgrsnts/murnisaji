@@ -29,7 +29,7 @@
                                 <div class="flex items-center justify-between mb-4">
                                     <h2 class="text-xl font-bold text-gray-900">Alamat Pengiriman</h2>
                                     <button type="button" onclick="toggleAddressForm()"
-                                        class="text-[#7A1F1F] hover:text-[#5A0F0F] text-sm font-medium">
+                                        class="text-[#7A1F1F] hover:text-[#5A0F0F] text-sm font-medium cursor-pointer">
                                         <i class="fas fa-plus mr-1"></i> Tambah Alamat Baru
                                     </button>
                                 </div>
@@ -60,7 +60,7 @@
                                             <i class="fas fa-map-marker-alt text-gray-300 text-4xl mb-2"></i>
                                             <p class="text-gray-600 mb-3">Belum ada alamat tersimpan</p>
                                             <button type="button" onclick="toggleAddressForm()"
-                                                class="text-[#7A1F1F] hover:text-[#5A0F0F] font-medium">
+                                                class="text-[#7A1F1F] hover:text-[#5A0F0F] font-medium cursor-pointer">
                                                 <i class="fas fa-plus mr-1"></i> Tambah Alamat Baru
                                             </button>
                                         </div>
@@ -92,11 +92,11 @@
                                         </div>
                                         <div class="flex gap-2">
                                             <button type="button" onclick="saveNewAddress()"
-                                                class="px-4 py-2 bg-[#7A1F1F] text-white rounded-lg hover:bg-[#5A0F0F] text-sm">
+                                                class="px-4 py-2 bg-[#7A1F1F] text-white rounded-lg hover:bg-[#5A0F0F] text-sm cursor-pointer">
                                                 Simpan
                                             </button>
                                             <button type="button" onclick="toggleAddressForm()"
-                                                class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-sm">
+                                                class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-sm cursor-pointer">
                                                 Batal
                                             </button>
                                         </div>
@@ -187,12 +187,12 @@
                                 </div>
 
                                 <button type="submit"
-                                    class="w-full bg-[#7A1F1F] text-white py-3 rounded-lg font-semibold hover:bg-[#5A0F0F] transition">
+                                    class="w-full bg-[#7A1F1F] text-white py-3 rounded-lg font-semibold hover:bg-[#5A0F0F] transition cursor-pointer">
                                     Bayar Sekarang
                                 </button>
 
                                 <a href="{{ route('cart.index') }}"
-                                    class="block w-full text-center border-2 border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition text-sm mt-3">
+                                    class="block w-full text-center border-2 border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition text-sm mt-3 cursor-pointer">
                                     Kembali ke Keranjang
                                 </a>
                             </div>
@@ -205,7 +205,7 @@
                     <h2 class="text-2xl font-semibold text-gray-700 mb-2">Keranjang Kosong</h2>
                     <p class="text-gray-500 mb-6">Tidak ada produk untuk di-checkout</p>
                     <a href="{{ route('menu.index') }}"
-                        class="inline-block bg-[#7A1F1F] text-white px-6 py-3 rounded-lg hover:bg-[#5A0F0F] transition">
+                        class="inline-block bg-[#7A1F1F] text-white px-6 py-3 rounded-lg hover:bg-[#5A0F0F] transition cursor-pointer">
                         Mulai Belanja
                     </a>
                 </div>

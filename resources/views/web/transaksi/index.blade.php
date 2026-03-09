@@ -24,7 +24,7 @@
                         @foreach ($cartItems as $item)
                             <div class="bg-white border border-gray-200 rounded-lg p-6 flex gap-6">
                                 <!-- Product Image -->
-                                <div class="w-32 h-32 bg-gray-100 rounded-lg flex-shrink-0">
+                                <div class="w-32 h-32 bg-gray-100 rounded-lg shrink-0">
                                     @if ($item['produk']->gambar)
                                         <img src="{{ asset('storage/' . $item['produk']->gambar) }}"
                                             alt="{{ $item['produk']->nama_produk }}"
@@ -52,7 +52,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="button" onclick="decreaseQty{{ $item['produk']->produk_id }}()"
-                                                class="w-8 h-8 border border-gray-300 rounded hover:bg-gray-100">
+                                                class="w-8 h-8 border border-gray-300 rounded hover:bg-gray-100 cursor-pointer">
                                                 <i class="fas fa-minus text-xs text-gray-600"></i>
                                             </button>
                                             <input type="number" name="qty" id="qty{{ $item['produk']->produk_id }}"
@@ -61,7 +61,7 @@
                                                 class="w-16 text-center border border-gray-300 rounded py-1"
                                                 onchange="this.form.submit()">
                                             <button type="button" onclick="increaseQty{{ $item['produk']->produk_id }}()"
-                                                class="w-8 h-8 border border-gray-300 rounded hover:bg-gray-100">
+                                                class="w-8 h-8 border border-gray-300 rounded hover:bg-gray-100 cursor-pointer">
                                                 <i class="fas fa-plus text-xs text-gray-600"></i>
                                             </button>
                                         </form>
@@ -72,7 +72,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="text-red-600 hover:text-red-800 flex items-center gap-1">
+                                                class="text-red-600 hover:text-red-800 flex items-center gap-1 cursor-pointer">
                                                 <i class="fas fa-trash"></i>
                                                 <span class="text-sm">Hapus</span>
                                             </button>
@@ -131,14 +131,14 @@
                             </div>
 
                             <a href="{{ route('checkout.index') }}"
-                                class="block w-full bg-[#7A1F1F] text-white py-3 rounded-lg font-semibold hover:bg-[#5A0F0F] transition text-center">
+                                class="block w-full bg-[#7A1F1F] text-white py-3 rounded-lg font-semibold hover:bg-[#5A0F0F] transition text-center cursor-pointer">
                                 Checkout
                             </a>
 
                             <form action="{{ route('cart.clear') }}" method="POST" class="mt-3">
                                 @csrf
                                 <button type="submit"
-                                    class="w-full border-2 border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition text-sm">
+                                    class="w-full border-2 border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition text-sm cursor-pointer">
                                     Kosongkan Keranjang
                                 </button>
                             </form>
@@ -151,7 +151,7 @@
                     <h2 class="text-2xl font-semibold text-gray-700 mb-2">Keranjang Kosong</h2>
                     <p class="text-gray-500 mb-6">Belum ada produk yang ditambahkan ke keranjang</p>
                     <a href="{{ route('menu.index') }}"
-                        class="inline-block bg-[#7A1F1F] text-white px-6 py-3 rounded-lg hover:bg-[#5A0F0F] transition">
+                        class="inline-block bg-[#7A1F1F] text-white px-6 py-3 rounded-lg hover:bg-[#5A0F0F] transition cursor-pointer">
                         Mulai Belanja
                     </a>
                 </div>

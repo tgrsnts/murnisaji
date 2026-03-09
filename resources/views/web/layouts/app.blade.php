@@ -55,7 +55,7 @@
 
 
                 <div class="flex items-center gap-6">
-                    <button class="text-[#000000] hover:opacity-70 transition">
+                    <button class="text-[#000000] hover:opacity-70 transition cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35m1.85-5.4a7.5 7.5 0 1 1-15 0
@@ -97,7 +97,7 @@
                     </a>
                 </div>
                 <!-- Login Button -->
-                <button class="bg-[#7A1F1F] text-white px-6 py-2 rounded-full">
+                <button class="bg-[#7A1F1F] text-white px-6 py-2 rounded-full hover:bg-[#5A0F0F] transition cursor-pointer">
                     Login
                 </button>
             </div>
