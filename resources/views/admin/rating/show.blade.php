@@ -94,7 +94,7 @@
                             @if ($i <= $rating->rating)
                                 <span class="text-yellow-500 text-2xl">★</span>
                             @else
-                                <span class="text-gray-300 text-2xl">★</span>
+                                <span class="text-[#D4AF5A] text-2xl">★</span>
                             @endif
                         @endfor
                     </div>

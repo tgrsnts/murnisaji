@@ -70,7 +70,7 @@
                                         @if ($i <= $rating->rating)
                                             <span class="text-yellow-500">★</span>
                                         @else
-                                            <span class="text-gray-300">★</span>
+                                            <span class="text-[#D4AF5A]">★</span>
                                         @endif
                                     @endfor
                                     <span class="ml-1 font-semibold text-red-800">{{ $rating->rating }}/5</span>

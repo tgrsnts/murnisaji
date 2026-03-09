@@ -25,14 +25,14 @@
                 @if($index % 2 == 0)
                     {{-- Product (Even Index - Left to Right) --}}
                     <div class="flex items-center gap-4">
-                        <div class="rounded-lg p-4 bg-gray-400 flex items-center justify-center">
+                        <div class="rounded-lg p-4 bg-[#D4AF5A] flex items-center justify-center">
                             @if($item->gambar)
                                 <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama_produk }}" class="w-full h-full object-cover rounded">
                             @else
-                                <img src="/images/Abon Sapi.png" class="w-full h-auto object-contain">
+                                <img src="/images/menu/menu1.png" class="w-full h-auto object-contain">
                             @endif
                         </div>
-                        <div class="flex bg-white border-12 border-l-0 border-gray-400 rounded-lg rounded-l-none p-6 flex-1">
+                        <div class="flex bg-white border-12 border-l-0 border-[#D4AF5A] rounded-lg rounded-l-none p-6 flex-1">
                             <div class="flex flex-col gap-4 w-full">
                                 <h2 class="text-[#7A1F1F] text-2xl font-semibold">{{ $item->nama_produk }}</h2>
                                 <div class="flex flex-col gap-2">
@@ -46,7 +46,7 @@
                                                     @elseif($i - 0.5 <= $item->average_rating)
                                                         <i class="fas fa-star-half-alt text-yellow-400"></i>
                                                     @else
-                                                        <i class="far fa-star text-gray-300"></i>
+                                                        <i class="far fa-star text-[#D4AF5A]"></i>
                                                     @endif
                                                 @endfor
                                             </div>
@@ -65,14 +65,14 @@
                 @else
                     {{-- Product (Odd Index - Right to Left) --}}
                     <div class="flex flex-row-reverse items-center gap-4">
-                        <div class="rounded-lg p-4 bg-gray-400 flex items-center justify-center">
+                        <div class="rounded-lg p-4 bg-[#D4AF5A] flex items-center justify-center">
                             @if($item->gambar)
                                 <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama_produk }}" class="w-full h-full object-cover rounded">
                             @else
-                                <img src="/images/Abon Sapi.png" class="w-full h-auto object-contain">
+                                <img src="/images/menu/menu2.png" class="w-full h-auto object-contain">
                             @endif
                         </div>
-                        <div class="flex bg-white border-12 border-r-0 border-gray-400 rounded-lg rounded-r-none p-6 flex-1">
+                        <div class="flex bg-white border-12 border-r-0 border-[#D4AF5A] rounded-lg rounded-r-none p-6 flex-1">
                             <div class="flex flex-col gap-4 w-full">
                                 <h2 class="text-[#7A1F1F] text-2xl font-semibold">{{ $item->nama_produk }}</h2>
                                 <div class="flex flex-col gap-2">
@@ -86,7 +86,7 @@
                                                     @elseif($i - 0.5 <= $item->average_rating)
                                                         <i class="fas fa-star-half-alt text-yellow-400"></i>
                                                     @else
-                                                        <i class="far fa-star text-gray-300"></i>
+                                                        <i class="far fa-star text-[#D4AF5A]"></i>
                                                     @endif
                                                 @endfor
                                             </div>
