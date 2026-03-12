@@ -80,6 +80,25 @@ class DashboardController extends Controller
     }
 
     /**
+     * Mark shipped transaction as received by user.
+     */
+    public function receiveTransaction($id)
+    {
+        $transaction = Transaksi::where('transaksi_id', $id)
+            ->where('id_user', Auth::user()->user_id)
+            ->firstOrFail();
+
+        if ($transaction->status !== 'SHIPPED') {
+            return back()->with('error', 'Pesanan tidak bisa dikonfirmasi saat ini.');
+        }
+
+        $transaction->status = 'DONE';
+        $transaction->save();
+
+        return back()->with('success', 'Pesanan berhasil dikonfirmasi diterima.');
+    }
+
+    /**
      * Show user addresses
      */
     public function addresses()

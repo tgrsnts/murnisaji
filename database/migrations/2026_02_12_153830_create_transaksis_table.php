@@ -17,19 +17,19 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user')->nullable();
             $table->unsignedBigInteger('id_alamat')->nullable();
 
-            // Data penerima
+            // Data penerima dan alamat lengkap
             $table->string('nama_penerima');
             $table->string('no_telepon');
             $table->string('email')->nullable();
+            $table->string('label_alamat');
+            $table->string('detail');
 
-            // Data alamat lengkap
-            $table->string('label_alamat')->nullable();
-            $table->text('detail');
             $table->string('provinsi');
-            $table->integer('province_id');
             $table->string('kabupaten');
-            $table->integer('city_id');
             $table->string('kecamatan');
+
+            $table->string('desa')->nullable();
+            $table->bigInteger('village_id')->nullable();
             $table->string('kodepos');
             $table->string('catatan_kurir')->nullable();
 

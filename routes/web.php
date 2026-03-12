@@ -121,6 +121,7 @@ Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(functi
     Route::get('/profile', [UserDashboardController::class, 'profile'])->name('profile');
     Route::put('/profile', [UserDashboardController::class, 'updateProfile'])->name('profile.update');
     Route::get('/transaction/{id}', [UserDashboardController::class, 'showTransaction'])->name('transaction');
+    Route::patch('/transaction/{id}/receive', [UserDashboardController::class, 'receiveTransaction'])->name('transaction.receive');
 });
 
 // ==========================
