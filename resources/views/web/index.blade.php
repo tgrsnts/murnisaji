@@ -19,17 +19,14 @@
             </p>
 
             <div class="mt-8 flex gap-4">
-                <button class="bg-[#7A1F1F] text-white px-8 py-3 rounded-full">
+                <x-button tone="primary" variant="full">
                     Buy Now
-                </button>
+                </x-button>
 
-                <button
-                    class="border-2 border-[#7A1F1F] text-[#7A1F1F] px-8 py-3 rounded-full 
-                    hover:bg-[#7A1F1F] hover:text-white transition duration-300">
+                <x-button tone="secondary" variant="full">
                     See Product
-                </button>
+                </x-button>
             </div>
-
         </div>
 
         <div class="w-full max-w-[300px] md:max-w-[600px] mx-auto">
