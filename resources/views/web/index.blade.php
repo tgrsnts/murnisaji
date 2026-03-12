@@ -46,22 +46,22 @@
 
         <div class="grid md:grid-cols-4 gap-8 mt-16">
 
-            <div class="bg-[#F6F1EA] rounded-xl p-8 shadow-sm">
+            <div class="bg-[#FCFBF5] rounded-xl p-8 shadow-sm">
                 <img src="{{ asset('images/icon/icon1.png') }}" class="w-16 mx-auto">
                 <p class="mt-6 font-semibold text-lg">Tanpa MSG</p>
             </div>
 
-            <div class="bg-[#F6F1EA] rounded-xl p-8 shadow-sm">
+            <div class="bg-[#FCFBF5] rounded-xl p-8 shadow-sm">
                 <img src="{{ asset('images/icon/icon2.png') }}" class="mx-auto w-16">
                 <p class="mt-6 font-semibold text-lg">Tanpa Pengawet</p>
             </div>
 
-            <div class="bg-[#F6F1EA] rounded-xl p-8 shadow-sm">
+            <div class="bg-[#FCFBF5] rounded-xl p-8 shadow-sm">
                 <img src="{{ asset('images/icon/icon3.png') }}" class="mx-auto w-16">
                 <p class="mt-6 font-semibold text-lg">Full Protein</p>
             </div>
 
-            <div class="bg-[#F6F1EA] rounded-xl p-8 shadow-sm">
+            <div class="bg-[#FCFBF5] rounded-xl p-8 shadow-sm">
                 <img src="{{ asset('images/icon/icon4.png') }}" class="mx-auto w-16">
                 <p class="mt-6 font-semibold text-lg">Praktis & Siap Tabur</p>
             </div>
