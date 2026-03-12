@@ -41,6 +41,10 @@ class ApiCoIdController extends Controller
             return $data;
         }
 
+        if (is_array($data) && isset($data['couriers']) && is_array($data['couriers'])) {
+            return $data['couriers'];
+        }
+
         $results = $response->json('results');
         if (is_array($results) && array_is_list($results)) {
             return $results;
@@ -63,7 +67,15 @@ class ApiCoIdController extends Controller
     {
         try {
             $url = $this->baseUrl() . '/' . $this->endpoint('provinces_endpoint', 'regional/indonesia/provinces');
+            
+            Log::info('Fetching provinces from API.co.id', ['url' => $url]);
+            
             $response = Http::withHeaders($this->getHeaders())->get($url);
+
+            Log::info('API.co.id provinces response', [
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
 
             if ($response->successful() && $response->json('is_success', true)) {
                 return response()->json([
@@ -80,15 +92,21 @@ class ApiCoIdController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Gagal mengambil data provinsi',
+                'debug' => [
+                    'status' => $response->status(),
+                    'body' => $response->json(),
+                ],
             ], 500);
         } catch (\Throwable $e) {
             Log::error('API.co.id provinces exception', [
                 'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
 
             return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan saat mengambil data provinsi',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -141,27 +159,23 @@ class ApiCoIdController extends Controller
         }
     }
 
-    public function calculateCost(Request $request)
+    public function getSubdistricts(Request $request)
     {
-        $request->validate([
-            'destination' => 'required|integer',
-            'weight' => 'required|integer|min:1',
-            'courier' => 'required|string|in:jne,pos,tiki',
-        ]);
+        $cityId = $request->input('city_id');
+
+        if (!$cityId) {
+            return response()->json([
+                'success' => false,
+                'message' => 'City ID is required',
+            ], 400);
+        }
 
         try {
-            $url = $this->baseUrl() . '/' . $this->endpoint('cost_endpoint', 'expedition/shipping-cost');
-
-            $payload = [
-                'origin' => (int) config('services.apicoid.origin_city_id', 501),
-                'destination' => (int) $request->destination,
-                'weight' => (int) $request->weight,
-                'courier' => $request->courier,
-            ];
-
+            $url = $this->baseUrl() . '/' . $this->endpoint('subdistricts_endpoint', 'regional/indonesia/districts');
             $response = Http::withHeaders($this->getHeaders())
-                ->asForm()
-                ->post($url, $payload);
+                ->get($url, [
+                    'regency_code' => $cityId,
+                ]);
 
             if ($response->successful() && $response->json('is_success', true)) {
                 return response()->json([
@@ -170,8 +184,126 @@ class ApiCoIdController extends Controller
                 ]);
             }
 
+            Log::error('API.co.id get subdistricts error', [
+                'city_id' => $cityId,
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data kecamatan',
+            ], 500);
+        } catch (\Throwable $e) {
+            Log::error('API.co.id subdistricts exception', [
+                'city_id' => $cityId,
+                'message' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat mengambil data kecamatan',
+            ], 500);
+        }
+    }
+
+    public function getVillages(Request $request)
+    {
+        $subdistrictId = $request->input('subdistrict_id');
+
+        if (!$subdistrictId) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Subdistrict ID is required',
+            ], 400);
+        }
+
+        try {
+            $url = $this->baseUrl() . '/' . $this->endpoint('villages_endpoint', 'regional/indonesia/villages');
+            $response = Http::withHeaders($this->getHeaders())
+                ->get($url, [
+                    'district_code' => $subdistrictId,
+                ]);
+
+            if ($response->successful() && $response->json('is_success', true)) {
+                return response()->json([
+                    'success' => true,
+                    'data' => $this->extractList($response),
+                ]);
+            }
+
+            Log::error('API.co.id get villages error', [
+                'subdistrict_id' => $subdistrictId,
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data desa/kelurahan',
+            ], 500);
+        } catch (\Throwable $e) {
+            Log::error('API.co.id villages exception', [
+                'subdistrict_id' => $subdistrictId,
+                'message' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat mengambil data desa/kelurahan',
+            ], 500);
+        }
+    }
+
+    public function calculateCost(Request $request)
+    {
+        $originVillageCode = (string) ($request->input('origin_village_code') ?: config('services.apicoid.origin_village_code', ''));
+
+        $request->validate([
+            'destination_village_code' => 'required|digits:10',
+            'weight' => 'required|numeric|gt:0',
+            'courier' => 'nullable|string',
+        ]);
+
+        if (!preg_match('/^\d{10}$/', $originVillageCode)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Origin village code tidak valid. Pastikan APICOID_ORIGIN_VILLAGE_CODE berisi 10 digit.',
+            ], 422);
+        }
+
+        try {
+            $url = $this->baseUrl() . '/' . $this->endpoint('cost', 'expedition/shipping-cost');
+
+            $payload = [
+                'origin_village_code' => $originVillageCode,
+                'destination_village_code' => (string) $request->destination_village_code,
+                'weight' => (float) $request->weight,
+            ];
+
+            // Only add courier if provided
+            if ($request->filled('courier')) {
+                $payload['courier'] = $request->courier;
+            }
+
+            Log::info('Calling API.co.id shipping cost', [
+                'url' => $url,
+                'payload' => $payload,
+            ]);
+
+            $response = Http::withHeaders($this->getHeaders())
+                ->get($url, $payload);
+
+            if ($response->successful() && $response->json('is_success', true)) {
+                return response()->json([
+                    'success' => true,
+                    'data' => $this->extractList($response),
+                    'result' => $response->json('result') ?? $this->extractList($response),
+                ]);
+            }
+
             Log::error('API.co.id calculate cost error', [
-                'destination' => $request->destination,
+                'destination_village_code' => $request->destination_village_code,
                 'courier' => $request->courier,
                 'status' => $response->status(),
                 'body' => $response->body(),
@@ -183,7 +315,7 @@ class ApiCoIdController extends Controller
             ], 500);
         } catch (\Throwable $e) {
             Log::error('API.co.id cost exception', [
-                'destination' => $request->destination,
+                'destination_village_code' => $request->destination_village_code,
                 'courier' => $request->courier,
                 'message' => $e->getMessage(),
             ]);

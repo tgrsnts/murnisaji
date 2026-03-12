@@ -97,11 +97,43 @@
                         </svg>
                     </a>
                 </div>
-                <!-- Login Button -->
-                <button
-                    class="bg-[#7A1F1F] text-white px-6 py-2 rounded-full hover:bg-[#5A0F0F] transition cursor-pointer">
-                    Login
-                </button>
+                <!-- Auth Menu -->
+                @if (Auth::check())
+                    <div class="flex items-center gap-4">
+                        <a href="{{ route('dashboard.index') }}"
+                            class="text-[#7A1F1F] hover:text-red-600 font-medium transition">
+                            Dashboard
+                        </a>
+                        <div class="relative group">
+                            <button class="text-[#7A1F1F] hover:text-red-600 font-medium transition flex items-center gap-2">
+                                {{ Auth::user()->name }}
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </button>
+                            <div class="absolute right-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition z-20">
+                                <a href="{{ route('dashboard.profile') }}" class="block px-4 py-2 text-gray-900 hover:bg-gray-100 transition">Profil</a>
+                                <form method="POST" action="{{ route('auth.logout') }}" class="block">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left px-4 py-2 text-gray-900 hover:bg-gray-100 transition">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="flex items-center gap-3">
+                        <a href="{{ route('auth.login') }}"
+                            class="text-[#7A1F1F] hover:text-red-600 font-medium transition">
+                            Login
+                        </a>
+                        <a href="{{ route('auth.register') }}"
+                            class="bg-[#7A1F1F] text-white px-6 py-2 rounded-full hover:bg-[#5A0F0F] transition font-medium">
+                            Daftar
+                        </a>
+                    </div>
+                @endif
             </div>
         </nav>
 

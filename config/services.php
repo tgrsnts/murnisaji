@@ -47,10 +47,12 @@ return [
     'apicoid' => [
         'api_key' => env('APICOID_API_KEY'),
         'base_url' => env('APICOID_BASE_URL', 'https://use.api.co.id'),
-        'origin_city_id' => env('APICOID_ORIGIN_CITY_ID', 501),
+        'origin_village_code' => env('APICOID_ORIGIN_VILLAGE_CODE', ''),
         'provinces_endpoint' => env('APICOID_PROVINCES_ENDPOINT', '/regional/indonesia/provinces'),
         'cities_endpoint' => env('APICOID_CITIES_ENDPOINT', '/regional/indonesia/regencies'),
-        'cost_endpoint' => env('APICOID_COST_ENDPOINT', '/expedition/shipping-cost'),
+        'subdistricts_endpoint' => env('APICOID_SUBDISTRICTS_ENDPOINT', '/regional/indonesia/districts'),
+        'villages_endpoint' => env('APICOID_VILLAGES_ENDPOINT', '/regional/indonesia/villages'),
+        'cost' => env('APICOID_COST_ENDPOINT', '/expedition/shipping-cost'),
     ],
 
 ];

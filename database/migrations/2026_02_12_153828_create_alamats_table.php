@@ -21,12 +21,11 @@ return new class extends Migration
             $table->string('detail');
 
             $table->string('provinsi');
-            $table->integer('province_id');
-
             $table->string('kabupaten');
-            $table->integer('city_id');
-
             $table->string('kecamatan');
+
+            $table->string('desa')->nullable();
+            $table->bigInteger('village_id')->nullable();
             $table->string('kodepos');
 
             $table->boolean('isPrimary')->default(false);

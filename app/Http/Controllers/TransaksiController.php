@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alamat;
 use App\Models\Produk;
 use App\Models\Transaksi;
 use App\Models\TransaksiItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
 {
@@ -63,10 +65,19 @@ class TransaksiController extends Controller
             }
         }
 
+        $savedAddresses = collect();
+        if (Auth::check()) {
+            $savedAddresses = Alamat::where('id_user', Auth::user()->user_id)
+                ->orderByDesc('isPrimary')
+                ->orderByDesc('created_at')
+                ->get();
+        }
+
         return view('web.transaksi.checkout', [
             'title' => 'Checkout',
             'cartItems' => $cartItems,
-            'subtotal' => $subtotal
+            'subtotal' => $subtotal,
+            'savedAddresses' => $savedAddresses,
         ]);
     }
 
@@ -163,23 +174,38 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_penerima' => 'required|string|max:255',
-            'no_telepon' => 'required|string|max:20',
+        $user = Auth::user();
+        $isLoggedIn = Auth::check();
+        $hasSavedAddress = $isLoggedIn
+            ? Alamat::where('id_user', $user->user_id)->exists()
+            : false;
+
+        $rules = [
             'email' => 'nullable|email|max:255',
-            'label_alamat' => 'required|string|max:255',
-            'detail' => 'required|string',
-            'provinsi' => 'required|string|max:255',
-            'province_id' => 'required|integer|min:1',
-            'kabupaten' => 'required|string|max:255',
-            'city_id' => 'required|integer|min:1',
-            'kecamatan' => 'required|string|max:255',
-            'kodepos' => 'required|string|max:10',
             'catatan_kurir' => 'nullable|string|max:255',
             'kurir' => 'required|string',
             'layanan_kurir' => 'required|string',
-            'ongkir' => 'required|numeric|min:0'
-        ]);
+            'ongkir' => 'required|numeric|min:0',
+        ];
+
+        if ($isLoggedIn && $hasSavedAddress) {
+            $rules['selected_alamat_id'] = 'required|exists:alamats,alamat_id';
+        } else {
+            $rules = array_merge($rules, [
+                'nama_penerima' => 'required|string|max:255',
+                'no_telepon' => 'required|string|max:20',
+                'label_alamat' => 'required|string|max:255',
+                'detail' => 'required|string',
+                'provinsi' => 'required|string|max:255',
+                'province_id' => 'required|integer|min:1',
+                'kabupaten' => 'required|string|max:255',
+                'city_id' => 'required|integer|min:1',
+                'kecamatan' => 'required|string|max:255',
+                'kodepos' => 'required|string|max:10',
+            ]);
+        }
+
+        $validated = $request->validate($rules);
 
         $cart = session()->get('cart', []);
 
@@ -198,22 +224,80 @@ class TransaksiController extends Controller
 
         $total_bayar = $total_harga_produk + $request->ongkir;
 
+        $alamatId = null;
+
+        if ($isLoggedIn && $hasSavedAddress) {
+            $alamat = Alamat::where('alamat_id', $validated['selected_alamat_id'])
+                ->where('id_user', $user->user_id)
+                ->firstOrFail();
+
+            $alamatId = $alamat->alamat_id;
+            $alamatData = [
+                'nama_penerima' => $alamat->nama_penerima,
+                'no_telepon' => $alamat->no_telepon,
+                'label_alamat' => $alamat->label_alamat,
+                'detail' => $alamat->detail,
+                'provinsi' => $alamat->provinsi,
+                'province_id' => $alamat->province_id,
+                'kabupaten' => $alamat->kabupaten,
+                'city_id' => $alamat->city_id,
+                'kecamatan' => $alamat->kecamatan,
+                'kodepos' => $alamat->kodepos,
+                'catatan_kurir' => $request->catatan_kurir ?? $alamat->catatan_kurir,
+            ];
+        } else {
+            $alamatData = [
+                'nama_penerima' => $request->nama_penerima,
+                'no_telepon' => $request->no_telepon,
+                'label_alamat' => $request->label_alamat,
+                'detail' => $request->detail,
+                'provinsi' => $request->provinsi,
+                'province_id' => $request->province_id,
+                'kabupaten' => $request->kabupaten,
+                'city_id' => $request->city_id,
+                'kecamatan' => $request->kecamatan,
+                'kodepos' => $request->kodepos,
+                'catatan_kurir' => $request->catatan_kurir,
+            ];
+
+            // If user logged in and has no saved address, save this address first.
+            if ($isLoggedIn && !$hasSavedAddress) {
+                $newAlamat = Alamat::create([
+                    'id_user' => $user->user_id,
+                    'nama_penerima' => $request->nama_penerima,
+                    'no_telepon' => $request->no_telepon,
+                    'label_alamat' => $request->label_alamat,
+                    'detail' => $request->detail,
+                    'provinsi' => $request->provinsi,
+                    'province_id' => $request->province_id,
+                    'kabupaten' => $request->kabupaten,
+                    'city_id' => $request->city_id,
+                    'kecamatan' => $request->kecamatan,
+                    'kodepos' => $request->kodepos,
+                    'isPrimary' => true,
+                    'catatan_kurir' => $request->catatan_kurir,
+                ]);
+
+                $alamatId = $newAlamat->alamat_id;
+            }
+        }
+
         // Create transaction
         $transaksi = Transaksi::create([
-            'id_user' => null,
-            'id_alamat' => null,
-            'nama_penerima' => $request->nama_penerima,
-            'no_telepon' => $request->no_telepon,
-            'email' => $request->email,
-            'label_alamat' => $request->label_alamat,
-            'detail' => $request->detail,
-            'provinsi' => $request->provinsi,
-            'province_id' => $request->province_id,
-            'kabupaten' => $request->kabupaten,
-            'city_id' => $request->city_id,
-            'kecamatan' => $request->kecamatan,
-            'kodepos' => $request->kodepos,
-            'catatan_kurir' => $request->catatan_kurir,
+            'id_user' => $isLoggedIn ? $user->user_id : null,
+            'id_alamat' => $alamatId,
+            'nama_penerima' => $alamatData['nama_penerima'],
+            'no_telepon' => $alamatData['no_telepon'],
+            'email' => $request->email ?? ($isLoggedIn ? $user->email : null),
+            'label_alamat' => $alamatData['label_alamat'],
+            'detail' => $alamatData['detail'],
+            'provinsi' => $alamatData['provinsi'],
+            'province_id' => $alamatData['province_id'],
+            'kabupaten' => $alamatData['kabupaten'],
+            'city_id' => $alamatData['city_id'],
+            'kecamatan' => $alamatData['kecamatan'],
+            'kodepos' => $alamatData['kodepos'],
+            'catatan_kurir' => $alamatData['catatan_kurir'],
             'total_harga_produk' => $total_harga_produk,
             'ongkir' => $request->ongkir,
             'total_bayar' => $total_bayar,

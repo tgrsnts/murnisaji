@@ -17,6 +17,7 @@ class Alamat extends Model
         'kabupaten',
         'city_id',
         'kecamatan',
+        'desa',
         'kodepos',
         'isPrimary',
         'catatan_kurir',

@@ -83,8 +83,49 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\AlamatController; // frontend alamat
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ApiCoIdController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController as UserDashboardController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
+// ==========================
+// AUTHENTICATION
+// ==========================
+Route::prefix('auth')->name('auth.')->group(function () {
+    // Login
+    Route::middleware('guest')->group(function () {
+        Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+        Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+        
+        // Register
+        Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+        Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
+    });
+    
+    // Logout
+    Route::middleware('auth')->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    });
+});
+
+// ==========================
+// USER DASHBOARD
+// ==========================
+Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::get('/', [UserDashboardController::class, 'index'])->name('index');
+    Route::get('/transactions', [UserDashboardController::class, 'index'])->name('transactions');
+    Route::get('/reviews', [UserDashboardController::class, 'reviews'])->name('reviews');
+    Route::get('/addresses', [UserDashboardController::class, 'addresses'])->name('addresses');
+    Route::post('/addresses', [UserDashboardController::class, 'storeAddress'])->name('addresses.store');
+    Route::put('/addresses/{alamat}', [UserDashboardController::class, 'updateAddress'])->name('addresses.update');
+    Route::delete('/addresses/{alamat}', [UserDashboardController::class, 'destroyAddress'])->name('addresses.destroy');
+    Route::get('/profile', [UserDashboardController::class, 'profile'])->name('profile');
+    Route::put('/profile', [UserDashboardController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/transaction/{id}', [UserDashboardController::class, 'showTransaction'])->name('transaction');
+});
+
+// ==========================
+// WEB HOME
+// ==========================
 Route::get('/', function () {
     return view('web.index');
 })->name('home');
@@ -142,5 +183,7 @@ Route::post('/alamat/store', [AlamatController::class, 'store'])
 Route::prefix('api/apicoid')->name('apicoid.')->group(function () {
     Route::get('/provinces', [ApiCoIdController::class, 'getProvinces'])->name('provinces');
     Route::get('/cities', [ApiCoIdController::class, 'getCities'])->name('cities');
+    Route::get('/districts', [ApiCoIdController::class, 'getSubdistricts'])->name('subdistricts');
+    Route::get('/villages', [ApiCoIdController::class, 'getVillages'])->name('villages');
     Route::post('/cost', [ApiCoIdController::class, 'calculateCost'])->name('cost');
 });
