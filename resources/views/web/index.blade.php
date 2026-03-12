@@ -1,9 +1,8 @@
 @extends('web.layouts.app')
 
 @section('content')
-
     <!-- Hero -->
-    <section class="bg-white flex items-center justify-between px-20  pb-20">
+    <section class="relative bg-[#FCFBF5] flex items-center justify-between px-20  pb-20">
         <div class="max-w-2xl">
             <div class="flex items-center w-full my-6">
                 <div class="h-px bg-[#D4AF5A] flex-1 max-w-[30px]"></div>
@@ -24,7 +23,8 @@
                     Buy Now
                 </button>
 
-                <button class="border-2 border-[#7A1F1F] text-[#7A1F1F] px-8 py-3 rounded-full 
+                <button
+                    class="border-2 border-[#7A1F1F] text-[#7A1F1F] px-8 py-3 rounded-full 
                     hover:bg-[#7A1F1F] hover:text-white transition duration-300">
                     See Product
                 </button>
@@ -34,15 +34,6 @@
 
         <div class="w-full max-w-[300px] md:max-w-[600px] mx-auto">
             <img src="{{ asset('images/logo/logo abon.png') }}" class="w-full h-auto object-contain">
-        </div>
-        <div class="absolute z-0 -bottom-[1px] left-0 w-full h-10 overflow-hidden">
-            <div class="w-full h-full" style="
-                                                            background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%2240%22 viewBox=%220 0 240 40%22><path d=%22M0 18 C 30 6, 60 6, 90 18 S 150 30, 180 18 S 210 6, 240 18 L240 40 L0 40 Z%22 fill=%22%23ffffff%22/></svg>');
-                                                            background-repeat: repeat-x;
-                                                            background-position: bottom;
-                                                            background-size: 240px 40px;
-                                                          ">
-            </div>
         </div>
     </section>
 
@@ -79,7 +70,7 @@
     </section>
 
     <!-- Menu Produk -->
-    <section class="bg-[#F7F4EF] py-24 px-20 text-center">
+    <section class="bg-[#FCFBF5] py-24 px-20 text-center">
 
         <h2 class="text-3xl font-bold text-[#2B2B2B]">
             Pilihan Menu Abon <span class="text-[#D4AF5A]">Murnisaji</span>
@@ -154,7 +145,7 @@
 
         <div class="grid md:grid-cols-3 gap-10 mt-16">
 
-            <div class="bg-[#F7F4EF] p-8 rounded-xl text-left">
+            <div class="bg-[#FCFBF5] p-8 rounded-xl text-left">
                 <p class="text-gray-600 text-sm">
                     Kalau lagi buru-buru pagi hari, Abon Murnisaji jadi solusi cepat.
                     Tinggal tambahkan ke nasi atau roti.
@@ -169,7 +160,7 @@
                 </div>
             </div>
 
-            <div class="bg-[#F7F4EF] p-8 rounded-xl text-left">
+            <div class="bg-[#FCFBF5] p-8 rounded-xl text-left">
                 <p class="text-gray-600 text-sm">
                     Rasanya gurih, teksturnya halus, dan yang paling penting tanpa MSG.
                 </p>
@@ -183,7 +174,7 @@
                 </div>
             </div>
 
-            <div class="bg-[#F7F4EF] p-8 rounded-xl text-left">
+            <div class="bg-[#FCFBF5] p-8 rounded-xl text-left">
                 <p class="text-gray-600 text-sm">
                     Praktis banget untuk anak kos. Tidak perlu masak ribet.
                 </p>
@@ -199,7 +190,4 @@
 
         </div>
     </section>
-
-
-
 @endsection
