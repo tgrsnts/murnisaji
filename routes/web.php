@@ -188,3 +188,11 @@ Route::prefix('api/apicoid')->name('apicoid.')->group(function () {
     Route::get('/villages', [ApiCoIdController::class, 'getVillages'])->name('villages');
     Route::post('/cost', [ApiCoIdController::class, 'calculateCost'])->name('cost');
 });
+
+// ==========================
+// CUSTOMER
+// ==========================
+
+Route::get('/customer/order', function () {
+    return view('customer.order.order');
+})->name('customer.order');
