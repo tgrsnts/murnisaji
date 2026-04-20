@@ -95,12 +95,12 @@ Route::prefix('auth')->name('auth.')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
         Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-        
+
         // Register
         Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
         Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
     });
-    
+
     // Logout
     Route::middleware('auth')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -132,7 +132,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/about', function () {
-    return view('web.about.about'); 
+    return view('web.about.about');
 })->name('about');
 
 
@@ -193,6 +193,43 @@ Route::prefix('api/apicoid')->name('apicoid.')->group(function () {
 // CUSTOMER
 // ==========================
 
-Route::get('/customer/order', function () {
-    return view('customer.order.order');
-})->name('customer.order');
+
+Route::prefix('customer')->name('customer.')->group(function () {
+
+    Route::get('/order', function () {
+        return view('customer.order.order');
+    })->name('order');
+
+    Route::get('/order/details', function () {
+        return view('customer.order.details');
+    })->name('order.details');
+
+    Route::view('/review', 'customer.review.review')
+        ->name('review');
+
+    Route::view('/review/detail', 'customer.review.review-detail')
+        ->name('review.detail');
+
+    Route::get('/address', function () {
+        return view('customer.address.address');
+    })->name('address');
+
+    Route::get('/address/create', function () {
+        return view('customer.address.create');
+    })->name('address.create');
+
+    Route::get('/address/edit', function () {
+    return view('customer.address.edit');
+    })->name('customer.address.edit');
+
+    Route::get('/profile', function () {
+        return view('customer.profile.profile');
+    })->name('profile');
+
+    Route::get('/profile/edit', function () {
+        return view('customer.profile.edit');
+    })->name('profile.edit');
+
+});
+
+

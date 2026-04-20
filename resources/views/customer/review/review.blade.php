@@ -19,7 +19,7 @@
                     {{-- MY ORDER --}}
                     <a href="{{ route('customer.order') }}"
                         class="flex items-center gap-3 p-3 pl-4 rounded-lg font-semibold relative
-                {{ request()->routeIs('customer.order*') ? 'text-[#7A1F1F] bg-gray-50 shadow' : 'text-gray-500 hover:bg-gray-100' }}">
+            {{ request()->routeIs('customer.order*') ? 'text-[#7A1F1F] bg-gray-50 shadow' : 'text-gray-500 hover:bg-gray-100' }}">
 
                         {{-- GARIS MERAH --}}
                         @if(request()->routeIs('customer.order*'))
@@ -40,7 +40,7 @@
                     {{-- REVIEW --}}
                     <a href="{{ route('customer.review') }}"
                         class="flex items-center gap-3 p-3 pl-4 rounded-lg font-semibold relative
-                                    {{ request()->routeIs('customer.review*') ? 'text-[#7A1F1F] bg-gray-50 shadow' : 'text-gray-500 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('customer.review*') ? 'text-[#7A1F1F] bg-gray-50 shadow' : 'text-gray-500 hover:bg-gray-100' }}">
 
                         {{-- GARIS MERAH --}}
                         @if(request()->routeIs('customer.review*'))
@@ -61,7 +61,7 @@
                     {{-- ADDRESS --}}
                     <a href="{{ route('customer.address') }}"
                         class="flex items-center gap-3 p-3 rounded-lg font-semibold transition
-                                                                        {{ request()->routeIs('customer.address') ? 'bg-[#7A1F1F] text-white shadow-lg scale-[1.02]' : 'text-gray-500 hover:bg-gray-100' }}">
+                                                                    {{ request()->routeIs('customer.address') ? 'bg-[#7A1F1F] text-white shadow-lg scale-[1.02]' : 'text-gray-500 hover:bg-gray-100' }}">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-5 h-5">
@@ -75,7 +75,7 @@
                     {{-- PROFILE --}}
                     <a href="{{ route('customer.profile') }}"
                         class="flex items-center gap-3 p-3 rounded-lg font-semibold transition
-                                                                        {{ request()->routeIs('customer.profile') ? 'bg-[#7A1F1F] text-white shadow-lg scale-[1.02]' : 'text-gray-500 hover:bg-gray-100' }}">
+                                                                    {{ request()->routeIs('customer.profile') ? 'bg-[#7A1F1F] text-white shadow-lg scale-[1.02]' : 'text-gray-500 hover:bg-gray-100' }}">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-5 h-5">
@@ -89,7 +89,6 @@
                 </ul>
             </div>
 
-
             {{-- LOGOUT --}}
             <div class="mt-auto">
                 <a href="{{ route('home') }}"
@@ -97,6 +96,7 @@
                     Logout
                 </a>
             </div>
+
         </div>
 
 
@@ -196,18 +196,12 @@
                                     </div>
                                 </div>
 
-                                <div class="w-[80px] text-center text-sm border-l border-r border-gray-200">
-                                    {{ $order['qty'] }}
-                                </div>
 
-                                <div class="w-[120px] text-center font-semibold text-sm">
-                                    {{ $order['price'] }}
-                                </div>
 
                                 <div class="w-[150px] flex justify-end">
-                                    <a href="{{ route('customer.order.details') }}"
-                                        class="border border-[#7A1F1F] text-[#7A1F1F] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#7A1F1F] hover:text-white transition">
-                                        VIEW DETAILS
+                                    <a href="{{ route('customer.review.detail') }}" class="border border-[#7A1F1F] text-[#7A1F1F] px-4 py-2 rounded-lg text-sm font-semibold
+                                                       hover:bg-[#7A1F1F] hover:text-white transition">
+                                        Review
                                     </a>
                                 </div>
 
