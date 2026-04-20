@@ -217,11 +217,7 @@ Route::prefix('customer')->name('customer.')->group(function () {
     Route::get('/address/create', function () {
         return view('customer.address.create');
     })->name('address.create');
-
-    Route::get('/address/edit', function () {
-    return view('customer.address.edit');
-    })->name('customer.address.edit');
-
+    
     Route::get('/profile', function () {
         return view('customer.profile.profile');
     })->name('profile');
