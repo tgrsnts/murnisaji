@@ -55,4 +55,8 @@ return [
         'cost' => env('APICOID_COST_ENDPOINT', '/expedition/shipping-cost'),
     ],
 
+    'binderbyte' => [
+        'api_key' => env('BINDERBYTE_API_KEY'),
+    ],
+
 ];

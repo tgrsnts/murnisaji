@@ -169,6 +169,11 @@ Route::post('/checkout/store', [TransaksiController::class, 'store'])
 Route::get('/transaksi/{id}', [TransaksiController::class, 'show'])
     ->name('transaksi.show');
 
+use App\Http\Controllers\TrackingController;
+
+// Shipment tracking API
+Route::get('/tracking/{id}', [TrackingController::class, 'show'])->name('tracking.show');
+
 Route::post('/transaksi/{transaksi}/pay', [PaymentController::class, 'createSnap'])
     ->name('payment.createSnap');
 
@@ -217,7 +222,7 @@ Route::prefix('customer')->name('customer.')->group(function () {
     Route::get('/address/create', function () {
         return view('customer.address.create');
     })->name('address.create');
-    
+
     Route::get('/profile', function () {
         return view('customer.profile.profile');
     })->name('profile');
@@ -225,7 +230,4 @@ Route::prefix('customer')->name('customer.')->group(function () {
     Route::get('/profile/edit', function () {
         return view('customer.profile.edit');
     })->name('profile.edit');
-
 });
-
-

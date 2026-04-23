@@ -96,8 +96,8 @@ class TransaksiSeeder extends Seeder
             'catatan_kurir' => 'Titip satpam',
             'kurir' => 'jne',
             'layanan_kurir' => 'JNE Express',
-            'status' => 'PAID',
-            'resi' => 'JNE123456789',
+            'status' => 'SHIPPED',
+            'tracking_id' => '1',
         ], $tx1Items, 33000);
 
         // Transaksi 2: guest checkout (total akan cocok dengan PaymentSeeder 270000)
@@ -119,7 +119,7 @@ class TransaksiSeeder extends Seeder
             'kurir' => 'anteraja',
             'layanan_kurir' => 'AnterAja',
             'status' => 'PENDING',
-            'resi' => null,
+            'tracking_id' => null,
         ], $tx2Items, 38000);
 
         // Transaksi 3: status DONE untuk kebutuhan dashboard/rating demo
@@ -141,7 +141,7 @@ class TransaksiSeeder extends Seeder
             'kurir' => 'sicepat',
             'layanan_kurir' => 'SiCepat Express',
             'status' => 'DONE',
-            'resi' => 'SICEPAT1234567',
+            'tracking_id' => '3',
         ], $tx3Items, 15000);
     }
 }

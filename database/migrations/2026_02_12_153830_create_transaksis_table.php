@@ -42,12 +42,13 @@ return new class extends Migration
 
             // Status dan resi
             $table->string('status')->default('pending');
-            $table->string('resi')->nullable();
+            $table->unsignedBigInteger('tracking_id')->nullable();
 
             $table->timestamps();
 
             $table->foreign('id_user')->references('user_id')->on('users')->onDelete('set null');
             $table->foreign('id_alamat')->references('alamat_id')->on('alamats')->onDelete('set null');
+            // foreign key tracking_id akan ditambahkan di migration terpisah
         });
     }
 

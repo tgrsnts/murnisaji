@@ -51,4 +51,9 @@ class Transaksi extends Model
     {
         return $this->hasOne(Payment::class, 'id_transaksi', 'transaksi_id');
     }
+
+    public function trackingResi()
+    {
+        return $this->belongsTo(TrackingResi::class, 'tracking_id', 'tracking_id');
+    }
 }

@@ -56,7 +56,9 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-500 mb-1">No. Resi</p>
-                            <p class="font-semibold">{{ $transaksi->resi ?? '-' }}</p>
+                            <p class="font-semibold">
+                                {{ optional($transaksi->trackingResi)->no_resi ?? $transaksi->resi ?? '-' }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -143,12 +145,39 @@
                         </div>
                     @endif
 
-                    @if ($transaksi->status == 'SHIPPED' && $transaksi->resi)
+                    @if ($transaksi->status == 'SHIPPED' && $transaksi->trackingResi->no_resi)
                         <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                             <p class="text-sm text-blue-800 mb-2"><i class="fas fa-shipping-fast"></i> <strong>Pesanan Sedang Dikirim</strong></p>
-                            <p class="text-sm text-blue-700">Nomor Resi: <strong>{{ $transaksi->resi }}</strong></p>
-                            <p class="text-sm text-blue-700">Silakan lacak paket Anda melalui website kurir.</p>
+                            <p class="text-sm text-blue-700">Nomor Resi: <strong>{{ $transaksi->trackingResi->no_resi }}</strong></p>
+                            <button id="cek-resi-btn" type="button" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">Cek Status Pengiriman</button>
+                            <div id="tracking-result" class="mt-3 text-sm text-blue-900"></div>
                         </div>
+                        <script>
+                            document.getElementById('cek-resi-btn').addEventListener('click', function() {
+                                const resultDiv = document.getElementById('tracking-result');
+                                resultDiv.innerHTML = 'Memuat status pengiriman...';
+                                fetch('/tracking/{{ $transaksi->tracking_id }}')
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        if (data.status_terakhir) {
+                                            let html = `<b>Status Terakhir:</b> ${data.status_terakhir}<br>`;
+                                            if (data.histories && data.histories.length > 0) {
+                                                html += '<b>Riwayat:</b><ul style="margin-left:1em">';
+                                                data.histories.slice(0, 5).forEach(h => {
+                                                    html += `<li>${h.waktu ? h.waktu.substring(0, 16).replace('T', ' ') : ''} - <b>${h.status}</b> ${h.deskripsi ? ('- ' + h.deskripsi) : ''} ${h.lokasi ? ('@' + h.lokasi) : ''}</li>`;
+                                                });
+                                                html += '</ul>';
+                                            }
+                                            resultDiv.innerHTML = html;
+                                        } else {
+                                            resultDiv.innerHTML = 'Status pengiriman tidak tersedia.';
+                                        }
+                                    })
+                                    .catch(() => {
+                                        resultDiv.innerHTML = 'Gagal mengambil status pengiriman.';
+                                    });
+                            });
+                        </script>
                     @endif
 
                     @if ($transaksi->status == 'DONE')
