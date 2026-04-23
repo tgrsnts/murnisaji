@@ -33,26 +33,49 @@
             <div class="bg-white rounded-lg shadow-lg p-6">
                 <h3 class="text-lg font-bold text-red-800 mb-4">Informasi Pelanggan</h3>
                 <div class="space-y-2">
-                    <div>
-                        <span class="text-gray-600 text-sm">Nama:</span>
-                        <p class="font-semibold">{{ $transaksi->alamat->user->name ?? 'N/A' }}</p>
-                    </div>
-                    <div>
-                        <span class="text-gray-600 text-sm">Email:</span>
-                        <p class="font-semibold">{{ $transaksi->alamat->user->email ?? 'N/A' }}</p>
-                    </div>
-                    <div>
-                        <span class="text-gray-600 text-sm">Alamat Pengiriman:</span>
-                        <p class="font-semibold">{{ $transaksi->alamat->alamat_lengkap ?? 'N/A' }}</p>
-                        <p class="text-sm text-gray-600">
-                            {{ $transaksi->alamat->kota ?? '' }}, {{ $transaksi->alamat->provinsi ?? '' }}
-                            {{ $transaksi->alamat->kode_pos ?? '' }}
-                        </p>
-                    </div>
-                    <div>
-                        <span class="text-gray-600 text-sm">No. Telepon:</span>
-                        <p class="font-semibold">{{ $transaksi->alamat->no_telp ?? 'N/A' }}</p>
-                    </div>
+                    @if ($transaksi->id_user === null)
+                        <div>
+                            <span class="text-gray-600 text-sm">Nama:</span>
+                            <p class="font-semibold">{{ $transaksi->nama_penerima ?? 'N/A' }}</p>
+                        </div>
+                        <div>
+                            <span class="text-gray-600 text-sm">Email:</span>
+                            <p class="font-semibold">{{ $transaksi->email ?? 'N/A' }}</p>
+                        </div>
+                        <div>
+                            <span class="text-gray-600 text-sm">Alamat Pengiriman:</span>
+                            <p class="font-semibold">{{ $transaksi->detail ?? 'N/A' }}</p>
+                            <p class="text-sm text-gray-600">
+                                {{ $transaksi->kabupaten ?? '' }}, {{ $transaksi->provinsi ?? '' }}
+                                {{ $transaksi->kodepos ?? '' }}
+                            </p>
+                        </div>
+                        <div>
+                            <span class="text-gray-600 text-sm">No. Telepon:</span>
+                            <p class="font-semibold">{{ $transaksi->no_telepon ?? 'N/A' }}</p>
+                        </div>
+                    @else
+                        <div>
+                            <span class="text-gray-600 text-sm">Nama:</span>
+                            <p class="font-semibold">{{ $transaksi->alamat->user->name ?? 'N/A' }}</p>
+                        </div>
+                        <div>
+                            <span class="text-gray-600 text-sm">Email:</span>
+                            <p class="font-semibold">{{ $transaksi->alamat->user->email ?? 'N/A' }}</p>
+                        </div>
+                        <div>
+                            <span class="text-gray-600 text-sm">Alamat Pengiriman:</span>
+                            <p class="font-semibold">{{ $transaksi->alamat->alamat_lengkap ?? 'N/A' }}</p>
+                            <p class="text-sm text-gray-600">
+                                {{ $transaksi->alamat->kota ?? '' }}, {{ $transaksi->alamat->provinsi ?? '' }}
+                                {{ $transaksi->alamat->kode_pos ?? '' }}
+                            </p>
+                        </div>
+                        <div>
+                            <span class="text-gray-600 text-sm">No. Telepon:</span>
+                            <p class="font-semibold">{{ $transaksi->alamat->no_telp ?? 'N/A' }}</p>
+                        </div>
+                    @endif
                 </div>
             </div>
 
