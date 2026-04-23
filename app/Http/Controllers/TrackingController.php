@@ -40,9 +40,20 @@ class TrackingController extends Controller
     protected function updateTrackingData(TrackingResi $tracking)
     {
         $apiKey = config('services.binderbyte.api_key');
+        $courirlist = [
+            'JT' => 'jnt',
+            'anteraja' => 'anteraja',
+            'JNE' => 'jne',
+            'JNECargo' => 'jne_cargo',
+            'SiCepat' => 'sicepat',
+            'SiCepatCargo' => 'sicepat_cargo',
+            'Ninja' => 'ninja'
+        ];
+
+        $courir = $courirlist[$tracking->kurir] ?? null;
         $response = Http::get('https://api.binderbyte.com/v1/track', [
             'api_key' => $apiKey,
-            'courier' => $tracking->kurir,
+            'courier' => $courir,
             'awb' => $tracking->no_resi,
         ]);
         $json = $response->json();
