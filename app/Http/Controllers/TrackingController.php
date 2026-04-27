@@ -40,13 +40,15 @@ class TrackingController extends Controller
     protected function updateTrackingData(TrackingResi $tracking)
     {
         $apiKey = config('services.binderbyte.api_key');
+
+        // nama kurir dari database dimapping berdasarkan required paramater API binderbyte (Cek Resi Otomatis)
         $courirlist = [
             'JT' => 'jnt',
             'anteraja' => 'anteraja',
             'JNE' => 'jne',
-            'JNECargo' => 'jne_cargo',
+            'JNECargo' => 'jne',
             'SiCepat' => 'sicepat',
-            'SiCepatCargo' => 'sicepat_cargo',
+            'SiCepatCargo' => 'sicepat',
             'Ninja' => 'ninja'
         ];
 
