@@ -5,7 +5,7 @@
                         <span class="text-amber-800 font-bold text-xs">MS</span>
                     </div>
                     <h2 class="text-[#8B0000] text-2xl font-bold tracking-tight italic">Murnisaji</h2> --}}
-            <img class="h-8" src="{{ asset('images/Murnisaji Logo Red 2.png') }}" alt="">
+            <img class="h-8" src="{{ asset('images/logo/Murnisaji Logo Red 2.png') }}" alt="">
         </a>
     </div>
 
