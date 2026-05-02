@@ -117,10 +117,10 @@ Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(functi
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
     Route::get('/reviews/create/{id}', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-    Route::get('/addresses', [UserDashboardController::class, 'addresses'])->name('addresses');
-    Route::post('/addresses', [UserDashboardController::class, 'storeAddress'])->name('addresses.store');
-    Route::put('/addresses/{alamat}', [UserDashboardController::class, 'updateAddress'])->name('addresses.update');
-    Route::delete('/addresses/{alamat}', [UserDashboardController::class, 'destroyAddress'])->name('addresses.destroy');
+    Route::get('/addresses', [AlamatController::class, 'addresses'])->name('addresses');
+    Route::post('/addresses', [AlamatController::class, 'storeAddress'])->name('addresses.store');
+    Route::put('/addresses/{alamat}', [AlamatController::class, 'updateAddress'])->name('addresses.update');
+    Route::delete('/addresses/{alamat}', [AlamatController::class, 'destroyAddress'])->name('addresses.destroy');
     Route::get('/profile', [UserDashboardController::class, 'profile'])->name('profile');
     Route::put('/profile', [UserDashboardController::class, 'updateProfile'])->name('profile.update');
     Route::get('/transaction/{id}', [UserDashboardController::class, 'showTransaction'])->name('transaction');
