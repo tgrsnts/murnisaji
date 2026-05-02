@@ -10,13 +10,13 @@
             <i class="fas fa-shopping-cart mr-4"></i> Transaksi
         </a>
         <a href="{{ route('dashboard.reviews') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('dashboard.reviews') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-[#D4AF5A] hover:text-[#8B0000]' }} transition">
-            <i class="fas fa-comment-alt mr-4"></i> Review
+            <i class="fas fa-comment-alt mr-4"></i> Ulasan
         </a>
         <a href="{{ route('dashboard.addresses') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('dashboard.addresses') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-[#D4AF5A] hover:text-[#8B0000]' }} transition">
             <i class="fas fa-map-marker-alt mr-4"></i> Alamat
         </a>
         <a href="{{ route('dashboard.profile') }}" class="flex items-center px-6 py-3 {{ request()->routeIs('dashboard.profile') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-[#D4AF5A] hover:text-[#8B0000]' }} transition">
-            <i class="fas fa-user mr-4"></i> Profile
+            <i class="fas fa-user mr-4"></i> Profil
         </a>
     </nav>
 

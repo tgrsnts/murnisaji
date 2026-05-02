@@ -1,11 +1,11 @@
 @extends('web.dashboard.layout.main')
 
-@php($title = 'Review')
+@php($title = 'Ulasan')
 
 @section('content')
     <div class="space-y-6">
         <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
-            <h1 class="text-3xl font-bold text-gray-900">Review Saya</h1>
+            <h1 class="text-3xl font-bold text-gray-900">Ulasan Saya</h1>
             <p class="text-gray-600 mt-1">Daftar ulasan dari transaksi Anda</p>
         </div>
 

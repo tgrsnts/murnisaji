@@ -11,22 +11,22 @@
 
     <nav class="mt-4 flex-1 px-4 space-y-2">      
         <a href="{{ route('admin.dashboard') }}" class="flex items-center px-6 py-3 {{ request()->is('admin') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-[#D4AF5A] hover:text-[#8B0000]' }} transition">
-            <i class="fas fa-home mr-4"></i> Dashboard
+            <i class="fas fa-home mr-4"></i> Ringkasan
         </a>
         <a href="{{ route('admin.produk.index') }}" class="flex items-center px-6 py-3 {{ request()->is('admin/produk*') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-[#D4AF5A] hover:text-[#8B0000]' }} transition">
-            <i class="fas fa-shopping-bag mr-4"></i> Product
+            <i class="fas fa-shopping-bag mr-4"></i> Produk
         </a>
         <a href="{{ route('admin.transaksi.index') }}" class="flex items-center px-6 py-3 {{ request()->is('admin/transaksi*') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-[#D4AF5A] hover:text-[#8B0000]' }} transition">
-            <i class="fas fa-shopping-cart mr-4"></i> Order
+            <i class="fas fa-shopping-cart mr-4"></i> Pesanan
         </a>
         <a href="{{ route('admin.review.index') }}" class="flex items-center px-6 py-3 {{ request()->is('admin/review*') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-[#D4AF5A] hover:text-[#8B0000]' }} transition">
-            <i class="fas fa-comment-alt mr-4"></i> Review
+            <i class="fas fa-comment-alt mr-4"></i> Ulasan
         </a>
         <a href="{{ route('admin.users.index') }}" class="flex items-center px-6 py-3 {{ request()->is('admin/users*') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-[#D4AF5A] hover:text-[#8B0000]' }} transition">
-            <i class="fas fa-users mr-4"></i> Customer
+            <i class="fas fa-users mr-4"></i> Pelanggan
         </a>
         <a href="{{ route('admin.profile.index') }}" class="flex items-center px-6 py-3 {{ request()->is('admin/profile*') ? 'text-[#8B0000] font-bold border-l-8 border-[#8B0000] rounded-lg' : 'text-[#D4AF5A] hover:text-[#8B0000]' }} transition">
-            <i class="fas fa-user mr-4"></i> Profile
+            <i class="fas fa-user mr-4"></i> Profil
         </a>
     </nav>
 
