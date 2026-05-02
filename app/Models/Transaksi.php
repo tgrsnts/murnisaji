@@ -32,6 +32,11 @@ class Transaksi extends Model
 
     protected $primaryKey = 'transaksi_id';
 
+    public function firstItem()
+{
+    return $this->hasOne(TransaksiItem::class, 'id_transaksi')->with('produk');
+}
+
     public function items()
     {
         return $this->hasMany(TransaksiItem::class, 'id_transaksi', 'transaksi_id');

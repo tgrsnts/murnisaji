@@ -16,9 +16,10 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+
         // Get user transactions
         $transactions = Transaksi::where('id_user', $user->user_id)
+            ->with(['items.produk', 'payment'])
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
@@ -47,7 +48,7 @@ class DashboardController extends Controller
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
-        
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->user_id . ',user_id',
