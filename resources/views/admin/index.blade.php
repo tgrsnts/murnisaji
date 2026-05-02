@@ -105,7 +105,7 @@
                                     <span class="w-fit bg-purple-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>
                                 @elseif ($order->status == 'SHIPPED')
                                     <span class="w-fit bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>
-                                @elseif ($order->status == 'DONE')
+                                @elseif ($order->status == 'DELIVERED')
                                     <span class="w-fit bg-green-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>
                                 @else
                                     <span class="w-fit bg-red-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>

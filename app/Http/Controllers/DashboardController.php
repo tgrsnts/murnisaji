@@ -27,7 +27,7 @@ class DashboardController extends Controller
         $totalTransactions = Transaksi::where('id_user', $user->user_id)->count();
         $totalSpent = Transaksi::where('id_user', $user->user_id)->sum('total_bayar');
         $pendingTransactions = Transaksi::where('id_user', $user->user_id)
-            ->whereIn('status', ['PENDING', 'PROCESS'])
+            ->whereIn('status', ['PENDING'])
             ->count();
 
         return view('web.dashboard.index', compact('user', 'transactions', 'totalTransactions', 'totalSpent', 'pendingTransactions'));
