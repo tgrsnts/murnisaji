@@ -18,7 +18,7 @@ class AlamatSeeder extends Seeder
 
         Alamat::create([
             'id_user' => $user->user_id,
-            'nama_penerima' => 'User Satu',
+            'nama_penerima' => 'Mochamad Tegar Santoso',
             'no_telepon' => '081234567891',
             'label_alamat' => 'Rumah',
             'detail' => 'Kp Kelapa No. 67',
