@@ -24,34 +24,154 @@
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
             <div class="xl:col-span-2 space-y-6">
                 <div class="bg-white rounded-3xl shadow-sm border border-gray-200 p-6">
-                    <div class="flex justify-between items-start gap-4">
+                    <div class="flex flex-col items-start gap-2">
                         <div>
                             <p class="text-sm text-gray-600 mb-1">Status Transaksi</p>
-                            <h2 class="text-2xl font-bold text-gray-900">{{ $transaction->status }}</h2>
+                            {{-- <h2 class="text-2xl font-bold text-gray-900">{{ $transaction->status }}</h2> --}}
                         </div>
-                        @if ($transaction->status === 'PENDING')
-                            <form method="POST" action="{{ route('payment.createSnap', $transaction->transaksi_id) }}">
-                                @csrf
-                                <button type="submit"
-                                    class="bg-[#7A1F1F] text-white px-4 py-2 rounded-lg hover:bg-[#5A0F0F] transition text-sm font-medium">
-                                    Lanjutkan Pembayaran
-                                </button>
-                            </form>
-                        @elseif ($transaction->status === 'SHIPPED')
-                            <form method="POST"
-                                action="{{ route('dashboard.transaction.receive', $transaction->transaksi_id) }}">
-                                @csrf
-                                @method('PATCH')
-                                <button type="submit"
-                                    class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm font-medium">
-                                    Pesanan Diterima
-                                </button>
-                            </form>
-                        @elseif ($transaction->status === 'DONE')
-                            <a href="{{ route('dashboard.reviews') }}"
-                                class="inline-flex items-center bg-[#7A1F1F] text-white px-4 py-2 rounded-lg hover:bg-[#5A0F0F] transition text-sm font-medium">
-                                Ulasan
-                            </a>
+
+                        @if ($transaction->status == 'PENDING')
+                            <div class="w-full p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                <p class="text-sm text-yellow-800 mb-2"><i class="fas fa-info-circle"></i> <strong>Menunggu
+                                        Pembayaran</strong></p>
+                                <p class="text-sm text-yellow-700">Silakan lakukan pembayaran untuk melanjutkan pesanan
+                                    Anda.</p>
+
+                                @if ($transaction->payment && $transaction->payment->snap_token)
+                                    <button type="button" id="pay-button"
+                                        class="mt-4 w-full bg-[#7A1F1F] text-white py-2 rounded-lg font-semibold hover:bg-[#5A0F0F] transition cursor-pointer">
+                                        Bayar Dengan Midtrans
+                                    </button>
+                                @else
+                                    <form action="{{ route('payment.createSnap', $transaction->transaksi_id) }}"
+                                        method="POST" class="mt-4">
+                                        @csrf
+                                        <button type="submit"
+                                            class="w-full bg-[#7A1F1F] text-white py-2 rounded-lg font-semibold hover:bg-[#5A0F0F] transition cursor-pointer">
+                                            Buat Pembayaran Midtrans
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
+                        @elseif ($transaction->status == 'PAID')
+                            <div class="w-full p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                <p class="text-sm text-blue-800 mb-2"><i class="fas fa-check-circle"></i> <strong>Pesanan
+                                        telah terbayar</strong></p>
+                                <p class="text-sm text-blue-700">Pesanan Anda sedang diproses.</p>
+                            </div>
+                        @elseif($transaction->status == 'PACKED')
+                            <div class="w-full p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                <p class="text-sm text-blue-800 mb-2"><i class="fas fa-box"></i> <strong>Pesanan
+                                        Dikemas</strong></p>
+                                <p class="text-sm text-blue-700">Pesanan Anda sedang dikemas dan akan segera dikirim.</p>
+                            </div>
+                        @elseif($transaction->status == 'SHIPPED' && $transaction->trackingResi->no_resi)
+                            <div class="w-full p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                <p class="text-sm text-blue-800 mb-2"><i class="fas fa-shipping-fast"></i> <strong>Pesanan
+                                        Sedang Dikirim</strong></p>
+                                <p class="text-sm text-blue-700">Nomor Resi:
+                                    <strong>{{ $transaction->trackingResi->no_resi }}</strong>
+                                </p>
+                                <div class="flex justify-between mt-2">
+                                    <button id="cek-resi-btn" type="button"
+                                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">Cek
+                                        Status Pengiriman</button>
+                                    <div id="tracking-result" class="mt-3 text-sm text-blue-900"></div>
+                                    <form method="POST"
+                                        action="{{ route('dashboard.transaction.receive', $transaction->transaksi_id) }}">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit"
+                                            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm font-medium">
+                                            Pesanan Diterima
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <script>
+                                document.getElementById('cek-resi-btn').addEventListener('click', function() {
+                                    const resultDiv = document.getElementById('tracking-result');
+                                    resultDiv.innerHTML = 'Memuat status pengiriman...';
+                                    fetch('/tracking/{{ $transaction->tracking_id }}')
+                                        .then(res => res.json())
+                                        .then(data => {
+                                            if (data.status_terakhir) {
+                                                let html = `<b>Status Terakhir:</b> ${data.status_terakhir}<br>`;
+                                                if (data.histories && data.histories.length > 0) {
+                                                    html += '<b>Riwayat:</b><ul style="margin-left:1em">';
+                                                    data.histories.slice(0, 5).forEach(h => {
+                                                        html +=
+                                                            `<li>${h.waktu ? h.waktu.substring(0, 16).replace('T', ' ') : ''} - <b>${h.status}</b> ${h.deskripsi ? ('- ' + h.deskripsi) : ''} ${h.lokasi ? ('@' + h.lokasi) : ''}</li>`;
+                                                    });
+                                                    html += '</ul>';
+                                                }
+                                                resultDiv.innerHTML = html;
+                                            } else {
+                                                resultDiv.innerHTML = 'Status pengiriman tidak tersedia.';
+                                            }
+                                        })
+                                        .catch(() => {
+                                            resultDiv.innerHTML = 'Gagal mengambil status pengiriman.';
+                                        });
+                                });
+                            </script>
+                        @elseif ($transaction->status == 'DELIVERED')
+                            <div class="w-full p-4 bg-green-50 border border-green-200 rounded-lg">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm text-green-800 mb-2"><i class="fas fa-check-circle"></i>
+                                            <strong>Pesanan
+                                                Selesai</strong>
+                                        </p>
+                                        <p class="text-sm text-green-700">Terima kasih telah berbelanja di Murnisaji!</p>
+                                    </div>
+
+                                    <a href="{{ route('dashboard.reviews') }}"
+                                        class="inline-flex items-center bg-[#7A1F1F] text-white px-4 py-2 h-fit rounded-lg hover:bg-[#5A0F0F] transition text-sm font-medium">
+                                        Ulasan
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($transaction->payment && $transaction->payment->snap_token)
+                            <script
+                                src="{{ config('services.midtrans.is_production') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}"
+                                data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+                            <script>
+                                const snapToken = @json($transaction->payment->snap_token);
+                                const shouldOpenSnap = @json(session('open_snap', false));
+                                const payButton = document.getElementById('pay-button');
+
+                                function openSnapPopup() {
+                                    if (!window.snap || !snapToken) {
+                                        return;
+                                    }
+
+                                    window.snap.pay(snapToken, {
+                                        onSuccess: function() {
+                                            window.location.reload();
+                                        },
+                                        onPending: function() {
+                                            window.location.reload();
+                                        },
+                                        onError: function() {
+                                            alert('Pembayaran gagal diproses, silakan coba lagi.');
+                                        },
+                                        onClose: function() {
+                                            // User closed popup without finishing payment.
+                                        }
+                                    });
+                                }
+
+                                if (payButton) {
+                                    payButton.addEventListener('click', openSnapPopup);
+                                }
+
+                                if (shouldOpenSnap) {
+                                    openSnapPopup();
+                                }
+                            </script>
                         @endif
                     </div>
                 </div>
