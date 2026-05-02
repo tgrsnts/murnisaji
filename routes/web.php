@@ -85,6 +85,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ApiCoIdController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController as UserDashboardController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 // ==========================
@@ -113,7 +114,9 @@ Route::prefix('auth')->name('auth.')->group(function () {
 Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [UserDashboardController::class, 'index'])->name('index');
     Route::get('/transactions', [UserDashboardController::class, 'index'])->name('transactions');
-    Route::get('/reviews', [UserDashboardController::class, 'reviews'])->name('reviews');
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
+    Route::get('/reviews/create/{id}', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
     Route::get('/addresses', [UserDashboardController::class, 'addresses'])->name('addresses');
     Route::post('/addresses', [UserDashboardController::class, 'storeAddress'])->name('addresses.store');
     Route::put('/addresses/{alamat}', [UserDashboardController::class, 'updateAddress'])->name('addresses.update');

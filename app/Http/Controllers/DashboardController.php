@@ -111,20 +111,6 @@ class DashboardController extends Controller
         return view('web.dashboard.alamat.index', compact('addresses'));
     }
 
-    /**
-     * Show user reviews history
-     */
-    public function reviews()
-    {
-        $reviews = Rating::whereHas('transaksiItem.transaksi', function ($query) {
-            $query->where('id_user', Auth::user()->user_id);
-        })
-            ->with(['transaksiItem.produk', 'transaksiItem.transaksi'])
-            ->latest()
-            ->get();
-
-        return view('web.dashboard.review.index', compact('reviews'));
-    }
 
     /**
      * Store a new address
