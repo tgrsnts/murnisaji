@@ -122,7 +122,7 @@ class TransaksiSeeder extends Seeder
             'tracking_id' => null,
         ], $tx2Items, 38000);
 
-        // Transaksi 3: status DONE untuk kebutuhan dashboard/rating demo
+        // Transaksi 3: status DELIVERED untuk kebutuhan dashboard/rating demo
         $insertTransaksi([
             'id_user' => $user2?->user_id,
             'id_alamat' => null,
@@ -140,7 +140,7 @@ class TransaksiSeeder extends Seeder
             'catatan_kurir' => 'Hubungi sebelum kirim',
             'kurir' => 'sicepat',
             'layanan_kurir' => 'SiCepat Express',
-            'status' => 'DONE',
+            'status' => 'DELIVERED',
             'tracking_id' => '3',
         ], $tx3Items, 15000);
     }

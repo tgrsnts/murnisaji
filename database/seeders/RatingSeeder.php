@@ -44,7 +44,7 @@ class RatingSeeder extends Seeder
 
         // Tambahan rating untuk produk lain jika ada lebih banyak transaksi selesai
         $allItems = TransaksiItem::whereHas('transaksi', function ($query) {
-            $query->where('status', 'DONE');
+            $query->where('status', 'DELIVERED');
         })->where('israted', false)->take(3)->get();
 
         if ($allItems->count() > 0) {

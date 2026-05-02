@@ -41,7 +41,7 @@
                                     'PAID' => 'bg-orange-100 text-orange-800',
                                     'PACKED' => 'bg-purple-100 text-purple-800',
                                     'SHIPPED' => 'bg-blue-100 text-blue-800',
-                                    'DONE' => 'bg-green-100 text-green-800',
+                                    'DELIVERED' => 'bg-green-100 text-green-800',
                                     'CANCEL' => 'bg-red-100 text-red-800',
                                 ];
                                 $statusColor = $statusColors[$transaksi->status] ?? 'bg-gray-100 text-gray-800';
@@ -180,7 +180,7 @@
                         </script>
                     @endif
 
-                    @if ($transaksi->status == 'DONE')
+                    @if ($transaksi->status == 'DELIVERED')
                         <div class="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                             <p class="text-sm text-green-800 mb-2"><i class="fas fa-check-circle"></i> <strong>Pesanan Selesai</strong></p>
                             <p class="text-sm text-green-700">Terima kasih telah berbelanja di Murnisaji!</p>

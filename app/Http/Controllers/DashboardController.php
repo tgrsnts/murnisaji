@@ -93,7 +93,7 @@ class DashboardController extends Controller
             return back()->with('error', 'Pesanan tidak bisa dikonfirmasi saat ini.');
         }
 
-        $transaction->status = 'DONE';
+        $transaction->status = 'DELIVERED';
         $transaction->save();
 
         return back()->with('success', 'Pesanan berhasil dikonfirmasi diterima.');

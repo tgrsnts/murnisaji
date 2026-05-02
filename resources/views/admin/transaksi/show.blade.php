@@ -100,7 +100,7 @@
                                     </option>
                                     <option value="SHIPPED" {{ $transaksi->status == 'SHIPPED' ? 'selected' : '' }}>
                                         SHIPPED</option>
-                                    <option value="DONE" {{ $transaksi->status == 'DONE' ? 'selected' : '' }}>DONE
+                                    <option value="DELIVERED" {{ $transaksi->status == 'DELIVERED' ? 'selected' : '' }}>DELIVERED
                                     </option>
                                     <option value="CANCEL" {{ $transaksi->status == 'CANCEL' ? 'selected' : '' }}>CANCEL
                                     </option>

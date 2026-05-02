@@ -17,8 +17,8 @@ class DashboardController extends Controller
         // Total Orders
         $totalOrders = Transaksi::count();
 
-        // Total Delivered (DONE status)
-        $totalDelivered = Transaksi::where('status', 'DONE')->count();
+        // Total Delivered (DELIVERED status)
+        $totalDelivered = Transaksi::where('status', 'DELIVERED')->count();
 
         // Total Customers (users with role 0)
         $totalCustomers = User::where('role', 0)->count();
@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $statusPaid = Transaksi::where('status', 'PAID')->count();
         $statusPacked = Transaksi::where('status', 'PACKED')->count();
         $statusShipped = Transaksi::where('status', 'SHIPPED')->count();
-        $statusDone = Transaksi::where('status', 'DONE')->count();
+        $statusDelivered = Transaksi::where('status', 'DELIVERED')->count();
         $statusCancel = Transaksi::where('status', 'CANCEL')->count();
 
         // Recent Orders (5 latest)

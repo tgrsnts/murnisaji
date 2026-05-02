@@ -42,7 +42,7 @@ class TransaksiController extends Controller
     public function updateStatus(Request $request, Transaksi $transaksi)
     {
         $validated = $request->validate([
-            'status' => 'required|in:PENDING,PAID,PACKED,SHIPPED,DONE,CANCEL'
+            'status' => 'required|in:PENDING,PAID,PACKED,SHIPPED,DELIVERED,CANCEL'
         ]);
 
         $transaksi->update(['status' => $validated['status']]);
