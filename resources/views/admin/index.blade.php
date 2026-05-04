@@ -4,7 +4,7 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div class="bg-white p-5 rounded-3xl shadow-sm flex justify-between items-center">
             <div>
-                <p class="text-sm text-[#D4AF5A] font-bold uppercase tracking-tighter">Income Money</p>
+                <p class="text-sm text-[#D4AF5A] font-bold uppercase tracking-tighter">PENDAPATAN</p>
                 <h2 class="text-xl font-black text-gray-800">Rp {{ number_format($totalIncome, 0, ',', '.') }}</h2>
             </div>
             <div class="bg-[#8B0000] p-3 rounded-xl text-white shadow-md">
@@ -13,7 +13,7 @@
         </div>
         <div class="bg-white p-5 rounded-3xl shadow-sm flex justify-between items-center">
             <div>
-                <p class="text-sm text-[#D4AF5A] font-bold uppercase tracking-tighter">Total Order</p>
+                <p class="text-sm text-[#D4AF5A] font-bold uppercase tracking-tighter">Total PESANAN</p>
                 <h2 class="text-xl font-black text-gray-800">{{ $totalOrders }}</h2>
             </div>
             <div class="bg-[#8B0000] p-3 rounded-xl text-white shadow-md">
@@ -22,7 +22,7 @@
         </div>
         <div class="bg-white p-5 rounded-3xl shadow-sm flex justify-between items-center">
             <div>
-                <p class="text-sm text-[#D4AF5A] font-bold uppercase tracking-tighter">Total Delivered</p>
+                <p class="text-sm text-[#D4AF5A] font-bold uppercase tracking-tighter">TOTAL TERKIRIM</p>
                 <h2 class="text-xl font-black text-gray-800">{{ $totalDelivered }}</h2>
             </div>
             <div class="bg-[#8B0000] p-3 rounded-xl text-white shadow-md">
@@ -31,7 +31,7 @@
         </div>
         <div class="bg-white p-5 rounded-3xl shadow-sm flex justify-between items-center">
             <div>
-                <p class="text-sm text-[#D4AF5A] font-bold uppercase tracking-tighter">Total Customer</p>
+                <p class="text-sm text-[#D4AF5A] font-bold uppercase tracking-tighter">TOTAL PELANGGAN</p>
                 <h2 class="text-xl font-black text-gray-800">{{ $totalCustomers }}</h2>
             </div>
             <div class="bg-[#8B0000] p-3 rounded-xl text-white shadow-md">
@@ -42,20 +42,20 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm">
-            <p class="text-sm text-[#D4AF5A] font-bold uppercase">Orders</p>
-            <h3 class="text-lg font-bold mb-4">Order Summary</h3>
+            <p class="text-sm text-[#D4AF5A] font-bold uppercase">PESANAN</p>
+            <h3 class="text-lg font-bold mb-4">RINGKASAN PESANAN</h3>
 
             <div class="grid grid-cols-3 gap-4 mb-6">
                 <div class="border border-gray-100 rounded-2xl p-3 text-center bg-gray-50/50">
-                    <p class="text-sm text-[#D4AF5A] font-bold">TOTAL ORDER</p>
+                    <p class="text-sm text-[#D4AF5A] font-bold">TOTAL PESANAN</p>
                     <p class="text-xl font-black">{{ $totalOrders }}</p>
                 </div>
                 <div class="border border-gray-100 rounded-2xl p-3 text-center bg-gray-50/50">
-                    <p class="text-sm text-blue-500 font-bold">ON DELIVERY</p>
+                    <p class="text-sm text-blue-500 font-bold">DALAM PENGIRIMAN</p>
                     <p class="text-xl font-black">{{ $statusShipped }}</p>
                 </div>
                 <div class="border border-gray-100 rounded-2xl p-3 text-center bg-gray-50/50">
-                    <p class="text-sm text-green-500 font-bold">DELIVERED</p>
+                    <p class="text-sm text-green-500 font-bold">TERKIRIM</p>
                     <p class="text-xl font-black">{{ $statusDone }}</p>
                 </div>
             </div>
@@ -65,8 +65,8 @@
         </div>
 
         <div class="bg-white p-6 rounded-3xl shadow-sm">
-            <p class="text-sm text-[#D4AF5A] font-bold uppercase">Performance</p>
-            <h3 class="text-lg font-bold mb-4 text-center">Total orders</h3>
+            <p class="text-sm text-[#D4AF5A] font-bold uppercase">PERFORMA</p>
+            <h3 class="text-lg font-bold mb-4 text-center">TOTAL PESANAN</h3>
             <div class="h-60">
                 <canvas id="barChart"></canvas>
             </div>
@@ -75,18 +75,18 @@
 
     <div class="bg-white rounded-3xl shadow-sm overflow-hidden mb-10">
         <div class="p-6 flex justify-between items-center">
-            <h3 class="text-lg font-bold">Recent Order</h3>
-            <a href="{{ route('admin.transaksi.index') }}" class="bg-[#8B0000] text-white px-5 py-1.5 rounded-xl text-xs font-bold uppercase">See All</a>
+            <h3 class="text-lg font-bold">Pesanan Terkini</h3>
+            <a href="{{ route('admin.transaksi.index') }}" class="bg-[#8B0000] text-white px-5 py-1.5 rounded-xl text-xs font-bold uppercase">Lihat Semua</a>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left">
                 <thead class="bg-[#8B0000] text-white text-sm uppercase">
                     <tr>
                         <th class="px-6 py-4">Order ID</th>
-                        <th class="px-6 py-4">Date</th>
-                        <th class="px-6 py-4">Customer Name</th>
-                        <th class="px-6 py-4">Amount</th>
-                        <th class="px-6 py-4">Order Status</th>
+                        <th class="px-6 py-4">Tanggal</th>
+                        <th class="px-6 py-4">Nama Pelanggan</th>
+                        <th class="px-6 py-4">Jumlah</th>
+                        <th class="px-6 py-4">Status</th>
                     </tr>
                 </thead>
                 <tbody class="text-sm divide-y divide-gray-50">
@@ -98,15 +98,15 @@
                             <td class="px-6 py-4 font-bold">Rp {{ number_format($order->total_bayar, 0, ',', '.') }}</td>
                             <td class="px-6 py-4">
                                 @if ($order->status == 'PENDING')
-                                    <span class="w-fit bg-yellow-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>
+                                    <span class="w-fit bg-yellow-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Belum Bayar</span>
                                 @elseif ($order->status == 'PAID')
-                                    <span class="w-fit bg-orange-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>
+                                    <span class="w-fit bg-orange-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sudah Bayar</span>
                                 @elseif ($order->status == 'PACKED')
-                                    <span class="w-fit bg-purple-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>
+                                    <span class="w-fit bg-purple-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sudah Dikemas</span>
                                 @elseif ($order->status == 'SHIPPED')
-                                    <span class="w-fit bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>
+                                    <span class="w-fit bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sedang Dikirim</span>
                                 @elseif ($order->status == 'DELIVERED')
-                                    <span class="w-fit bg-green-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>
+                                    <span class="w-fit bg-green-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sudah Dikirim</span>
                                 @else
                                     <span class="w-fit bg-red-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>
                                 @endif
