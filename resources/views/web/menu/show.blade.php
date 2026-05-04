@@ -89,12 +89,12 @@
                         <div>
                             <label class="block text-gray-700 font-medium mb-2">Jumlah</label>
                             <div class="flex items-center gap-3">
-                                <button type="button" onclick="decreaseQty()" class="w-10 h-10 border border-[#D4AF5A] rounded-lg hover:bg-gray-100">
+                                <button type="button" onclick="decreaseQty()" class="w-10 h-10 border border-[#D4AF5A] rounded-lg hover:bg-gray-100 hover:cursor-pointer">
                                     <i class="fas fa-minus text-gray-600"></i>
                                 </button>
                                 <input type="number" name="qty" id="qty" value="1" min="1" max="{{ $produk->stok }}"
                                     class="w-20 text-center border border-[#D4AF5A] rounded-lg py-2 font-semibold">
-                                <button type="button" onclick="increaseQty()" class="w-10 h-10 border border-[#D4AF5A] rounded-lg hover:bg-gray-100">
+                                <button type="button" onclick="increaseQty()" class="w-10 h-10 border border-[#D4AF5A] rounded-lg hover:bg-gray-100 hover:cursor-pointer">
                                     <i class="fas fa-plus text-gray-600"></i>
                                 </button>
                             </div>
@@ -102,7 +102,7 @@
 
                         <div class="flex gap-3">
                             <button type="submit" 
-                                class="flex-1 bg-[#7A1F1F] text-white py-3 rounded-lg font-semibold hover:bg-[#5A0F0F] transition flex items-center justify-center gap-2"
+                                class="flex-1 bg-[#7A1F1F] text-white py-3 rounded-lg font-semibold hover:bg-[#5A0F0F] transition flex items-center justify-center gap-2 hover:cursor-pointer"
                                 @if($produk->stok == 0) disabled @endif>
                                 <i class="fas fa-shopping-cart"></i>
                                 @if($produk->stok == 0)

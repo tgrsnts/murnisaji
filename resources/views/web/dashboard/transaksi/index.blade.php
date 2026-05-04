@@ -73,16 +73,18 @@
                                     <strong>{{ $transaction->trackingResi->no_resi }}</strong>
                                 </p>
                                 <div class="flex justify-between mt-2">
-                                    <button id="cek-resi-btn" type="button"
-                                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">Cek
+                                    <div>
+                                        <button id="cek-resi-btn" type="button"
+                                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm hover:cursor-pointer">Cek
                                         Status Pengiriman</button>
                                     <div id="tracking-result" class="mt-3 text-sm text-blue-900"></div>
+                                    </div>
                                     <form method="POST"
                                         action="{{ route('dashboard.transaction.receive', $transaction->transaksi_id) }}">
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit"
-                                            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm font-medium">
+                                            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm font-medium hover:cursor-pointer">
                                             Pesanan Diterima
                                         </button>
                                     </form>
@@ -127,7 +129,7 @@
                                     </div>
 
                                     <a href="{{ route('dashboard.reviews') }}"
-                                        class="inline-flex items-center bg-[#7A1F1F] text-white px-4 py-2 h-fit rounded-lg hover:bg-[#5A0F0F] transition text-sm font-medium">
+                                        class="inline-flex items-center bg-[#7A1F1F] text-white px-4 py-2 h-fit rounded-lg hover:bg-[#5A0F0F] transition text-sm font-medium hover:cursor-pointer">
                                         Ulasan
                                     </a>
                                 </div>

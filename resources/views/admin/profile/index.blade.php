@@ -123,7 +123,7 @@
             </div>
 
             <div class="flex justify-end mt-8">
-                <button type="submit" class="px-8 py-3 bg-red-800 text-white rounded-lg hover:bg-red-900 font-medium">
+                <button type="submit" class="px-8 py-3 bg-red-800 text-white rounded-lg hover:bg-red-900 font-medium hover:cursor-pointer">
                     SIMPAN PERUBAHAN
                 </button>
             </div>

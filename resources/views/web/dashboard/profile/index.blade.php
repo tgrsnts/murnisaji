@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="pt-4 border-t border-gray-200">
-                        <button type="submit" class="bg-[#7A1F1F] text-white px-6 py-2 rounded-lg hover:bg-[#5A0F0F] transition font-medium">
+                        <button type="submit" class="bg-[#7A1F1F] text-white px-6 py-2 rounded-lg hover:bg-[#5A0F0F] transition font-medium hover:cursor-pointer">
                             Simpan Perubahan
                         </button>
                     </div>

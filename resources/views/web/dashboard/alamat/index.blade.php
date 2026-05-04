@@ -11,7 +11,7 @@
                         <h1 class="text-3xl font-bold text-gray-900">Alamat Saya</h1>
                         <p class="text-gray-600 mt-1">Daftar alamat yang tersimpan pada akun Anda</p>
                     </div>
-                    <button onclick="openAddModal()" class="bg-[#7A1F1F] hover:bg-[#5a1515] text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg">
+                    <button onclick="openAddModal()" class="bg-[#7A1F1F] hover:bg-[#5a1515] text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg hover:cursor-pointer">
                         <i class="fas fa-plus mr-2"></i>Tambah Alamat
                     </button>
                 </div>
@@ -42,7 +42,7 @@
                                         <p class="text-sm text-gray-600 mt-1">{{ $alamat->detail }}, @if($alamat->desa){{ $alamat->desa }}, @endif{{ $alamat->kecamatan }}, {{ $alamat->kabupaten }}, {{ $alamat->provinsi }} {{ $alamat->kodepos }}</p>
                                     </div>
                                     <div class="flex gap-2">
-                                        <button onclick="openEditModal({{ $alamat->alamat_id }}, '{{ addslashes($alamat->label_alamat) }}', '{{ addslashes($alamat->nama_penerima) }}', '{{ $alamat->no_telepon }}', '{{ addslashes($alamat->provinsi) }}', '{{ addslashes($alamat->kabupaten) }}', '{{ addslashes($alamat->kecamatan) }}', '{{ addslashes($alamat->desa ?? '') }}', '{{ addslashes($alamat->detail) }}', '{{ $alamat->kodepos }}', {{ $alamat->isPrimary ? 'true' : 'false' }})" class="text-blue-600 hover:text-blue-800 px-3 py-2 rounded-lg hover:bg-blue-50 transition-all">                                            <i class="fas fa-edit"></i>
+                                        <button onclick="openEditModal({{ $alamat->alamat_id }}, '{{ addslashes($alamat->label_alamat) }}', '{{ addslashes($alamat->nama_penerima) }}', '{{ $alamat->no_telepon }}', '{{ addslashes($alamat->provinsi) }}', '{{ addslashes($alamat->kabupaten) }}', '{{ addslashes($alamat->kecamatan) }}', '{{ addslashes($alamat->desa ?? '') }}', '{{ addslashes($alamat->detail) }}', '{{ $alamat->kodepos }}', {{ $alamat->isPrimary ? 'true' : 'false' }})" class="text-blue-600 hover:text-blue-800 px-3 py-2 rounded-lg hover:bg-blue-50 transition-all hover:cursor-pointer">                                            <i class="fas fa-edit"></i>
                                         </button>
                                         <button onclick="confirmDelete({{ $alamat->alamat_id }})" class="text-red-600 hover:text-red-800 px-3 py-2 rounded-lg hover:bg-red-50 transition-all">
                                             <i class="fas fa-trash"></i>
@@ -141,10 +141,10 @@
                     </div>
 
                     <div class="flex gap-3 mt-6">
-                        <button type="button" onclick="closeAddModal()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold transition-all">
+                        <button type="button" onclick="closeAddModal()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold transition-all hover:cursor-pointer">
                             Batal
                         </button>
-                        <button type="submit" class="flex-1 bg-[#7A1F1F] hover:bg-[#5a1515] text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg">
+                        <button type="submit" class="flex-1 bg-[#7A1F1F] hover:bg-[#5a1515] text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg hover:cursor-pointer">
                             Simpan Alamat
                         </button>
                     </div>
@@ -232,10 +232,10 @@
                     </div>
 
                     <div class="flex gap-3 mt-6">
-                        <button type="button" onclick="closeEditModal()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold transition-all">
+                        <button type="button" onclick="closeEditModal()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold transition-all hover:cursor-pointer">
                             Batal
                         </button>
-                        <button type="submit" class="flex-1 bg-[#7A1F1F] hover:bg-[#5a1515] text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg">
+                        <button type="submit" class="flex-1 bg-[#7A1F1F] hover:bg-[#5a1515] text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg hover:cursor-pointer">
                             Simpan Perubahan
                         </button>
                     </div>

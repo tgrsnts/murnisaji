@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $statusPaid = Transaksi::where('status', 'PAID')->count();
         $statusPacked = Transaksi::where('status', 'PACKED')->count();
         $statusShipped = Transaksi::where('status', 'SHIPPED')->count();
-        $statusDelivered = Transaksi::where('status', 'DELIVERED')->count();
+        $statusDone = Transaksi::where('status', 'DELIVERED')->count();
         $statusCancel = Transaksi::where('status', 'CANCEL')->count();
 
         // Recent Orders (5 latest)
