@@ -73,10 +73,15 @@
                 <button
                     class="flex items-center gap-2 bg-[#7A1F1F] text-white px-6 py-2 rounded-full hover:bg-[#5A0F0F] transition font-medium">
                     {{ Auth::user()->name }}
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-4 h-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                    </svg>
+                    @if (Auth::user()->gambar)
+                        <img src="{{ asset('storage/' . Auth::user()->gambar) }}" alt="{{ Auth::user()->name }}"
+                            class="w-4 h-4 object-cover rounded-full border-2 border-white">
+                    @else
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    @endif
                 </button>
                 <div
                     class="absolute right-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition z-20">

@@ -7,6 +7,7 @@ use App\Models\Rating;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -53,13 +54,28 @@ class DashboardController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->user_id . ',user_id',
             'telp' => 'required|string|max:20',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ], [
             'name.required' => 'Nama harus diisi',
             'email.required' => 'Email harus diisi',
             'email.email' => 'Format email tidak valid',
             'email.unique' => 'Email sudah digunakan',
             'telp.required' => 'Nomor telepon harus diisi',
+            'gambar.image' => 'File harus berupa gambar',
         ]);
+
+        // handle upload foto
+        if ($request->hasFile('gambar')) {
+
+            // hapus foto lama (optional tapi penting biar gak numpuk)
+            if ($user->gambar && Storage::exists('public/' . $user->gambar)) {
+                Storage::delete('public/' . $user->gambar);
+            }
+
+            $path = $request->file('gambar')->store('profile', 'public');
+            $validated['gambar'] = $path;
+        }
+
 
         $user->fill($validated);
         $user->save();

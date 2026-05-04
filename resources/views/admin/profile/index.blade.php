@@ -28,36 +28,66 @@
             </div>
         @endif
 
-        <div class="mb-8 flex items-center gap-6">
-            @if ($user->gambar)
-                <img src="{{ asset('storage/' . $user->gambar) }}" alt="{{ $user->name }}"
-                    class="w-24 h-24 object-cover rounded-full border-4 border-red-100">
-            @else
-                <div
-                    class="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center text-red-800 font-bold text-3xl border-4 border-red-200">
-                    {{ strtoupper(substr($user->name, 0, 1)) }}
-                </div>
-            @endif
-            <div>
-                <h3 class="text-2xl font-bold text-gray-800">{{ $user->name }}</h3>
-                <p class="text-gray-600">{{ $user->email }}</p>
-                <span class="inline-block px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-semibold mt-2">
-                    Admin
-                </span>
-            </div>
-        </div>
+
 
         <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+
+            <div class="mb-8 flex items-center gap-6">
+                @if ($user->gambar)
+                    <img src="{{ asset('storage/' . $user->gambar) }}" alt="{{ $user->name }}"
+                        class="w-24 h-24 object-cover rounded-full border-4 border-red-100" id="previewImage">
+                @else
+                    <div
+                        class="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center text-red-800 font-bold text-3xl border-4 border-red-200">
+                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                    </div>
+                @endif
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-800">{{ $user->name }}</h3>
+                    <p class="text-gray-600">{{ $user->email }}</p>
+                    <span
+                        class="inline-block px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-semibold mt-2">
+                        Admin
+                    </span>
+                </div>
+                <div>
+                    <input type="file" name="gambar" id="gambarInput" class="hidden" accept="image/*">
+
+                    <button type="button" id="triggerUpload"
+                        class="bg-gray-200 px-4 py-2 rounded-lg text-sm hover:bg-gray-300 hover:cursor-pointer">
+                        Ganti Foto
+                    </button>
+
+                    @error('gambar')
+                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <script>
+                    const input = document.getElementById('gambarInput');
+                    const trigger = document.getElementById('triggerUpload');
+                    const preview = document.getElementById('previewImage');
+
+                    trigger.addEventListener('click', () => input.click());
+
+                    input.addEventListener('change', function() {
+                        const file = this.files[0];
+                        if (file) {
+                            preview.src = URL.createObjectURL(file);
+                        }
+                    });
+                </script>
+            </div>
 
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
                     <div class="mb-6">
                         <label class="block text-red-800 font-medium mb-2">Nama Lengkap*</label>
                         <input type="text" name="name" value="{{ old('name', $user->name) }}"
-                            placeholder="Nama lengkap"
-                            class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg" required>
+                            placeholder="Nama lengkap" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg"
+                            required>
                     </div>
 
                     <div class="mb-6">
@@ -70,8 +100,8 @@
                     <div class="mb-6">
                         <label class="block text-red-800 font-medium mb-2">Email*</label>
                         <input type="email" name="email" value="{{ old('email', $user->email) }}"
-                            placeholder="email@example.com"
-                            class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg" required>
+                            placeholder="email@example.com" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg"
+                            required>
                     </div>
                 </div>
 
@@ -87,19 +117,7 @@
                         <input type="password" name="password" placeholder="Kosongkan jika tidak ingin mengubah"
                             class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg">
                         <p class="text-xs text-gray-500 mt-1">Minimal 6 karakter, kosongkan jika tidak ingin mengubah</p>
-                    </div>
-
-                    <div class="mb-6">
-                        <label class="block text-red-800 font-medium mb-2">Foto Profil</label>
-                        <input type="file" name="gambar" accept="image/*"
-                            class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg"
-                            onchange="previewImage(event)">
-                        <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG, GIF (Max: 2MB)</p>
-                        
-                        <div id="preview-container" class="mt-3 hidden">
-                            <img id="preview" class="w-32 h-32 object-cover rounded-lg border-2 border-gray-200">
-                        </div>
-                    </div>
+                    </div>                    
                 </div>
             </div>
 
@@ -123,7 +141,8 @@
             </div>
 
             <div class="flex justify-end mt-8">
-                <button type="submit" class="px-8 py-3 bg-red-800 text-white rounded-lg hover:bg-red-900 font-medium hover:cursor-pointer">
+                <button type="submit"
+                    class="px-8 py-3 bg-red-800 text-white rounded-lg hover:bg-red-900 font-medium hover:cursor-pointer">
                     SIMPAN PERUBAHAN
                 </button>
             </div>
@@ -135,7 +154,7 @@
             const preview = document.getElementById('preview');
             const previewContainer = document.getElementById('preview-container');
             const file = event.target.files[0];
-            
+
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
