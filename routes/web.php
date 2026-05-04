@@ -86,6 +86,7 @@ use App\Http\Controllers\ApiCoIdController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController as UserDashboardController;
 use App\Http\Controllers\ReviewController;
+use App\Models\Produk;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 // ==========================
@@ -131,7 +132,8 @@ Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(functi
 // WEB HOME
 // ==========================
 Route::get('/', function () {
-    return view('web.index');
+
+    return view('web.index', ['produk' => Produk::all()]);
 })->name('home');
 
 Route::get('/about', function () {

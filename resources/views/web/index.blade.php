@@ -73,62 +73,28 @@
             Pilihan Menu Abon <span class="text-[#D4AF5A]">Murnisaji</span>
         </h2>
 
-        <div class="grid md:grid-cols-3 gap-12 mt-40">
+        <div class="grid md:grid-cols-3 gap-x-16 gap-y-36 mt-40">
 
-            <div class="bg-[#D4AF5A] p-6 pt-28 rounded-xl shadow relative">
-                <img src="{{ asset('images/menu/menu1.png') }}"
-                    class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px]">
-                <h3 class="mt-6 text-[#ffffff] font-semibold">Abon Ayam</h3>
-                <p class="text-sm text-gray-700 mt-2">
-                    Abon yang dibuat dari daging ayam pilihan
-                </p>
+            @foreach ($produk as $item)
+                <div class="bg-[#D4AF5A] p-6 pt-28 rounded-xl shadow relative">
+                    <img src="{{ asset('/storage/' . $item->gambar) }}"
+                        class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px]">
+                    <h3 class="mt-6 text-[#ffffff] font-semibold">{{ $item->nama_produk }}</h3>
+                    <p class="text-sm text-gray-700 mt-2">
+                        {{ $item->deskripsi }}
+                    </p>
 
-                <div class="flex justify-between mt-4">
-                    <span>⭐ 4.9/5</span>
-                    <span class="text-[#ffffff] font-semibold">Rp 6.000</span>
+                    <div class="flex justify-between mt-4">
+                        <span>⭐ {{ $item->getAverageRatingAttribute() }}/5</span>
+                        <span class="text-[#ffffff] font-semibold">Rp {{ number_format($item->harga, 0, ',', '.') }}</span>
+                    </div>
+
+                    <button
+                        class="mt-4 bg-[#ffffff] w-full py-2 rounded-lg hover:bg-gray-200 transition hover:cursor-pointer">
+                        Buy Now
+                    </button>
                 </div>
-
-                <button class="mt-4 bg-[#ffffff] w-full py-2 rounded-lg">
-                    Buy Now
-                </button>
-            </div>
-
-            <div class="bg-[#D4AF5A] p-6 pt-28 rounded-xl shadow relative">
-                <img src="{{ asset('images/menu/menu2.png') }}"
-                    class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px]">
-                <h3 class="mt-6 text-[#ffffff] font-semibold">Abon Sapi</h3>
-                <p class="text-sm text-gray-700 mt-2">
-                    Abon yang dibuat dari daging sapi pilihan
-                </p>
-
-                <div class="flex justify-between mt-4">
-                    <span>⭐ 4.9/5</span>
-                    <span class="text-[#ffffff] font-semibold">Rp 6.000</span>
-                </div>
-
-                <button class="mt-4 bg-[#ffffff] w-full py-2 rounded-lg">
-                    Buy Now
-                </button>
-            </div>
-
-            <div class="bg-[#D4AF5A] p-6 pt-28 rounded-xl shadow relative">
-                <img src="{{ asset('images/menu/menu3.png') }}"
-                    class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px]">
-                <h3 class="mt-6 text-[#ffffff] font-semibold">Abon Tuna</h3>
-                <p class="text-sm text-gray-700 mt-2">
-                    Abon yang dibuat dari daging tuna pilihan
-                </p>
-
-                <div class="flex justify-between mt-4">
-                    <span>⭐ 4.9/5</span>
-                    <span class="text-[#ffffff] font-semibold">Rp 6.000</span>
-                </div>
-
-                <button class="mt-4 bg-[#ffffff] w-full py-2 rounded-lg">
-                    Buy Now
-                </button>
-            </div>
-
+            @endforeach
         </div>
 
     </section>
