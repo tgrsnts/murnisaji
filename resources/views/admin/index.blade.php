@@ -96,7 +96,7 @@
                             <td class="px-6 py-4 font-bold text-[#8B0000]">#{{ $order->transaksi_id }}</td>
                             <td class="px-6 py-4 text-[#D4AF5A] text-xs">{{ $order->created_at->format('d F Y, h:i A') }}
                             </td>
-                            <td class="px-6 py-4 font-medium">{{ $order->user->name ?? 'Unknown' }}</td>
+                            <td class="px-6 py-4 font-medium">{{ $order->user->name ?? $order->nama_penerima }}</td>
                             <td class="px-6 py-4 font-bold">Rp {{ number_format($order->total_bayar, 0, ',', '.') }}</td>
                             <td class="px-6 py-4">
                                 @if ($order->status == 'PENDING')

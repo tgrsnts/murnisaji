@@ -49,7 +49,7 @@
                             </td>
 
                             <td class="py-2 px-3 text-xs text-gray-800">
-                                {{ $transaksi->alamat->user->name ?? 'N/A' }}
+                                {{ $transaksi->alamat->user->name ?? $transaksi->nama_penerima }}
                             </td>
 
                             <td class="py-2 px-3 text-xs text-red-800 font-semibold">
