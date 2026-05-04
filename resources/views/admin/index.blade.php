@@ -76,7 +76,8 @@
     <div class="bg-white rounded-3xl shadow-sm overflow-hidden mb-10">
         <div class="p-6 flex justify-between items-center">
             <h3 class="text-lg font-bold">Pesanan Terkini</h3>
-            <a href="{{ route('admin.transaksi.index') }}" class="bg-[#8B0000] text-white px-5 py-1.5 rounded-xl text-xs font-bold uppercase">Lihat Semua</a>
+            <a href="{{ route('admin.transaksi.index') }}"
+                class="bg-[#8B0000] text-white px-5 py-1.5 rounded-xl text-xs font-bold uppercase">Lihat Semua</a>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left">
@@ -93,22 +94,34 @@
                     @forelse ($recentOrders as $order)
                         <tr>
                             <td class="px-6 py-4 font-bold text-[#8B0000]">#{{ $order->transaksi_id }}</td>
-                            <td class="px-6 py-4 text-[#D4AF5A] text-xs">{{ $order->created_at->format('d F Y, h:i A') }}</td>
+                            <td class="px-6 py-4 text-[#D4AF5A] text-xs">{{ $order->created_at->format('d F Y, h:i A') }}
+                            </td>
                             <td class="px-6 py-4 font-medium">{{ $order->user->name ?? 'Unknown' }}</td>
                             <td class="px-6 py-4 font-bold">Rp {{ number_format($order->total_bayar, 0, ',', '.') }}</td>
                             <td class="px-6 py-4">
                                 @if ($order->status == 'PENDING')
-                                    <span class="w-fit bg-yellow-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Belum Bayar</span>
+                                    <span
+                                        class="w-fit bg-yellow-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Belum
+                                        Bayar</span>
                                 @elseif ($order->status == 'PAID')
-                                    <span class="w-fit bg-orange-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sudah Bayar</span>
+                                    <span
+                                        class="w-fit bg-orange-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sudah
+                                        Bayar</span>
                                 @elseif ($order->status == 'PACKED')
-                                    <span class="w-fit bg-purple-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sudah Dikemas</span>
+                                    <span
+                                        class="w-fit bg-purple-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sudah
+                                        Dikemas</span>
                                 @elseif ($order->status == 'SHIPPED')
-                                    <span class="w-fit bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sedang Dikirim</span>
+                                    <span
+                                        class="w-fit bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sedang
+                                        Dikirim</span>
                                 @elseif ($order->status == 'DELIVERED')
-                                    <span class="w-fit bg-green-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sudah Dikirim</span>
+                                    <span
+                                        class="w-fit bg-green-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sudah
+                                        Dikirim</span>
                                 @else
-                                    <span class="w-fit bg-red-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>
+                                    <span
+                                        class="w-fit bg-red-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>
                                 @endif
                             </td>
                         </tr>
@@ -126,41 +139,64 @@
 @endsection
 
 @push('scripts')
-<script>
-    // Logika Donut Chart
-    new Chart(document.getElementById('donutChart'), {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [{{ $statusDone }}, {{ $statusShipped }}, {{ $statusPending + $statusPaid + $statusPacked + $statusCancel }}],
-                backgroundColor: ['#22c55e', '#3b82f6', '#ef4444'],
-                borderWidth: 0,
-                cutout: '70%'
-            }]
-        },
-        options: { maintainAspectRatio: false, plugins: { legend: { display: false } } }
-    });
-
-    // Logika Bar Chart - Order per bulan (dummy untuk saat ini)
-    new Chart(document.getElementById('barChart'), {
-        type: 'bar',
-        data: {
-            labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [{
-                data: [22, 18, 30, 20, 15, {{ $totalOrders }}],
-                backgroundColor: '#8B0000',
-                borderRadius: 20,
-                barThickness: 10
-            }]
-        },
-        options: { 
-            maintainAspectRatio: false, 
-            plugins: { legend: { display: false } },
-            scales: { 
-                y: { display: false }, 
-                x: { grid: { display: false }, border: { display: false } } 
+    <script>
+        // Logika Donut Chart
+        new Chart(document.getElementById('donutChart'), {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [{{ $statusDone }}, {{ $statusShipped }},
+                        {{ $statusPending + $statusPaid + $statusPacked + $statusCancel }}
+                    ],
+                    backgroundColor: ['#22c55e', '#3b82f6', '#ef4444'],
+                    borderWidth: 0,
+                    cutout: '70%'
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
             }
-        }
-    });
-</script>
+        });
+
+        // Logika Bar Chart - Order per bulan (dummy untuk saat ini)
+        new Chart(document.getElementById('barChart'), {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($labels) !!},
+                datasets: [{
+                    label: 'Total Pesanan',
+                    data: {!! json_encode($chartData) !!},
+                    borderRadius: 10,
+                    backgroundColor: '#8B0000',
+                    barThickness: 10
+                }]                
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        display: false
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        border: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 @endpush
