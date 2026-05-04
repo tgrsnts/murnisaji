@@ -13,7 +13,7 @@ class TrackingResiSeeder extends Seeder
     {
         $resi = TrackingResi::create([
             'no_resi' => '8825112045716759',
-            'kurir' => 'jne',
+            'kurir' => 'JNE',
             'status_terakhir' => 'SHIPPING',
             'last_checked_at' => now()->subMinutes(90),
             'delivered_at' => null,

@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             ProdukSeeder::class,
             AlamatSeeder::class,
             TransaksiSeeder::class,
-            RatingSeeder::class,
+            // RatingSeeder::class,
             PaymentSeeder::class,
             TrackingResiSeeder::class,
         ]);
