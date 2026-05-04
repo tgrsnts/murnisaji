@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
-        <h1 class="text-2xl font-bold text-gray-900">Transaksi Saya</h1>
+        <h1 class="text-3xl font-bold text-gray-900">Transaksi Saya</h1>
         <p class="text-gray-600 mt-1">Ringkasan aktivitas belanja Anda</p>
     </div>
 
