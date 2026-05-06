@@ -92,16 +92,18 @@
                                                 class="w-full border border-gray-300 rounded-lg p-2 text-sm">
                                         </div>
 
-                                        <input type="hidden" name="nama_penerima" id="nama_penerima_hidden">
-                                        <input type="hidden" name="no_telepon" id="no_telepon_hidden">
-                                        <input type="hidden" name="label_alamat" id="label_alamat_hidden">
-                                        <input type="hidden" name="detail" id="detail_hidden">
-                                        <input type="hidden" name="provinsi" id="provinsi">
-                                        <input type="hidden" name="province_id" id="province_id_hidden">
-                                        <input type="hidden" name="kabupaten" id="kabupaten">
-                                        <input type="hidden" name="city_id" id="city_id">
-                                        <input type="hidden" name="kecamatan" id="kecamatan_hidden">
-                                        <input type="hidden" name="kodepos" id="kodepos_hidden">
+                                        {{-- Hidden inputs dengan old() fallback --}}
+                                        <input type="hidden" name="nama_penerima" id="nama_penerima_hidden" value="{{ old('nama_penerima') }}">
+                                        <input type="hidden" name="no_telepon" id="no_telepon_hidden" value="{{ old('no_telepon') }}">
+                                        <input type="hidden" name="label_alamat" id="label_alamat_hidden" value="{{ old('label_alamat') }}">
+                                        <input type="hidden" name="detail" id="detail_hidden" value="{{ old('detail') }}">
+                                        <input type="hidden" name="provinsi" id="provinsi" value="{{ old('provinsi') }}">
+                                        <input type="hidden" name="province_id" id="province_id_hidden" value="{{ old('province_id') }}">
+                                        <input type="hidden" name="kabupaten" id="kabupaten" value="{{ old('kabupaten') }}">
+                                        <input type="hidden" name="city_id" id="city_id" value="{{ old('city_id') }}">
+                                        <input type="hidden" name="village_id" id="village_id_hidden" value="{{ old('village_id') }}">
+                                        <input type="hidden" name="kecamatan" id="kecamatan_hidden" value="{{ old('kecamatan') }}">
+                                        <input type="hidden" name="kodepos" id="kodepos_hidden" value="{{ old('kodepos') }}">
                                     </div>
                                 @else
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -136,7 +138,7 @@
                                                 class="w-full border border-gray-300 rounded-lg p-2 text-sm">
                                                 <option value="">Pilih Provinsi</option>
                                             </select>
-                                            <input type="hidden" name="provinsi" id="provinsi">
+                                            <input type="hidden" name="provinsi" id="provinsi" value="{{ old('provinsi') }}">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 mb-1">Kota/Kabupaten</label>
@@ -144,7 +146,7 @@
                                                 class="w-full border border-gray-300 rounded-lg p-2 text-sm" disabled>
                                                 <option value="">Pilih Kota</option>
                                             </select>
-                                            <input type="hidden" name="kabupaten" id="kabupaten">
+                                            <input type="hidden" name="kabupaten" id="kabupaten" value="{{ old('kabupaten') }}">
                                         </div>
                                         <div class="">
                                             <label class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
@@ -212,8 +214,8 @@
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="ongkir" id="ongkir" value="0">
-                                <input type="hidden" name="layanan_kurir" id="layanan_kurir_hidden" value="">
+                                <input type="hidden" name="ongkir" id="ongkir" value="{{ old('ongkir', 0) }}">
+                                <input type="hidden" name="layanan_kurir" id="layanan_kurir_hidden" value="{{ old('layanan_kurir') }}">
                                 
                                 <div id="shippingInfo" class="hidden mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                                     <p class="text-sm text-blue-800">
@@ -319,6 +321,13 @@
             'Ninja': 'reguler'
         };
 
+        // Old values from Laravel (untuk restore setelah validation error)
+        const oldKurir = '{{ old('kurir') }}';
+        const oldOngkir = parseInt('{{ old('ongkir', 0) }}') || 0;
+        const oldLayananKurir = '{{ old('layanan_kurir') }}';
+        const oldSelectedAlamatId = '{{ old('selected_alamat_id') }}';
+        const oldVillageId = '{{ old('village_id') }}';
+
         let provinces = [];
         let cities = [];
         let subdistricts = [];
@@ -377,6 +386,7 @@
             setVal('province_id_hidden', option?.dataset.provinceId);
             setVal('kabupaten', option?.dataset.kabupaten);
             setVal('city_id', option?.dataset.cityId);
+            setVal('village_id_hidden', option?.dataset.villageId);
             setVal('kecamatan_hidden', option?.dataset.kecamatan);
             setVal('kodepos_hidden', option?.dataset.kodepos);
 
@@ -409,6 +419,36 @@
             }
         }
 
+        // Restore preview dari old() values saat validasi error (saved address mode)
+        function restoreAddressPreviewFromOld() {
+            if (!hasSavedAddressMode) return;
+
+            const oldNama = '{{ old('nama_penerima') }}';
+            const oldNoTelp = '{{ old('no_telepon') }}';
+            const oldLabel = '{{ old('label_alamat') }}';
+            const oldDetail = '{{ old('detail') }}';
+            const oldKecamatan = '{{ old('kecamatan') }}';
+            const oldKabupaten = '{{ old('kabupaten') }}';
+            const oldProvinsi = '{{ old('provinsi') }}';
+            const oldKodepos = '{{ old('kodepos') }}';
+
+            if (!oldSelectedAlamatId) return;
+
+            const preview = document.getElementById('savedAddressPreview');
+            const previewLabel = document.getElementById('previewLabel');
+            const previewRecipient = document.getElementById('previewRecipient');
+            const previewPhone = document.getElementById('previewPhone');
+            const previewAddress = document.getElementById('previewAddress');
+
+            if (preview && oldNama) {
+                preview.classList.remove('hidden');
+                if (previewLabel) previewLabel.textContent = oldLabel;
+                if (previewRecipient) previewRecipient.textContent = oldNama;
+                if (previewPhone) previewPhone.textContent = oldNoTelp;
+                if (previewAddress) previewAddress.textContent = `${oldDetail}, ${oldKecamatan}, ${oldKabupaten}, ${oldProvinsi} ${oldKodepos}`;
+            }
+        }
+
         async function loadProvinces() {
             if (!provinceSelect || provinceSelect.tagName !== 'SELECT') return;
 
@@ -437,6 +477,15 @@
                 option.dataset.name = province.province || province.name || province.province_name;
                 provinceSelect.appendChild(option);
             });
+
+            // Restore old province value setelah provinces dimuat
+            const oldProvinceId = '{{ old('province_id') }}';
+            if (oldProvinceId && provinceSelect) {
+                provinceSelect.value = oldProvinceId;
+                if (provinceSelect.value) {
+                    loadCities(oldProvinceId);
+                }
+            }
         }
 
         async function loadCities(provinceId) {
@@ -473,6 +522,15 @@
                 option.dataset.name = cityName;
                 citySelect.appendChild(option);
             });
+
+            // Restore old city value setelah cities dimuat
+            const oldCityId = '{{ old('city_id') }}';
+            if (oldCityId && citySelect) {
+                citySelect.value = oldCityId;
+                if (citySelect.value) {
+                    loadSubdistricts(oldCityId);
+                }
+            }
         }
 
         async function loadSubdistricts(cityId) {
@@ -508,6 +566,20 @@
                 option.dataset.subdistrictId = subdistrict.subdistrict_id || subdistrict.district_id || subdistrict.id || subdistrict.code || subdistrict.district_code;
                 subdistrictSelect.appendChild(option);
             });
+
+            // Restore old kecamatan value setelah subdistricts dimuat
+            const oldKecamatan = '{{ old('kecamatan') }}';
+            if (oldKecamatan && subdistrictSelect) {
+                subdistrictSelect.value = oldKecamatan;
+                if (subdistrictSelect.value) {
+                    // Cari subdistrictId berdasarkan nilai yang dipilih
+                    const selectedOpt = subdistrictSelect.options[subdistrictSelect.selectedIndex];
+                    const subdistrictId = selectedOpt?.dataset.subdistrictId || '';
+                    if (subdistrictId) {
+                        loadVillages(subdistrictId);
+                    }
+                }
+            }
         }
 
         async function loadVillages(subdistrictId) {
@@ -548,6 +620,15 @@
                 option.dataset.villageId = villageId;
                 villageSelect.appendChild(option);
             });
+
+            // Restore old desa value setelah villages dimuat, lalu load shipping cost
+            const oldDesa = '{{ old('desa') }}';
+            if (oldDesa && villageSelect) {
+                villageSelect.value = oldDesa;
+                if (villageSelect.value) {
+                    loadShippingCost();
+                }
+            }
         }
 
         async function loadShippingCost() {
@@ -649,9 +730,20 @@
             });
             
             categorySelect.disabled = false;
+
+            // Restore old category & courier setelah categories dimuat
+            if (oldKurir && categorySelect) {
+                const oldCategory = courierCategories[oldKurir] || '';
+                if (oldCategory) {
+                    categorySelect.value = oldCategory;
+                    if (categorySelect.value) {
+                        populateCouriersByCategory(true); // true = restore mode
+                    }
+                }
+            }
         }
 
-        function populateCouriersByCategory() {
+        function populateCouriersByCategory(restoreMode = false) {
             if (!categorySelect.value) {
                 courierSelect.innerHTML = '<option value="">Pilih Kurir</option>';
                 courierSelect.disabled = true;
@@ -691,6 +783,25 @@
             });
 
             courierSelect.disabled = couriers.length === 0;
+
+            // Restore old courier setelah options dimuat
+            if (restoreMode && oldKurir) {
+                courierSelect.value = oldKurir;
+                if (courierSelect.value) {
+                    const selectedOpt = courierSelect.options[courierSelect.selectedIndex];
+                    const restoredCost = parseInt(selectedOpt?.dataset.cost || '0', 10) || oldOngkir;
+                    const restoredEtd = selectedOpt?.dataset.etd || '';
+                    const restoredServiceName = selectedOpt?.dataset.serviceName || oldLayananKurir;
+
+                    if (layananKurirHidden) layananKurirHidden.value = restoredServiceName;
+                    updatePrice(restoredCost);
+
+                    if (restoredCost > 0) {
+                        shippingDetails.textContent = `Estimasi ${restoredEtd}`;
+                        shippingInfo.classList.remove('hidden');
+                    }
+                }
+            }
         }
 
         function resetCourier() {
@@ -730,10 +841,27 @@
                     }
                 });
                 
-                // Initial setup if address is already selected
-                const initialVillageCode = destinationVillageCode();
-                if (initialVillageCode) {
-                    loadShippingCost();
+                // Restore saved address mode setelah validation error
+                if (oldSelectedAlamatId) {
+                    selectedAddressSelect.value = oldSelectedAlamatId;
+                    applySelectedAddress();
+                    restoreAddressPreviewFromOld();
+
+                    if (categorySelect) {
+                        categorySelect.disabled = false;
+                    }
+
+                    // Load shipping cost menggunakan village_id dari old value
+                    const villageCode = destinationVillageCode();
+                    if (villageCode) {
+                        loadShippingCost();
+                    }
+                } else {
+                    // Initial setup if address is already selected (non-old scenario)
+                    const initialVillageCode = destinationVillageCode();
+                    if (initialVillageCode) {
+                        loadShippingCost();
+                    }
                 }
             }
 
@@ -856,7 +984,14 @@
             }
 
             if (hasSavedAddressMode && categorySelect) {
-                categorySelect.disabled = !destinationVillageCode();
+                categorySelect.disabled = !destinationVillageCode() && !oldSelectedAlamatId;
+            }
+
+            // Restore ongkir display dari old value jika ada
+            if (oldOngkir > 0) {
+                ongkirDisplay.textContent = 'Rp ' + oldOngkir.toLocaleString('id-ID');
+                const total = subtotal + oldOngkir;
+                totalDisplay.textContent = 'Rp ' + total.toLocaleString('id-ID');
             }
         });
     </script>

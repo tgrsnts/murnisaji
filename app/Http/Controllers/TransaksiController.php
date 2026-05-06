@@ -194,7 +194,7 @@ class TransaksiController extends Controller
             $rules = array_merge($rules, [
                 'nama_penerima' => 'required|string|max:255',
                 'no_telepon' => 'required|string|max:20',
-                'label_alamat' => 'required|string|max:255',
+                'label_alamat' => 'string|max:255',
                 'detail' => 'required|string',
                 'provinsi' => 'required|string|max:255',
                 'province_id' => 'required|integer|min:1',
