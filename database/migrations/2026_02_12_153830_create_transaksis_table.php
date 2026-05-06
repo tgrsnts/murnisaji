@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nama_penerima');
             $table->string('no_telepon');
             $table->string('email')->nullable();
-            $table->string('label_alamat');
+            $table->string('label_alamat')->nullable();
             $table->string('detail');
 
             $table->string('provinsi');

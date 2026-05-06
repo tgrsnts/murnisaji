@@ -160,12 +160,14 @@
                                                 <option value="">Pilih kecamatan terlebih dahulu</option>
                                             </select>
                                         </div>
+                                        @if($isLoggedIn)
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 mb-1">Label Alamat</label>
                                             <input type="text" name="label_alamat" required value="{{ old('label_alamat') }}"
                                                 placeholder="Contoh: Rumah"
                                                 class="w-full border border-gray-300 rounded-lg p-2 text-sm">
                                         </div>
+                                        @endif
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 mb-1">Kode Pos</label>
                                             <input type="text" name="kodepos" required value="{{ old('kodepos') }}"
