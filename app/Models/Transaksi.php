@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaksi extends Model
 {
+    use HasUuids;
+
     protected $fillable = [
         'id_user',
         'id_alamat',
@@ -31,6 +34,10 @@ class Transaksi extends Model
     ];
 
     protected $primaryKey = 'transaksi_id';
+    
+    // Beritahu Laravel bahwa ini bukan integer auto-increment
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     public function firstItem()
 {

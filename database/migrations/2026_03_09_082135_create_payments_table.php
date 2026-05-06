@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id('payment_id');
-            $table->unsignedBigInteger('id_transaksi');
+            $table->foreignUuid('id_transaksi')
+                ->references('transaksi_id')
+                ->on('transaksis')
+                ->onDelete('cascade');
 
             $table->string('provider')->default('midtrans');
             $table->string('order_id')->unique();
@@ -30,11 +33,6 @@ return new class extends Migration
             $table->longText('raw_response')->nullable();
 
             $table->timestamps();
-
-            $table->foreign('id_transaksi')
-                  ->references('transaksi_id')
-                  ->on('transaksis')
-                  ->onDelete('cascade');
         });
     }
 

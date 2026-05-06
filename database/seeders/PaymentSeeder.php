@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\Transaksi;
 
 class PaymentSeeder extends Seeder
 {
@@ -13,9 +14,19 @@ class PaymentSeeder extends Seeder
      */
     public function run(): void
     {
+        // 1. Ambil semua transaksi yang baru saja dibuat oleh TransaksiSeeder
+        // Kita urutkan berdasarkan created_at agar urutannya konsisten
+        $transaksis = Transaksi::orderBy('created_at', 'asc')->get();
+
+        if ($transaksis->count() < 2) {
+            $this->command->warn('Transaksi tidak cukup untuk PaymentSeeder. Jalankan TransaksiSeeder dulu.');
+            return;
+        }
+
         DB::table('payments')->insert([
             [
-                'id_transaksi' => 1,
+                // Ambil UUID dari transaksi pertama
+                'id_transaksi' => $transaksis[0]->transaksi_id, 
                 'provider' => 'midtrans',
                 'order_id' => 'ORDER-' . time() . '-1',
                 'snap_token' => 'sample-snap-token-abc123',
@@ -37,7 +48,8 @@ class PaymentSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'id_transaksi' => 2,
+                // Ambil UUID dari transaksi kedua
+                'id_transaksi' => $transaksis[1]->transaksi_id, 
                 'provider' => 'midtrans',
                 'order_id' => 'ORDER-' . (time() + 1) . '-2',
                 'snap_token' => 'sample-snap-token-xyz789',

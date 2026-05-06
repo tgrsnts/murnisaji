@@ -22,8 +22,49 @@
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
                 <!-- Header -->
                 <div class="bg-[#7A1F1F] text-white p-6">
-                    <h1 class="text-2xl font-bold mb-2">Detail Pesanan</h1>
-                    <p class="text-sm opacity-90">Order ID: #{{ $transaksi->transaksi_id }}</p>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h1 class="text-2xl font-bold mb-2">Detail Pesanan</h1>
+                            <p class="text-sm opacity-90">Order ID: #{{ $transaksi->transaksi_id }}</p>
+                        </div>
+
+                        {{-- Tombol Salin Link untuk Guest --}}
+                        @guest
+                            <div class="flex flex-col items-end gap-2">
+                                <button type="button" id="copy-link-btn"
+                                    class="bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-2 rounded-lg border border-white/30 transition flex items-center gap-2 hover:cursor-pointer">
+                                    <i class="fas fa-copy"></i>
+                                    <span>Salin Link Pesanan</span>
+                                </button>
+                                <p class="text-[10px] opacity-75">*Simpan link ini untuk cek status pesanan Anda</p>
+                            </div>
+
+                            <script>
+                                document.getElementById('copy-link-btn')?.addEventListener('click', function() {
+                                    // Mengambil URL saat ini
+                                    const orderUrl = window.location.href;
+
+                                    // Menggunakan Clipboard API
+                                    navigator.clipboard.writeText(orderUrl).then(() => {
+                                        // Animasi feedback sederhana
+                                        const btn = this;
+                                        const originalContent = btn.innerHTML;
+
+                                        btn.classList.replace('bg-white/20', 'bg-green-500');
+                                        btn.innerHTML = '<i class="fas fa-check"></i> <span>Tersalin!</span>';
+
+                                        setTimeout(() => {
+                                            btn.classList.replace('bg-green-500', 'bg-white/20');
+                                            btn.innerHTML = originalContent;
+                                        }, 2000);
+                                    }).catch(err => {
+                                        console.error('Gagal menyalin link: ', err);
+                                        alert('Gagal menyalin link, silakan salin URL di browser Anda secara manual.');
+                                    });
+                                });
+                            </script>
+                        @endguest
+                    </div>
                 </div>
 
                 <!-- Order Info -->
@@ -57,7 +98,7 @@
                         <div>
                             <p class="text-sm text-gray-500 mb-1">No. Resi</p>
                             <p class="font-semibold">
-                                {{ optional($transaksi->trackingResi)->no_resi ?? $transaksi->resi ?? '-' }}
+                                {{ optional($transaksi->trackingResi)->no_resi ?? ($transaksi->resi ?? '-') }}
                             </p>
                         </div>
                     </div>
@@ -67,11 +108,16 @@
                 <div class="p-6 border-b border-gray-200">
                     <h3 class="font-bold text-gray-900 mb-3">Alamat Pengiriman</h3>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <p class="font-semibold text-gray-900 mb-1">{{ $transaksi->nama_penerima ?? optional($transaksi->user)->name ?? '-' }}</p>
-                        <p class="text-gray-700">{{ $transaksi->detail ?? optional($transaksi->alamat)->alamat_lengkap ?? '-' }}</p>
-                        <p class="text-gray-700">{{ $transaksi->kecamatan ?? '-' }}, {{ $transaksi->kabupaten ?? optional($transaksi->alamat)->kota ?? '-' }}</p>
-                        <p class="text-gray-700">{{ $transaksi->provinsi ?? '-' }} {{ $transaksi->kodepos ?? optional($transaksi->alamat)->kode_pos ?? '-' }}</p>
-                        <p class="text-gray-700 mt-2">{{ $transaksi->no_telepon ?? optional($transaksi->alamat)->no_telp ?? '-' }}</p>
+                        <p class="font-semibold text-gray-900 mb-1">
+                            {{ $transaksi->nama_penerima ?? (optional($transaksi->user)->name ?? '-') }}</p>
+                        <p class="text-gray-700">
+                            {{ $transaksi->detail ?? (optional($transaksi->alamat)->alamat_lengkap ?? '-') }}</p>
+                        <p class="text-gray-700">{{ $transaksi->kecamatan ?? '-' }},
+                            {{ $transaksi->kabupaten ?? (optional($transaksi->alamat)->kota ?? '-') }}</p>
+                        <p class="text-gray-700">{{ $transaksi->provinsi ?? '-' }}
+                            {{ $transaksi->kodepos ?? (optional($transaksi->alamat)->kode_pos ?? '-') }}</p>
+                        <p class="text-gray-700 mt-2">
+                            {{ $transaksi->no_telepon ?? (optional($transaksi->alamat)->no_telp ?? '-') }}</p>
                     </div>
                 </div>
 
@@ -111,7 +157,8 @@
                     <div class="space-y-2 mb-4">
                         <div class="flex justify-between text-sm">
                             <span class="text-gray-600">Subtotal Produk</span>
-                            <span class="font-medium">Rp {{ number_format($transaksi->total_harga_produk, 0, ',', '.') }}</span>
+                            <span class="font-medium">Rp
+                                {{ number_format($transaksi->total_harga_produk, 0, ',', '.') }}</span>
                         </div>
                         <div class="flex justify-between text-sm">
                             <span class="text-gray-600">Ongkos Kirim</span>
@@ -119,14 +166,17 @@
                         </div>
                         <div class="flex justify-between text-lg font-bold border-t pt-2">
                             <span>Total Pembayaran</span>
-                            <span class="text-[#7A1F1F]">Rp {{ number_format($transaksi->total_bayar, 0, ',', '.') }}</span>
+                            <span class="text-[#7A1F1F]">Rp
+                                {{ number_format($transaksi->total_bayar, 0, ',', '.') }}</span>
                         </div>
                     </div>
 
                     @if ($transaksi->status == 'PENDING')
                         <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                            <p class="text-sm text-yellow-800 mb-2"><i class="fas fa-info-circle"></i> <strong>Menunggu Pembayaran</strong></p>
-                            <p class="text-sm text-yellow-700">Silakan lakukan pembayaran untuk melanjutkan pesanan Anda.</p>
+                            <p class="text-sm text-yellow-800 mb-2"><i class="fas fa-info-circle"></i> <strong>Menunggu
+                                    Pembayaran</strong></p>
+                            <p class="text-sm text-yellow-700">Silakan lakukan pembayaran untuk melanjutkan pesanan Anda.
+                            </p>
 
                             @if ($transaksi->payment && $transaksi->payment->snap_token)
                                 <button type="button" id="pay-button"
@@ -134,7 +184,8 @@
                                     Bayar Dengan Midtrans
                                 </button>
                             @else
-                                <form action="{{ route('payment.createSnap', $transaksi->transaksi_id) }}" method="POST" class="mt-4">
+                                <form action="{{ route('payment.createSnap', $transaksi->transaksi_id) }}" method="POST"
+                                    class="mt-4">
                                     @csrf
                                     <button type="submit"
                                         class="w-full bg-[#7A1F1F] text-white py-2 rounded-lg font-semibold hover:bg-[#5A0F0F] transition cursor-pointer">
@@ -147,9 +198,14 @@
 
                     @if ($transaksi->status == 'SHIPPED' && $transaksi->trackingResi->no_resi)
                         <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                            <p class="text-sm text-blue-800 mb-2"><i class="fas fa-shipping-fast"></i> <strong>Pesanan Sedang Dikirim</strong></p>
-                            <p class="text-sm text-blue-700">Nomor Resi: <strong>{{ $transaksi->trackingResi->no_resi }}</strong></p>
-                            <button id="cek-resi-btn" type="button" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">Cek Status Pengiriman</button>
+                            <p class="text-sm text-blue-800 mb-2"><i class="fas fa-shipping-fast"></i> <strong>Pesanan
+                                    Sedang Dikirim</strong></p>
+                            <p class="text-sm text-blue-700">Nomor Resi:
+                                <strong>{{ $transaksi->trackingResi->no_resi }}</strong>
+                            </p>
+                            <button id="cek-resi-btn" type="button"
+                                class="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">Cek Status
+                                Pengiriman</button>
                             <div id="tracking-result" class="mt-3 text-sm text-blue-900"></div>
                         </div>
                         <script>
@@ -164,7 +220,8 @@
                                             if (data.histories && data.histories.length > 0) {
                                                 html += '<b>Riwayat:</b><ul style="margin-left:1em">';
                                                 data.histories.slice(0, 5).forEach(h => {
-                                                    html += `<li>${h.waktu ? h.waktu.substring(0, 16).replace('T', ' ') : ''} - <b>${h.status}</b> ${h.deskripsi ? ('- ' + h.deskripsi) : ''} ${h.lokasi ? ('@' + h.lokasi) : ''}</li>`;
+                                                    html +=
+                                                        `<li>${h.waktu ? h.waktu.substring(0, 16).replace('T', ' ') : ''} - <b>${h.status}</b> ${h.deskripsi ? ('- ' + h.deskripsi) : ''} ${h.lokasi ? ('@' + h.lokasi) : ''}</li>`;
                                                 });
                                                 html += '</ul>';
                                             }
@@ -182,7 +239,8 @@
 
                     @if ($transaksi->status == 'DELIVERED')
                         <div class="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                            <p class="text-sm text-green-800 mb-2"><i class="fas fa-check-circle"></i> <strong>Pesanan Selesai</strong></p>
+                            <p class="text-sm text-green-800 mb-2"><i class="fas fa-check-circle"></i> <strong>Pesanan
+                                    Selesai</strong></p>
                             <p class="text-sm text-green-700">Terima kasih telah berbelanja di Murnisaji!</p>
                         </div>
                     @endif
@@ -204,7 +262,8 @@
     </section>
 
     @if ($transaksi->payment && $transaksi->payment->snap_token)
-        <script src="{{ config('services.midtrans.is_production') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}"
+        <script
+            src="{{ config('services.midtrans.is_production') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}"
             data-client-key="{{ config('services.midtrans.client_key') }}"></script>
         <script>
             const snapToken = @json($transaksi->payment->snap_token);

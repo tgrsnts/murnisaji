@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Alamat;
 use App\Models\Produk;
+use App\Models\Transaksi;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -53,7 +54,7 @@ class TransaksiSeeder extends Seeder
                 $subtotal += $harga * (int) $item['quantity'];
             }
 
-            $transaksiId = DB::table('transaksis')->insertGetId([
+            $transaksi = Transaksi::create([
                 ...$baseData,
                 'total_harga_produk' => $subtotal,
                 'ongkir' => $ongkir,
@@ -61,6 +62,8 @@ class TransaksiSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ], 'transaksi_id');
+
+            $transaksiId = $transaksi->transaksi_id;
 
             foreach ($items as $item) {
                 $harga = (int) ($produks[$item['id_produk']]->harga ?? 0);
