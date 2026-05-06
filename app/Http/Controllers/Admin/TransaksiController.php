@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\TrackingResi;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
@@ -59,12 +60,17 @@ class TransaksiController extends Controller
             'resi' => 'required|string|max:255'
         ]);
 
+        $tracking =TrackingResi::create([            
+            'no_resi' => $validated['resi'],
+            'kurir' => $transaksi->kurir,
+        ]);
+
         $transaksi->update([
-            'resi' => $validated['resi'],
+            'tracking_id' => $tracking->tracking_id,
             'status' => 'SHIPPED'
         ]);
 
-        return back()->with('success', 'Nomor resi berhasil ditambahkan dan status diubah menjadi SHIPPED.');
+        return back()->with('success', 'Nomor resi berhasil ditambahkan dan status diubah menjadi Dikirim.');
     }
 
     /**

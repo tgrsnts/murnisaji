@@ -27,7 +27,7 @@ class Transaksi extends Model
         'kurir',
         'layanan_kurir',
         'status',
-        'resi',
+        'tracking_id',
     ];
 
     protected $primaryKey = 'transaksi_id';

@@ -52,7 +52,7 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-500 mb-1">Kurir</p>
-                            <p class="font-semibold">{{ $transaksi->kurir }} - {{ $transaksi->layanan_kurir }}</p>
+                            <p class="font-semibold">{{ $transaksi->layanan_kurir }}</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-500 mb-1">No. Resi</p>

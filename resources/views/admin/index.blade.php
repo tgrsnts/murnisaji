@@ -101,27 +101,25 @@
                             <td class="px-6 py-4">
                                 @if ($order->status == 'PENDING')
                                     <span
-                                        class="w-fit bg-yellow-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Belum
-                                        Bayar</span>
+                                        class="w-fit bg-yellow-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center">Menunggu Pembayaran</span>
                                 @elseif ($order->status == 'PAID')
                                     <span
-                                        class="w-fit bg-orange-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sudah
-                                        Bayar</span>
+                                        class="w-fit bg-orange-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center">
+                                        Dibayar</span>
                                 @elseif ($order->status == 'PACKED')
                                     <span
-                                        class="w-fit bg-purple-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sudah
+                                        class="w-fit bg-purple-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center">
                                         Dikemas</span>
                                 @elseif ($order->status == 'SHIPPED')
                                     <span
-                                        class="w-fit bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sedang
-                                        Dikirim</span>
+                                        class="w-fit bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center">Dalam
+                                        Pengiriman</span>
                                 @elseif ($order->status == 'DELIVERED')
                                     <span
-                                        class="w-fit bg-green-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">Sudah
-                                        Dikirim</span>
+                                        class="w-fit bg-green-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center">Selesai</span>
                                 @else
                                     <span
-                                        class="w-fit bg-red-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center uppercase">{{ $order->status }}</span>
+                                        class="w-fit bg-red-500 text-white text-sm font-bold px-4 py-2 rounded-lg block text-center">{{ $order->status }}</span>
                                 @endif
                             </td>
                         </tr>
@@ -174,7 +172,7 @@
                     borderRadius: 10,
                     backgroundColor: '#8B0000',
                     barThickness: 10
-                }]                
+                }]
             },
             options: {
                 maintainAspectRatio: false,

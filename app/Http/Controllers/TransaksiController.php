@@ -303,8 +303,7 @@ class TransaksiController extends Controller
             'total_bayar' => $total_bayar,
             'kurir' => $request->kurir,
             'layanan_kurir' => $request->layanan_kurir,
-            'status' => 'PENDING',
-            'resi' => null,
+            'status' => 'PENDING',            
         ]);
 
         // Create transaction items

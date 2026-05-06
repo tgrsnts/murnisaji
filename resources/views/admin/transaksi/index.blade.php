@@ -66,25 +66,38 @@
                                         'DELIVERED' => 'bg-green-100 text-green-800',
                                         'CANCEL' => 'bg-red-100 text-red-800',
                                     ];
+
+                                    $statusLabels = [
+                                        'PENDING' => 'Menunggu Pembayaran',
+                                        'PAID' => 'Dibayar',
+                                        'PACKED' => 'Dikemas',
+                                        'SHIPPED' => 'Dalam Pengiriman',
+                                        'DELIVERED' => 'Selesai',
+                                        'CANCEL' => 'Dibatalkan',
+                                    ];
+
                                     $statusColor = $statusColors[$transaksi->status] ?? 'bg-gray-100 text-gray-800';
+                                    $statusLabel = $statusLabels[$transaksi->status] ?? $transaksi->status;
                                 @endphp
+
                                 <span class="px-2 py-1 rounded-full text-xs font-semibold {{ $statusColor }}">
-                                    {{ $transaksi->status }}
+                                    {{ $statusLabel }}
                                 </span>
                             </td>
 
                             <td class="py-2 px-3 text-xs text-gray-600">
-                                {{ $transaksi->kurir }} - {{ $transaksi->layanan_kurir }}
+                                {{ $transaksi->layanan_kurir }}
                             </td>
 
                             <td class="py-2 px-3 text-xs text-gray-600">
-                                {{ $transaksi->resi ?? '-' }}
+                                {{ optional($transaksi->trackingResi)->no_resi ?? '-' }}
                             </td>
 
                             <td class="py-2 px-3">
                                 <div class="flex justify-center space-x-2">
                                     <a href="{{ route('admin.transaksi.show', $transaksi->transaksi_id) }}"
-                                        class="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-xs" title="Lihat detail">
+                                        class="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-xs"
+                                        title="Lihat detail">
                                         Detail
                                     </a>
 
@@ -93,7 +106,8 @@
                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-xs"
+                                        <button type="submit"
+                                            class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-xs"
                                             title="Hapus transaksi">
                                             Hapus
                                         </button>

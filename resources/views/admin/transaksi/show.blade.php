@@ -85,56 +85,89 @@
                 <div class="space-y-4">
                     <!-- Status Update Form -->
                     <div>
-                        <form action="{{ route('admin.transaksi.updateStatus', $transaksi->transaksi_id) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <label class="text-gray-600 text-sm">Status Transaksi:</label>
-                            <div class="flex gap-2 mt-1">
-                                <select name="status" class="flex-1 p-2 border border-[#D4AF5A] rounded-lg text-sm">
-                                    <option value="PENDING" {{ $transaksi->status == 'PENDING' ? 'selected' : '' }}>
-                                        PENDING
-                                    </option>
-                                    <option value="PAID" {{ $transaksi->status == 'PAID' ? 'selected' : '' }}>PAID
-                                    </option>
-                                    <option value="PACKED" {{ $transaksi->status == 'PACKED' ? 'selected' : '' }}>PACKED
-                                    </option>
-                                    <option value="SHIPPED" {{ $transaksi->status == 'SHIPPED' ? 'selected' : '' }}>
-                                        SHIPPED</option>
-                                    <option value="DELIVERED" {{ $transaksi->status == 'DELIVERED' ? 'selected' : '' }}>DELIVERED
-                                    </option>
-                                    <option value="CANCEL" {{ $transaksi->status == 'CANCEL' ? 'selected' : '' }}>CANCEL
-                                    </option>
-                                </select>
-                                <button type="submit"
-                                    class="px-4 py-2 bg-red-800 text-white rounded-lg hover:bg-red-900 text-sm">
-                                    Update
-                                </button>
+                        @if ($transaksi->status === 'PENDING')
+                            <div class="px-4 py-2 bg-yellow-100 text-yellow-700 rounded-lg text-sm">
+                                Transaksi ini sedang menunggu pembayaran.
                             </div>
-                        </form>
-                    </div>
+                        @endif
 
-                    <!-- Resi Update Form -->
-                    <div>
-                        <form action="{{ route('admin.transaksi.updateResi', $transaksi->transaksi_id) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <label class="text-gray-600 text-sm">Nomor Resi:</label>
-                            <div class="flex gap-2 mt-1">
-                                <input type="text" name="resi" value="{{ $transaksi->resi }}"
-                                    placeholder="Masukkan nomor resi"
-                                    class="flex-1 p-2 border border-[#D4AF5A] rounded-lg text-sm">
+                        @if ($transaksi->status === 'PAID')
+                            <form action="{{ route('admin.transaksi.updateStatus', $transaksi->transaksi_id) }}"
+                                method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="status" value="PACKED">
+
                                 <button type="submit"
-                                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
-                                    Simpan
+                                    class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 text-sm">
+                                    Kemas Pesanan
                                 </button>
+                            </form>
+                        @endif
+
+                        @if ($transaksi->status === 'PACKED')
+                            <form action="{{ route('admin.transaksi.updateResi', $transaksi->transaksi_id) }}"
+                                method="POST">
+                                @csrf
+                                @method('PATCH')
+
+                                <label class="text-gray-600 text-sm">Nomor Resi:</label>
+                                <div class="flex gap-2 mt-1">
+                                    <input type="text" name="resi" placeholder="Masukkan nomor resi"
+                                        class="flex-1 p-2 border border-[#D4AF5A] rounded-lg text-sm" required>
+
+                                    <button type="submit"
+                                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
+                                        Input Resi & Kirim
+                                    </button>
+                                </div>
+                            </form>
+                        @endif
+
+                        @if ($transaksi->status === 'SHIPPED')
+                            <form action="{{ route('admin.transaksi.updateStatus', $transaksi->transaksi_id) }}"
+                                method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="status" value="DELIVERED">
+
+                                <button type="submit"
+                                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm">
+                                    Tandai Selesai
+                                </button>
+                            </form>
+                        @endif
+
+                        {{-- @if ($transaksi->status !== 'CANCEL' && $transaksi->status !== 'DELIVERED')
+                            <form action="{{ route('admin.transaksi.updateStatus', $transaksi->transaksi_id) }}"
+                                method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="status" value="CANCEL">
+
+                                <button type="submit"
+                                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm">
+                                    Batalkan Transaksi
+                                </button>
+                            </form>
+                        @endif
+
+                        @if ($transaksi->status === 'CANCEL')
+                            <div class="px-4 py-2 bg-red-100 text-red-700 rounded-lg text-sm">
+                                Transaksi ini telah dibatalkan.
                             </div>
-                            <p class="text-xs text-gray-500 mt-1">Status akan otomatis berubah menjadi SHIPPED</p>
-                        </form>
+                        @endif --}}
+
+                        @if ($transaksi->status === 'DELIVERED')
+                            <div class="px-4 py-2 bg-green-100 text-green-700 rounded-lg text-sm">
+                                Transaksi ini telah selesai.
+                            </div>
+                        @endif
                     </div>
 
                     <div class="border-t pt-3">
                         <span class="text-gray-600 text-sm">Kurir:</span>
-                        <p class="font-semibold">{{ $transaksi->kurir }} - {{ $transaksi->layanan_kurir }}</p>
+                        <p class="font-semibold">{{ $transaksi->layanan_kurir }}</p>
                     </div>
                 </div>
             </div>
