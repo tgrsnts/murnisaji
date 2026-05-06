@@ -46,18 +46,62 @@
                             placeholder="Masukkan nomor telepon">
                     </div>
 
-                    <div>
+                    <div class="relative">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input type="password" name="password" required
-                            class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:border-red-500"
+
+                        <input type="password" name="password" id="password" required
+                            class="w-full border border-gray-300 rounded-lg p-2 pr-10 text-sm focus:outline-none focus:border-red-500"
                             placeholder="Min 6 karakter">
+
+                        <button type="button" onclick="togglePassword()"
+                            class="absolute right-3 top-1/2 text-gray-500 hover:text-gray-700">
+                            <i id="eyeIcon" class="fas fa-eye"></i>
+                        </button>
+                        <script>
+                            function togglePassword() {
+                                const input = document.getElementById('password');
+                                const icon = document.getElementById('eyeIcon');
+
+                                if (input.type === 'password') {
+                                    input.type = 'text';
+                                    icon.classList.remove('fa-eye');
+                                    icon.classList.add('fa-eye-slash');
+                                } else {
+                                    input.type = 'password';
+                                    icon.classList.remove('fa-eye-slash');
+                                    icon.classList.add('fa-eye');
+                                }
+                            }
+                        </script>
                     </div>
 
-                    <div>
+                    <div class="relative">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
-                        <input type="password" name="password_confirmation" required
-                            class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:border-red-500"
-                            placeholder="Konfirmasi password">
+
+                        <input type="password" name="password_confirmation" id="password_confirmation" required
+                            class="w-full border border-gray-300 rounded-lg p-2 pr-10 text-sm focus:outline-none focus:border-red-500"
+                            placeholder="Konfirmasi Password">
+
+                        <button type="button" onclick="togglePasswordConfirmation()"
+                            class="absolute right-3 top-1/2 text-gray-500 hover:text-gray-700">
+                            <i id="eyeIconConfirmation" class="fas fa-eye"></i>
+                        </button>
+                        <script>
+                            function togglePasswordConfirmation() {
+                                const input = document.getElementById('password_confirmation');
+                                const icon = document.getElementById('eyeIconConfirmation');
+
+                                if (input.type === 'password') {
+                                    input.type = 'text';
+                                    icon.classList.remove('fa-eye');
+                                    icon.classList.add('fa-eye-slash');
+                                } else {
+                                    input.type = 'password';
+                                    icon.classList.remove('fa-eye-slash');
+                                    icon.classList.add('fa-eye');
+                                }
+                            }
+                        </script>
                     </div>
 
                     <button type="submit"
@@ -67,7 +111,8 @@
                 </form>
 
                 <p class="text-center text-sm text-gray-600 mt-6">
-                    Sudah punya akun? <a href="{{ route('auth.login') }}" class="text-red-600 font-medium hover:underline">Login di sini</a>
+                    Sudah punya akun? <a href="{{ route('auth.login') }}"
+                        class="text-red-600 font-medium hover:underline">Login di sini</a>
                 </p>
             </div>
         </div>
