@@ -26,7 +26,7 @@ class PaymentController extends Controller
                 ->with('open_snap', true);
         }
 
-        $orderId = $payment?->order_id ?? 'TRX-' . $transaksi->transaksi_id . '-' . now()->timestamp;
+        $orderId = $payment?->order_id ?? (string) $transaksi->transaksi_id;
 
         $params = [
             'transaction_details' => [
