@@ -31,10 +31,8 @@ class AlamatController extends Controller
             'label_alamat' => 'required|string|max:100',
             'nama_penerima' => 'required|string|max:100',
             'no_telepon' => 'required|string|max:20',
-            'provinsi' => 'required|string|max:100',
-            'province_id' => 'required|integer',
-            'kabupaten' => 'required|string|max:100',
-            'city_id' => 'required|integer',
+            'provinsi' => 'required|string|max:100',            
+            'kabupaten' => 'required|string|max:100',   
             'kecamatan' => 'required|string|max:100',
             'desa' => 'nullable|string|max:100',
             'detail' => 'required|string',
@@ -63,10 +61,8 @@ class AlamatController extends Controller
         $alamat->label_alamat = $validated['label_alamat'];
         $alamat->nama_penerima = $validated['nama_penerima'];
         $alamat->no_telepon = $validated['no_telepon'];
-        $alamat->provinsi = $validated['provinsi'];
-        $alamat->province_id = $validated['province_id'];
-        $alamat->kabupaten = $validated['kabupaten'];
-        $alamat->city_id = $validated['city_id'];
+        $alamat->provinsi = $validated['provinsi'];    
+        $alamat->kabupaten = $validated['kabupaten'];   
         $alamat->kecamatan = $validated['kecamatan'];
         $alamat->desa = $validated['desa'] ?? null;
         $alamat->detail = $validated['detail'];
@@ -91,9 +87,7 @@ class AlamatController extends Controller
             'nama_penerima' => 'required|string|max:100',
             'no_telepon' => 'required|string|max:20',
             'provinsi' => 'required|string|max:100',
-            'province_id' => 'required|integer',
             'kabupaten' => 'required|string|max:100',
-            'city_id' => 'required|integer',
             'kecamatan' => 'required|string|max:100',
             'desa' => 'nullable|string|max:100',
             'detail' => 'required|string',
