@@ -30,10 +30,12 @@
         </a>
     </nav>
 
-    <div class="p-8">
+    {{-- <div class="p-8">
         <button
             class="w-full bg-[#8B0000] text-white py-3 rounded-xl font-bold hover:opacity-90 transition shadow-lg uppercase text-xs tracking-widest hover:cursor-pointer">
             Logout
         </button>
-    </div>
+    </div> --}}
+
+    <x-modal-logout />
 </aside>
