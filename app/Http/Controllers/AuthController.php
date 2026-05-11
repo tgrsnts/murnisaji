@@ -91,7 +91,7 @@ class AuthController extends Controller
             'username' => $request->username,
             'telp' => $request->telp,
             'password' => Hash::make($request->password),
-            'role' => 'user', // Default role
+            'role' => 0,
         ]);
 
         Auth::login($user);
