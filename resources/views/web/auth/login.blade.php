@@ -1,9 +1,12 @@
 @extends('web.layouts.app')
 
 @section('content')
-    <section class="bg-white px-20 py-32 min-h-screen flex items-center justify-center">
-        <div class="max-w-md w-full">
-            <div class="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
+    <section
+        class="relative min-h-screen flex items-center justify-center bg-cover bg-center overflow-hidden"
+        style="background-image: url('{{ asset('images/logo/bg log.png') }}');">
+        <div class="absolute inset-0 bg-black/75"></div>
+        <div class="relative w-full max-w-lg px-6">
+            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-10 shadow-2xl">
                 <h1 class="text-3xl font-bold text-gray-900 mb-2">Login</h1>
                 <p class="text-gray-600 mb-6">Masuk ke akun Anda untuk melanjutkan</p>
 
