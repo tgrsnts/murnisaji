@@ -2,23 +2,23 @@
 
 @section('content')
     <!-- Hero -->
-    <section class="relative bg-[#FCFBF5] flex items-center justify-between px-20  pb-20">
+    <section class="relative bg-[#FCFBF5] flex flex-col-reverse md:flex-row items-center justify-between px-4 md:px-20 pb-20">
         <div class="max-w-2xl">
-            <div class="flex items-center w-full my-6">
-                <div class="h-px bg-[#D4AF5A] flex-1 max-w-[30px]"></div>
-                <span class="px-4 text-[#7A1F1F] text-lg font-semibold">Abon Murnisaji</span>
-                <div class="h-px bg-[#D4AF5A] flex-1 max-w-[30px]"></div>
+            <div class="flex items-center w-full my-2 md:my-6">
+                <div class="h-px bg-[#D4AF5A] flex-1 w-full md:max-w-[30px]"></div>
+                <span class="px-4 text-[#7A1F1F] text-sm md:text-lg font-semibold">Abon Murnisaji</span>
+                <div class="h-px bg-[#D4AF5A] flex-1 w-full md:max-w-[30px]"></div>
             </div>
-            <h1 class="text-[40px] font-bold leading-snug" style="font-family: 'Libre Baskerville', serif;">
+            <h1 class="text-xl md:text-[40px] font-bold leading-snug" style="font-family: 'Libre Baskerville', serif;">
                 <span class="text-[#D4AF5A]">Solusi</span>
                 <span class="text-[#7A1F1F]">Praktis Cukupi Protein Setiap Hari</span>
             </h1>
-            <p class="mt-6 text-[#6B645C] text-lg">
+            <p class="mt-2 md:mt-6 text-[#6B645C] text-md md:text-lg">
                 Abon Sapi, Ayam, dan Tuna tanpa MSG,
                 tanpa pengawet, siap tabur kapan saja.
             </p>
 
-            <div class="mt-8 flex gap-4">
+            <div class="mt-8 flex justify-center md:justify-start gap-4">
                 <x-button tone="primary" variant="full">
                     Buy Now
                 </x-button>
@@ -35,13 +35,13 @@
     </section>
 
     <!-- Kenapa Pilih -->
-    <section class="bg-white py-24 px-20 text-center">
+    <section class="bg-white py-24 px-4 md:px-20 text-center">
 
-        <h2 class="text-3xl font-bold text-[#2B2B2B]">
+        <h2 class="text-xl md:text-3xl font-bold text-[#2B2B2B]">
             Kenapa Pilih Abon <span class="text-[#D4AF5A]">Murnisaji?</span>
         </h2>
 
-        <div class="grid md:grid-cols-4 gap-8 mt-16">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-8 md:mt-16">
 
             <div class="bg-[#FCFBF5] rounded-xl p-8 shadow-sm">
                 <img src="{{ asset('images/icon/icon1.png') }}" class="w-16 mx-auto">
@@ -67,19 +67,19 @@
     </section>
 
     <!-- Menu Produk -->
-    <section class="bg-[#FCFBF5] py-24 px-20 text-center">
+    <section class="bg-[#FCFBF5] py-24 px-4 md:px-20 text-center">
 
-        <h2 class="text-3xl font-bold text-[#2B2B2B]">
+        <h2 class="text-xl md:text-3xl font-bold text-[#2B2B2B]">
             Pilihan Menu Abon <span class="text-[#D4AF5A]">Murnisaji</span>
         </h2>
 
-        <div class="grid md:grid-cols-3 gap-x-16 gap-y-36 mt-40">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-24 md:gap-x-16 md:gap-y-36 mt-40">
 
             @foreach ($produk as $item)
-                <div class="bg-[#D4AF5A] flex flex-col p-6 pt-28 rounded-xl shadow relative">
+                <div class="bg-[#D4AF5A] flex flex-col p-2 md:p-6 pt-28 rounded-xl shadow relative">
                     <img src="{{ asset('/storage/' . $item->gambar) }}"
                         class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px]">
-                    <h3 class="mt-6 text-[#ffffff] font-semibold">{{ $item->nama_produk }}</h3>
+                    <h3 class="mt-2 md:mt-6 text-[#ffffff] font-semibold">{{ $item->nama_produk }}</h3>
                     <p class="text-sm text-gray-700 mt-2">
                         {{ $item->deskripsi }}
                     </p>
@@ -100,13 +100,13 @@
     </section>
 
     <!-- Testimoni -->
-    <section class="bg-white py-24 px-20 text-center">
+    <section class="bg-white py-24 px-4 md:px-20 text-center">
 
-        <h2 class="text-3xl font-bold text-[#2B2B2B]">
+        <h2 class="text-xl md:text-3xl font-bold text-[#2B2B2B]">
             Pendapat Mereka Tentang Abon <span class="text-[#D4AF5A]">Murnisaji</span>
         </h2>
 
-        <div class="grid md:grid-cols-3 gap-10 mt-16">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-16">
 
             <div class="bg-[#FCFBF5] p-8 rounded-xl text-left">
                 <p class="text-gray-600 text-sm">
