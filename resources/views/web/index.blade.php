@@ -89,10 +89,10 @@
                         <span class="text-[#ffffff] font-semibold">Rp {{ number_format($item->harga, 0, ',', '.') }}</span>
                     </div>
 
-                    <button
+                    <a href="{{ route('menu.show', $item->produk_id) }}"
                         class="mt-4 bg-[#ffffff] w-full py-2 rounded-lg hover:bg-gray-200 transition hover:cursor-pointer">
-                        Buy Now
-                    </button>
+                        Lihat Detail
+                    </a>
                 </div>
             @endforeach
         </div>
