@@ -90,7 +90,7 @@
                     </div>
 
                     <a href="{{ route('menu.show', $item->produk_id) }}"
-                        class="mt-4 bg-[#ffffff] w-full py-2 rounded-lg hover:bg-gray-200 transition hover:cursor-pointer">
+                        class="mt-4 bg-[#ffffff] w-full py-2 px-4 rounded-lg hover:bg-gray-200 transition hover:cursor-pointer">
                         Lihat Detail
                     </a>
                 </div>
