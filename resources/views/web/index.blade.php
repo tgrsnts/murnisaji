@@ -76,7 +76,7 @@
         <div class="grid md:grid-cols-3 gap-x-16 gap-y-36 mt-40">
 
             @foreach ($produk as $item)
-                <div class="bg-[#D4AF5A] p-6 pt-28 rounded-xl shadow relative">
+                <div class="bg-[#D4AF5A] flex flex-col p-6 pt-28 rounded-xl shadow relative">
                     <img src="{{ asset('/storage/' . $item->gambar) }}"
                         class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px]">
                     <h3 class="mt-6 text-[#ffffff] font-semibold">{{ $item->nama_produk }}</h3>
