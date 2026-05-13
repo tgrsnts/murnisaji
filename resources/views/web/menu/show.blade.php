@@ -1,18 +1,18 @@
 @extends('web.layouts.app')
 
 @section('content')
-    <section class="bg-white px-20 py-12">
+    <section class="bg-white px-4 md:px-20 py-4 md:py-12">
         <div class="max-w-7xl mx-auto">
             <!-- Breadcrumb -->
-            <div class="mb-6">
+            <div class="mb-4 md:mb-6">
                 <a href="{{ route('menu.index') }}" class="text-gray-500 hover:text-[#7A1F1F]">Menu</a>
                 <span class="text-[#D4AF5A] mx-2">/</span>
                 <span class="text-gray-800">{{ $produk->nama_produk }}</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12">
                 <!-- Product Image -->
-                <div class="bg-gray-100 rounded-lg p-8 flex items-center justify-center">
+                <div class="bg-gray-100 rounded-lg p-2 md:p-8 flex items-center justify-center">
                     @if ($produk->gambar)
                         <img src="{{ asset('storage/' . $produk->gambar) }}" alt="{{ $produk->nama_produk }}"
                             class="w-full h-auto object-contain max-h-96">
@@ -25,7 +25,7 @@
                 <!-- Product Info -->
                 <div class="flex flex-col gap-6">
                     <div>
-                        <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ $produk->nama_produk }}</h1>
+                        <h1 class="text-xl md:text-3xl font-bold text-gray-900 mb-2">{{ $produk->nama_produk }}</h1>
                         <p class="text-sm text-gray-500">Kategori: {{ $produk->kategori }}</p>
                     </div>
 
@@ -48,7 +48,7 @@
 
                     <!-- Price -->
                     <div class="border-t border-b py-4">
-                        <p class="text-4xl font-bold text-[#7A1F1F]">Rp {{ number_format($produk->harga, 0, ',', '.') }}</p>
+                        <p class="text-xl md:text-4xl font-bold text-[#7A1F1F]">Rp {{ number_format($produk->harga, 0, ',', '.') }}</p>
                     </div>
 
                     <!-- Product Details -->
@@ -102,7 +102,7 @@
 
                         <div class="flex gap-3">
                             <button type="submit" 
-                                class="flex-1 bg-[#7A1F1F] text-white py-3 rounded-lg font-semibold hover:bg-[#5A0F0F] transition flex items-center justify-center gap-2 hover:cursor-pointer"
+                                class="text-sm md:text-base flex-1 bg-[#7A1F1F] text-white py-3 rounded-lg font-semibold hover:bg-[#5A0F0F] transition flex items-center justify-center gap-2 hover:cursor-pointer"
                                 @if($produk->stok == 0) disabled @endif>
                                 <i class="fas fa-shopping-cart"></i>
                                 @if($produk->stok == 0)
@@ -112,7 +112,7 @@
                                 @endif
                             </button>
                             <a href="{{ route('menu.index') }}" 
-                                class="px-6 py-3 border-2 border-[#7A1F1F] text-[#7A1F1F] rounded-lg font-semibold hover:bg-[#7A1F1F] hover:text-white transition">
+                                class="text-sm md:text-base px-6 py-3 border-2 border-[#7A1F1F] text-[#7A1F1F] rounded-lg font-semibold hover:bg-[#7A1F1F] hover:text-white transition">
                                 Kembali
                             </a>
                         </div>
@@ -122,7 +122,7 @@
 
             <!-- Reviews Section -->
             <div class="mt-12">
-                <div class="flex items-center justify-between mb-6">
+                <div class="flex flex-col md:flex-row md:items-center gap-2 justify-between mb-6">
                     <h2 class="text-2xl font-bold text-gray-900">Ulasan Pelanggan</h2>
                     <div class="flex items-center gap-2">
                         <div class="flex items-center">
