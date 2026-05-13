@@ -2,32 +2,32 @@
 
 @section('content')
     <!-- Hero -->
-    <section class="relative flex items-center justify-between px-20 py-24">
+    <section class="relative flex items-center justify-between px-4 md:px-20 py-24">
         <div class="w-full">
-            <h1 class="text-center text-black text-[40px] font-semibold">
+            <h1 class="text-center text-black text-2xl md:text-[40px] font-semibold">
                 Menu Abon <span class="text-[#7A1F1F]">Murnisaji</span>
             </h1>
         </div>
     </section>
-    <section class="bg-white flex items-center justify-between px-20 py-24">
-        <div class="flex flex-col gap-24 w-full">
+    <section class="bg-white flex items-center justify-between px-4 md:px-20 py-24">
+        <div class="flex flex-col gap-12 md:gap-24 w-full">
             @forelse($produk as $index => $item)
                 @if($index % 2 == 0)
                     {{-- Product (Even Index - Left to Right) --}}
-                    <div class="flex items-center gap-4">
-                        <div class="rounded-lg p-4 bg-[#D4AF5A] flex items-center justify-center">
+                    <div class="flex flex-col md:flex-row items-center md:gap-4">
+                        <div class="rounded-lg rounded-b-none md:rounded-b-lg p-4 bg-[#D4AF5A] flex items-center justify-center">
                             @if($item->gambar)
                                 <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama_produk }}" class="w-full h-full object-cover rounded">
                             @else
                                 <img src="/images/menu/menu1.png" class="w-full h-auto object-contain">
                             @endif
                         </div>
-                        <div class="flex bg-white border-12 border-l-0 border-[#D4AF5A] rounded-lg rounded-l-none p-6 flex-1">
+                        <div class="flex bg-white border-12 md:border-l-0 border-[#D4AF5A] rounded-lg rounded-t-none md:rounded-t-lg md:rounded-l-none p-4 md:p-6 flex-1">
                             <div class="flex flex-col gap-4 w-full">
-                                <h2 class="text-[#7A1F1F] text-2xl font-semibold">{{ $item->nama_produk }}</h2>
+                                <h2 class="text-[#7A1F1F] text-xl md:text-2xl font-semibold">{{ $item->nama_produk }}</h2>
                                 <div class="flex flex-col gap-2">
                                     <p class="text-gray-700 line-clamp-3">{{ $item->deskripsi }}</p>
-                                    <div class="flex justify-between items-center">
+                                    <div class="flex flex-col md:flex-row items-start md:justify-between md:items-center">
                                         <div class="flex items-center gap-2">
                                             <div class="flex items-center">
                                                 @for($i = 1; $i <= 5; $i++)
@@ -54,20 +54,20 @@
                     </div>
                 @else
                     {{-- Product (Odd Index - Right to Left) --}}
-                    <div class="flex flex-row-reverse items-center gap-4">
-                        <div class="rounded-lg p-4 bg-[#D4AF5A] flex items-center justify-center">
+                    <div class="flex flex-col md:flex-row-reverse items-center md:gap-4">
+                        <div class="rounded-lg rounded-b-none md:rounded-b-lg p-4 bg-[#D4AF5A] flex items-center justify-center">
                             @if($item->gambar)
                                 <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama_produk }}" class="w-full h-full object-cover rounded">
                             @else
                                 <img src="/images/menu/menu2.png" class="w-full h-auto object-contain">
                             @endif
                         </div>
-                        <div class="flex bg-white border-12 border-r-0 border-[#D4AF5A] rounded-lg rounded-r-none p-6 flex-1">
+                        <div class="flex bg-white border-12 md:border-r-0 border-[#D4AF5A] rounded-lg rounded-t-none md:rounded-t-lg md:rounded-r-none p-4 md:p-6 flex-1">
                             <div class="flex flex-col gap-4 w-full">
-                                <h2 class="text-[#7A1F1F] text-2xl font-semibold">{{ $item->nama_produk }}</h2>
+                                <h2 class="text-[#7A1F1F] text-xl md:text-2xl font-semibold">{{ $item->nama_produk }}</h2>
                                 <div class="flex flex-col gap-2">
                                     <p class="text-gray-700 line-clamp-3">{{ $item->deskripsi }}</p>
-                                    <div class="flex justify-between items-center">
+                                    <div class="flex flex-col md:flex-row items-start md:justify-between md:items-center">
                                         <div class="flex items-center gap-2">
                                             <div class="flex items-center">
                                                 @for($i = 1; $i <= 5; $i++)

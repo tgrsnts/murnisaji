@@ -2,10 +2,10 @@
 
 @section('content')
     <!-- Hero -->
-    <section class="relative flex items-center justify-between px-20 py-24">
+    <section class="relative flex items-center justify-between px-4 md:px-20 py-24">
         <div class="w-full">
-            <h1 class="text-center text-black text-[40px] font-semibold">
-                Menu Abon <span class="text-[#7A1F1F]">Murnisaji</span>
+            <h1 class="text-center text-black text-2xl md:text-[40px] font-semibold">
+                Tentang Abon <span class="text-[#7A1F1F]">Murnisaji</span>
             </h1>
         </div>
         <div class="absolute z-0 -bottom-[1px] left-0 w-full h-10 overflow-hidden">
@@ -20,13 +20,13 @@
         </div>
 
     </section>
-    <section class="bg-white flex items-center justify-between px-20  pb-20">
-        <img src="/images/logo/logo abon.png" class="w-1/2 h-auto object-contain">
-        <div class="space-y-8 p-12">
+    <section class="bg-white flex flex-col md:flex-row items-center justify-between px-4 md:px-20 pb-20">
+        <img src="/images/logo/logo abon.png" class="w-7/10 md:w-1/2 h-auto object-contain">
+        <div class="space-y-8 p-4 md:p-12">
             <h2 class="text-3xl text-center font-bold text-[#2B2B2B]">
                 Apa Itu Abon <span class="text-[#D4AF5A]">Murnisaji?</span>
             </h2>
-            <p>
+            <p class="text-justify">
                 MURNISAJI adalah brand pangan yang memproduksi abon protein hewani dalam kemasan sachet,
                 dirancang sebagai solusi lauk praktis, siap saji, dan mudah diaplikasikan. Kami menghadirkan abon ayam dan
                 abon
@@ -39,11 +39,11 @@
         </div>
 
     </section>
-    <section class="bg-[#FDFCF8] flex flex-col items-center px-60 py-20">
-        <div class="space-y-4 text-center">
-            <h2 class="text-4xl font-bold text-[#2B2B2B]">Pemilik Abon <span class="text-[#D4AF5A]">Murnisaji</span></h2>
-            <p>
-                Get to know the friendly faces behind your favorite flavors.
+    <section class="bg-[#FDFCF8] flex flex-col items-center px-4 md:px-60 py-20">
+        <div class="space-y-2 md:space-y-4 text-center">
+            <h2 class="text-xl md:text-4xl font-bold text-[#2B2B2B]">Pemilik Abon <span class="text-[#D4AF5A]">Murnisaji</span></h2>
+            <p class="text-md">
+                Kenalilah sosok di balik kesuksesan Abon Murnisaji, Firdan Ihsanul In’am.
             </p>
 
             <div class="flex flex-col items-center space-y-4 mt-8">
@@ -73,9 +73,9 @@
             </div>
         </div>
     </section>
-    <section class="bg-white px-20 py-20">
+    <section class="bg-white px-4 md:px-20 py-20">
         <div class="space-y-8">
-            <h2 class="text-4xl text-center font-bold text-[#2B2B2B]">
+            <h2 class="text-xl md:text-4xl text-center font-bold text-[#2B2B2B]">
                 Lokasi Abon <span class="text-[#D4AF5A]">Murnisaji?</span>
             </h2>
 
