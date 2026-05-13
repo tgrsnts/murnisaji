@@ -2,7 +2,7 @@
 
     <!-- Logo -->
     <a href="{{ route('home') }}">
-        <img src="{{ asset('images/logo/Murnisaji Logo Red 2.png') }}" alt="Logo Murnisaji" class="h-10">
+        <img src="{{ asset('images/logo/MAIN LOGO-01.webp') }}" alt="Logo Murnisaji" class="h-24">
     </a>
 
     <!-- Menu -->

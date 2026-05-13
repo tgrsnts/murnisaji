@@ -1,7 +1,7 @@
 <aside class="w-64 bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden fixed top-6 left-6 bottom-6">
-    <div class="p-8">
-        <a href="{{ route('dashboard.index') }}" class="flex justify-center items-center gap-2">
-            <img class="h-8" src="{{ asset('images/logo/Murnisaji Logo Red 2.png') }}" alt="Murnisaji">
+    <div class="p-4">
+        <a href="{{ route('home') }}" class="flex justify-center items-center gap-2">
+            <img class="h-24" src="{{ asset('images/logo/MAIN LOGO-01.webp') }}" alt="Murnisaji">
         </a>
     </div>
 
