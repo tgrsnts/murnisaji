@@ -1,9 +1,9 @@
 @extends('web.layouts.app')
 
 @section('content')
-    <section class="bg-white px-20 py-12 min-h-screen">
+    <section class="bg-white p-4 md:px-20 md:py-12 min-h-screen">
         <div class="max-w-7xl mx-auto">
-            <h1 class="text-3xl font-bold text-gray-900 mb-8">Keranjang Belanja</h1>
+            <h1 class="text-xl md:text-3xl font-bold text-gray-900 mb-2 md:mb-8">Keranjang Belanja</h1>
 
             @if (session('success'))
                 <div class="mb-6 p-4 bg-green-100 text-green-800 rounded-lg">
@@ -18,13 +18,13 @@
             @endif
 
             @if (count($cartItems) > 0)
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
                     <!-- Cart Items -->
-                    <div class="lg:col-span-2 space-y-4">
+                    <div class="lg:col-span-2 space-y-2 md:space-y-4">
                         @foreach ($cartItems as $item)
-                            <div class="bg-white border border-gray-200 rounded-lg p-6 flex gap-6">
+                            <div class="bg-white border border-gray-200 rounded-lg p-2 md:p-6 flex gap-2 md:gap-6">
                                 <!-- Product Image -->
-                                <div class="w-32 h-32 bg-gray-100 rounded-lg shrink-0">
+                                <div class="w-16 md:w-32 h-16 md:h-32 bg-gray-100 rounded-lg shrink-0">
                                     @if ($item['produk']->gambar)
                                         <img src="{{ asset('storage/' . $item['produk']->gambar) }}"
                                             alt="{{ $item['produk']->nama_produk }}"
@@ -37,18 +37,18 @@
 
                                 <!-- Product Info -->
                                 <div class="flex-1">
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-1">
+                                    <h3 class="text-sm md:text-lg font-semibold text-gray-900 mb-1">
                                         {{ $item['produk']->nama_produk }}
                                     </h3>
                                     <p class="text-sm text-gray-500 mb-2">{{ $item['produk']->kategori }}</p>
-                                    <p class="text-xl font-bold text-[#7A1F1F] mb-4">
+                                    <p class="text-sm md:text-xl font-bold text-[#7A1F1F] mb-4">
                                         Rp {{ number_format($item['produk']->harga, 0, ',', '.') }}
                                     </p>
 
                                     <div class="flex items-center justify-between">
                                         <!-- Quantity Controls -->
                                         <form action="{{ route('cart.updateItem', $item['produk']->produk_id) }}"
-                                            method="POST" class="flex items-center gap-3">
+                                            method="POST" class="flex items-center gap-1 md:gap-3">
                                             @csrf
                                             @method('PATCH')
                                             <button type="button" onclick="decreaseQty{{ $item['produk']->produk_id }}()"
@@ -81,9 +81,9 @@
                                 </div>
 
                                 <!-- Subtotal -->
-                                <div class="text-right">
+                                <div class="hidden md:block text-right">
                                     <p class="text-sm text-gray-500 mb-1">Subtotal</p>
-                                    <p class="text-lg font-bold text-gray-900">
+                                    <p class="text-sm md:text-lg font-bold text-gray-900">
                                         Rp {{ number_format($item['subtotal'], 0, ',', '.') }}
                                     </p>
                                 </div>
@@ -115,8 +115,8 @@
 
                     <!-- Order Summary -->
                     <div class="lg:col-span-1">
-                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 sticky top-4">
-                            <h2 class="text-xl font-bold text-gray-900 mb-4">Ringkasan Pesanan</h2>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-2 md:p-6 sticky top-4">
+                            <h2 class="text-md md:text-xl font-bold text-gray-900 mb-4">Ringkasan Pesanan</h2>
 
                             <!-- Price Summary -->
                             <div class="border-t border-gray-200 pt-4 space-y-2 mb-6">
