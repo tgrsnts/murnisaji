@@ -2,7 +2,8 @@
 
 @section('content')
     <!-- Hero -->
-    <section class="relative bg-[#FCFBF5] flex flex-col-reverse md:flex-row items-center justify-between px-4 md:px-20 pb-20">
+    <section
+        class="relative bg-[#FCFBF5] flex flex-col-reverse md:flex-row items-center justify-between px-4 md:px-20 pb-20">
         <div class="max-w-2xl">
             <div class="flex items-center w-full my-2 md:my-6">
                 <div class="h-px bg-[#D4AF5A] flex-1 w-full md:max-w-[30px]"></div>
@@ -76,23 +77,30 @@
         <div class="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-24 md:gap-x-16 md:gap-y-36 mt-40">
 
             @foreach ($produk as $item)
-                <div class="bg-[#D4AF5A] flex flex-col p-2 md:p-6 pt-28 rounded-xl shadow relative">
+                <div class="bg-[#D4AF5A] h-full flex flex-col p-2 md:p-6 pt-16 md:pt-28 rounded-xl shadow relative">
+
                     <img src="{{ asset('/storage/' . $item->gambar) }}"
                         class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px]">
-                    <h3 class="mt-2 md:mt-6 text-[#ffffff] font-semibold">{{ $item->nama_produk }}</h3>
-                    <p class="text-sm text-gray-700 mt-2">
-                        {{ $item->deskripsi }}
-                    </p>
 
-                    <div class="flex justify-between mt-4">
-                        <span>⭐ {{ $item->getAverageRatingAttribute() }}/5</span>
-                        <span class="text-[#ffffff] font-semibold">Rp {{ number_format($item->harga, 0, ',', '.') }}</span>
+                    <div class="flex-grow">
+                        <h3 class="mt-4 md:mt-6 text-[#ffffff] font-semibold">{{ $item->nama_produk }}</h3>
+                        <p class="text-sm text-gray-700 mt-2">
+                            {{ $item->deskripsi }}
+                        </p>
                     </div>
 
-                    <a href="{{ route('menu.show', $item->produk_id) }}"
-                        class="mt-4 bg-[#ffffff] w-full py-2 px-4 rounded-lg hover:bg-gray-200 transition hover:cursor-pointer">
-                        Lihat Detail
-                    </a>
+                    <div class="mt-auto">
+                        <div class="flex justify-between mt-4">
+                            <span>⭐ {{ $item->getAverageRatingAttribute() }}/5</span>
+                            <span class="text-[#ffffff] font-semibold">Rp
+                                {{ number_format($item->harga, 0, ',', '.') }}</span>
+                        </div>
+
+                        <a href="{{ route('menu.show', $item->produk_id) }}"
+                            class="block text-center mt-4 bg-[#ffffff] w-full py-2 px-4 rounded-lg hover:bg-gray-200 transition hover:cursor-pointer">
+                            Lihat Detail
+                        </a>
+                    </div>
                 </div>
             @endforeach
         </div>
