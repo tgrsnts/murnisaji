@@ -27,5 +27,9 @@
         menu.classList.toggle('hidden');
     });
 
+    btnOff.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+    });
+
 
 </script>
