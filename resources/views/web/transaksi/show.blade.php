@@ -181,7 +181,7 @@
                             @if ($transaksi->payment && $transaksi->payment->snap_token)
                                 <button type="button" id="pay-button"
                                     class="mt-4 w-full bg-[#7A1F1F] text-white py-2 rounded-lg font-semibold hover:bg-[#5A0F0F] transition cursor-pointer">
-                                    Bayar Dengan Midtrans
+                                    Bayar
                                 </button>
                             @else
                                 <form action="{{ route('payment.createSnap', $transaksi->transaksi_id) }}" method="POST"
@@ -189,7 +189,7 @@
                                     @csrf
                                     <button type="submit"
                                         class="w-full bg-[#7A1F1F] text-white py-2 rounded-lg font-semibold hover:bg-[#5A0F0F] transition cursor-pointer">
-                                        Buat Pembayaran Midtrans
+                                        Bayar
                                     </button>
                                 </form>
                             @endif
