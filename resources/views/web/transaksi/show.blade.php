@@ -1,7 +1,7 @@
 @extends('web.layouts.app')
 
 @section('content')
-    <section class="bg-white px-20 py-12 min-h-screen">
+    <section class="bg-white p-4 md:px-20 md:py-12 min-h-screen">
         <div class="max-w-4xl mx-auto">
             @if (session('success'))
                 <div class="mb-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded-lg flex items-center gap-3">
@@ -21,22 +21,22 @@
 
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
                 <!-- Header -->
-                <div class="bg-[#7A1F1F] text-white p-6">
+                <div class="bg-[#7A1F1F] text-white p-4 md:p-6">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h1 class="text-2xl font-bold mb-2">Detail Pesanan</h1>
-                            <p class="text-sm opacity-90">Order ID: #{{ $transaksi->transaksi_id }}</p>
+                            <h1 class="text-lg md:text-2xl font-bold mb-0 md:mb-2">Detail Pesanan</h1>
+                            <p class="text-[10px] md:text-sm opacity-90">#{{ $transaksi->transaksi_id }}</p>
                         </div>
 
                         {{-- Tombol Salin Link untuk Guest --}}
                         @guest
                             <div class="flex flex-col items-end gap-2">
                                 <button type="button" id="copy-link-btn"
-                                    class="bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-2 rounded-lg border border-white/30 transition flex items-center gap-2 hover:cursor-pointer">
+                                    class="bg-white/20 hover:bg-white/30 text-white text-[10px] md:text-[12px] px-2 py-1 md:px-3 md:py-2 rounded-lg border border-white/30 transition flex items-center gap-1 md:gap-2 hover:cursor-pointer">
                                     <i class="fas fa-copy"></i>
                                     <span>Salin Link Pesanan</span>
                                 </button>
-                                <p class="text-[10px] opacity-75">*Simpan link ini untuk cek status pesanan Anda</p>
+                                <p class="text-[6px] md:text-[10px] text-right opacity-75">*Simpan link ini untuk cek status pesanan Anda</p>
                             </div>
 
                             <script>
@@ -68,7 +68,7 @@
                 </div>
 
                 <!-- Order Info -->
-                <div class="p-6 border-b border-gray-200">
+                <div class="p-4 md:p-6 border-b border-gray-200">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div>
                             <p class="text-sm text-gray-500 mb-1">Tanggal Pesanan</p>
@@ -105,7 +105,7 @@
                 </div>
 
                 <!-- Shipping Address -->
-                <div class="p-6 border-b border-gray-200">
+                <div class="p-4 md:p-6 border-b border-gray-200">
                     <h3 class="font-bold text-gray-900 mb-3">Alamat Pengiriman</h3>
                     <div class="bg-gray-50 p-4 rounded-lg">
                         <p class="font-semibold text-gray-900 mb-1">
@@ -122,7 +122,7 @@
                 </div>
 
                 <!-- Order Items -->
-                <div class="p-6 border-b border-gray-200">
+                <div class="p-4 md:p-6 border-b border-gray-200">
                     <h3 class="font-bold text-gray-900 mb-4">Produk Pesanan</h3>
                     <div class="space-y-4">
                         @foreach ($transaksi->items as $item)
@@ -153,7 +153,7 @@
                 </div>
 
                 <!-- Payment Summary -->
-                <div class="p-6 bg-gray-50">
+                <div class="p-4 md:p-6 bg-gray-50">
                     <div class="space-y-2 mb-4">
                         <div class="flex justify-between text-sm">
                             <span class="text-gray-600">Subtotal Produk</span>

@@ -1,7 +1,7 @@
 @extends('web.layouts.app')
 
 @section('content')
-    <section class="bg-white px-20 py-12 min-h-screen">
+    <section class="bg-white p-4 md:px-20 md:py-12 min-h-screen">
         <div class="max-w-7xl mx-auto">
             <h1 class="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
 
