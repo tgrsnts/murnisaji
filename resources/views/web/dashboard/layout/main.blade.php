@@ -23,7 +23,7 @@
     <div class="relative z-10 flex gap-4 md:gap-6 p-4 md:p-6 h-screen">
         @include('web.dashboard.layout.partials.sidebar')
 
-        <div class="w-0 md:w-64"></div>
+        <div class="hidden md:block w-64"></div>
 
         <div class="flex-1 flex flex-col gap-2 md:gap-6 h-fit overflow-y-auto no-scrollbar">
             @include('web.dashboard.layout.partials.header')
