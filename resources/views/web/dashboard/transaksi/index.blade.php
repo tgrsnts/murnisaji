@@ -3,7 +3,7 @@
 @php($title = 'Detail Transaksi')
 
 @section('content')
-    <div class="space-y-6">
+    <div class="space-y-2 md:space-y-6">
         @if (session('success'))
             <div class="bg-green-100 border border-green-200 text-green-800 rounded-2xl p-4">
                 {{ session('success') }}
@@ -16,14 +16,14 @@
             </div>
         @endif
 
-        <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
-            <h1 class="text-3xl font-bold text-gray-900">Detail Transaksi</h1>
-            <p class="text-gray-600 mt-1">No. Transaksi: #{{ $transaction->transaksi_id }}</p>
+        <div class="bg-white rounded-xl md:rounded-3xl shadow-xl border border-gray-100 p-4 md:p-6">
+            <h1 class="text-lg md:text-3xl font-bold text-gray-900">Detail Transaksi</h1>
+            <p class="text-xs md:text-md text-gray-600 mt-1">No. Transaksi: #{{ $transaction->transaksi_id }}</p>
         </div>
 
-        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            <div class="xl:col-span-2 space-y-6">
-                <div class="bg-white rounded-3xl shadow-sm border border-gray-200 p-6">
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-2 md:gap-6">
+            <div class="xl:col-span-2 space-y-2 md:space-y-6">
+                <div class="bg-white rounded-xl md:rounded-3xl shadow-sm border border-gray-200 p-4 md:p-6">
                     <div class="flex flex-col items-start gap-2">
                         <div>
                             <p class="text-sm text-gray-600 mb-1">Status Transaksi</p>
@@ -178,7 +178,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-3xl shadow-sm border border-gray-200 p-6">
+                <div class="bg-white rounded-xl md:rounded-3xl shadow-sm border border-gray-200 p-4 md:p-6">
                     <h3 class="text-lg font-bold text-gray-900 mb-4">Barang yang Dipesan</h3>
                     <div class="space-y-4 mb-4 pb-4 border-b border-gray-200">
                         @foreach ($transaction->items as $item)
@@ -215,8 +215,8 @@
                 </div>
             </div>
 
-            <div class="space-y-6">
-                <div class="bg-white rounded-3xl shadow-sm border border-gray-200 p-6">
+            <div class="space-y-2 md:space-y-6">
+                <div class="bg-white rounded-xl md:rounded-3xl shadow-sm border border-gray-200 p-4 md:p-6">
                     <h3 class="text-lg font-bold text-gray-900 mb-4">Pengiriman</h3>
                     <div class="space-y-3 text-sm">
                         <div>
@@ -236,7 +236,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-3xl shadow-sm border border-gray-200 p-6">
+                <div class="bg-white rounded-xl md:rounded-3xl shadow-sm border border-gray-200 p-4 md:p-6">
                     <h3 class="text-lg font-bold text-gray-900 mb-4">Ringkasan</h3>
                     <div class="space-y-3 text-sm">
                         <div class="flex justify-between">
