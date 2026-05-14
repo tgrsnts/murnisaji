@@ -1,8 +1,14 @@
-<aside class="w-64 bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden fixed top-6 left-6 bottom-6">
-    <div class="p-4">
+<aside id="nav-menu" class="hidden transition-all w-64 bg-white rounded-3xl shadow-2xl md:flex flex-col overflow-hidden fixed top-4 left-4 md:top-6 md:left-6 bottom-6">
+    <div class="flex justify-between p-4">
         <a href="{{ route('home') }}" class="flex justify-center items-center gap-2">
-            <img class="h-24" src="{{ asset('images/logo/MAIN LOGO-01.webp') }}" alt="Murnisaji">
+            <img class="h-16 md:h-24" src="{{ asset('images/logo/MAIN LOGO-01.webp') }}" alt="Murnisaji">
         </a>
+
+        <button id="hamburger-btn-off" class="md:hidden text-[#7A1F1F] p-2 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
     </div>
 
     <nav class="mt-4 flex-1 px-4 space-y-2">

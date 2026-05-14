@@ -3,8 +3,8 @@
 @php($title = 'Transaksi')
 
 @section('content')
-    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
-        <h1 class="text-3xl font-bold text-gray-900">Transaksi Saya</h1>
+    <div class="bg-white rounded-xl md:rounded-3xl shadow-xl border border-gray-100 p-4 md:p-6">
+        <h1 class="text-xl md:text-3xl font-bold text-gray-900">Transaksi Saya</h1>
         <p class="text-gray-600 mt-1">Ringkasan aktivitas belanja Anda</p>
     </div>
 
@@ -14,29 +14,29 @@
         </div>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="bg-white p-5 rounded-3xl shadow-sm flex justify-between items-center">
+    <div class="grid grid-cols-3 gap-2 md:gap-4">
+        <div class="bg-white p-2 md:p-5 rounded-xl md:rounded-3xl shadow-sm flex justify-between items-center">
             <div>
                 <p class="text-sm text-[#D4AF5A] font-bold uppercase tracking-tighter">Total Transaksi</p>
-                <h2 class="text-xl font-black text-gray-800">{{ $totalTransactions }}</h2>
+                <h2 class="text-md md:text-xl font-black text-gray-800">{{ $totalTransactions }}</h2>
             </div>
             <div class="bg-[#8B0000] p-3 rounded-xl text-white shadow-md">
                 <i class="fas fa-shopping-cart"></i>
             </div>
         </div>
-        <div class="bg-white p-5 rounded-3xl shadow-sm flex justify-between items-center">
+        <div class="bg-white p-2 md:p-5 rounded-xl md:rounded-3xl shadow-sm flex justify-between items-center">
             <div>
                 <p class="text-sm text-[#D4AF5A] font-bold uppercase tracking-tighter">Total Belanja</p>
-                <h2 class="text-xl font-black text-gray-800">Rp{{ number_format($totalSpent, 0, ',', '.') }}</h2>
+                <h2 class="text-md md:text-xl font-black text-gray-800">Rp{{ number_format($totalSpent, 0, ',', '.') }}</h2>
             </div>
             <div class="bg-[#8B0000] p-3 rounded-xl text-white shadow-md">
                 <i class="fas fa-wallet"></i>
             </div>
         </div>
-        <div class="bg-white p-5 rounded-3xl shadow-sm flex justify-between items-center">
+        <div class="bg-white p-2 md:p-5 rounded-xl md:rounded-3xl shadow-sm flex justify-between items-center">
             <div>
                 <p class="text-sm text-[#D4AF5A] font-bold uppercase tracking-tighter">Pending</p>
-                <h2 class="text-xl font-black text-gray-800">{{ $pendingTransactions }}</h2>
+                <h2 class="text-md md:text-xl font-black text-gray-800">{{ $pendingTransactions }}</h2>
             </div>
             <div class="bg-[#8B0000] p-3 rounded-xl text-white shadow-md">
                 <i class="fas fa-clock"></i>

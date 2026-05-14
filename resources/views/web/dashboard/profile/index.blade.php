@@ -3,8 +3,8 @@
 @php($title = 'Profile')
 
 @section('content')
-    <div class="space-y-6">
-        <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
+    <div class="space-y-2 md:space-y-6">
+        <div class="bg-white rounded-xl md:rounded-3xl shadow-xl border border-gray-100 p-6">
             <h1 class="text-3xl font-bold text-gray-900">Profile</h1>
             <p class="text-gray-600 mt-1">Kelola informasi akun Anda</p>
         </div>
@@ -15,7 +15,7 @@
             </div>
         @endif
 
-        <div class="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
+        <div class="bg-white rounded-xl md:rounded-3xl shadow-sm border border-gray-200 p-4 md:p-8">
             <form method="POST" action="{{ route('dashboard.profile.update') }}" class="space-y-6" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')

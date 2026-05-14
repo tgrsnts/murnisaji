@@ -20,12 +20,12 @@
 <body class="bg-[#F8F9FA] min-h-screen font-sans relative overflow-x-hidden">
     <div class="fixed top-0 left-0 w-full h-[300px] bg-[#8B0000] z-0 shadow-lg bg-pattern"></div>
 
-    <div class="relative z-10 flex gap-6 p-6 h-screen">
+    <div class="relative z-10 flex gap-4 md:gap-6 p-4 md:p-6 h-screen">
         @include('web.dashboard.layout.partials.sidebar')
 
-        <div class="w-64"></div>
+        <div class="w-0 md:w-64"></div>
 
-        <div class="flex-1 flex flex-col gap-6 h-fit overflow-y-auto no-scrollbar">
+        <div class="flex-1 flex flex-col gap-2 md:gap-6 h-fit overflow-y-auto no-scrollbar">
             @include('web.dashboard.layout.partials.header')
             @yield('content')
         </div>

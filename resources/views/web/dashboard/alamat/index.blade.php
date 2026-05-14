@@ -3,15 +3,15 @@
 @php($title = 'Alamat')
 
 @section('content')
-        <div class="space-y-6">
+        <div class="space-y-2 md:space-y-6">
             <!-- Header with Add Button -->
-            <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
+            <div class="bg-white rounded-xl md:rounded-3xl shadow-xl border border-gray-100 p-4 md:p-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h1 class="text-3xl font-bold text-gray-900">Alamat Saya</h1>
-                        <p class="text-gray-600 mt-1">Daftar alamat yang tersimpan pada akun Anda</p>
+                        <h1 class="text-lg md:text-3xl font-bold text-gray-900">Alamat Saya</h1>
+                        <p class="text-xs md:text-md text-gray-600 md:mt-1">Daftar alamat yang tersimpan pada akun Anda</p>
                     </div>
-                    <button onclick="openAddModal()" class="bg-[#7A1F1F] hover:bg-[#5a1515] text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg hover:cursor-pointer">
+                    <button onclick="openAddModal()" class="text-xs md:text-md bg-[#7A1F1F] hover:bg-[#5a1515] text-white px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg hover:cursor-pointer">
                         <i class="fas fa-plus mr-2"></i>Tambah Alamat
                     </button>
                 </div>
@@ -25,7 +25,7 @@
             @endif
 
             <!-- Address List -->
-            <div class="bg-white rounded-3xl shadow-sm border border-gray-200 p-6">
+            <div class="bg-white rounded-xl md:rounded-3xl shadow-sm border border-gray-200 p-4 md:p-6">
                 @if ($addresses->count())
                     <div class="space-y-4">
                         @foreach ($addresses as $alamat)
