@@ -20,13 +20,13 @@
             </p>
 
             <div class="mt-8 flex justify-center md:justify-start gap-4">
-                <x-button tone="primary" variant="full">
+                {{-- <x-button tone="primary" variant="full">
                     Buy Now
-                </x-button>
+                </x-button> --}}
 
-                <x-button tone="secondary" variant="full">
-                    See Product
-                </x-button>
+                <a href="{{ route('menu.index') }}" class="bg-[#7A1F1F] hover:bg-[#5a1717] text-white hover:cursor-pointer transition duration-300 px-8 py-3 rounded-lg lg:rounded-full">
+                    Lihat Produk
+                </a>
             </div>
         </div>
 
