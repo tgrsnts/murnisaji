@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('berat_gram');
             $table->string('gambar')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -101,6 +101,8 @@ class ProdukController extends Controller
      */
     public function destroy(Produk $produk)
     {
-        //
+        $produk->delete();
+
+        return redirect()->route('admin.produk.index')->with('success', 'Produk berhasil dihapus.');
     }
 }
