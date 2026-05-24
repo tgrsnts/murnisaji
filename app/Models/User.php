@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Transaksi::class, 'id_user', 'user_id');
     }
+
+    public function isAdmin(): bool
+    {
+        return (int) $this->role === 1;
+    }
 }
