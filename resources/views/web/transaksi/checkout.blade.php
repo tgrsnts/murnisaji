@@ -71,6 +71,12 @@
                                             </select>
                                         </div>
 
+                                        {{-- Warning jika alamat tidak punya village_id --}}
+                                        <div id="missingVillageWarning" class="hidden p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
+                                            <i class="fas fa-exclamation-triangle mr-1"></i>
+                                            Alamat ini tidak memiliki data desa/kelurahan lengkap. Silakan tambah alamat baru dengan data lengkap untuk bisa memilih kurir.
+                                        </div>
+
                                         <div id="savedAddressPreview" class="hidden p-4 bg-gray-50 border border-gray-200 rounded-lg">
                                             <p class="text-sm font-semibold text-gray-900 mb-1" id="previewLabel"></p>
                                             <p class="text-sm text-gray-700" id="previewRecipient"></p>
@@ -101,6 +107,7 @@
                                         <input type="hidden" name="province_id" id="province_id_hidden" value="{{ old('province_id') }}">
                                         <input type="hidden" name="kabupaten" id="kabupaten" value="{{ old('kabupaten') }}">
                                         <input type="hidden" name="city_id" id="city_id" value="{{ old('city_id') }}">
+                                        {{-- FIX: village_id hidden input untuk saved address mode --}}
                                         <input type="hidden" name="village_id" id="village_id_hidden" value="{{ old('village_id') }}">
                                         <input type="hidden" name="kecamatan" id="kecamatan_hidden" value="{{ old('kecamatan') }}">
                                         <input type="hidden" name="kodepos" id="kodepos_hidden" value="{{ old('kodepos') }}">
@@ -157,10 +164,13 @@
                                         </div>
                                         <div class="">
                                             <label class="block text-sm font-medium text-gray-700 mb-1">Desa/Kelurahan</label>
+                                            {{-- FIX: tambah data-village-id dan set hidden village_id saat berubah --}}
                                             <select id="village_id" name="desa"
                                                 class="w-full border border-gray-300 rounded-lg p-2 text-sm" disabled>
                                                 <option value="">Pilih kecamatan terlebih dahulu</option>
                                             </select>
+                                            {{-- FIX: hidden input untuk menyimpan village_id (kode desa) saat input manual --}}
+                                            <input type="hidden" name="village_id" id="village_id_code" value="{{ old('village_id') }}">
                                         </div>
                                         @if($isLoggedIn)
                                         <div>
@@ -178,7 +188,7 @@
                                         <div class="md:col-span-2">
                                             <label class="block text-sm font-medium text-gray-700 mb-1">Detail Alamat</label>
                                             <textarea name="detail" rows="3" required class="w-full border border-gray-300 rounded-lg p-2 text-sm" placeholder="Jalan, nomor rumah, patokan">{{ old('detail') }}</textarea>
-                                        </div>                                        
+                                        </div>
                                         <div class="md:col-span-2">
                                             <label class="block text-sm font-medium text-gray-700 mb-1">Catatan Kurir (opsional)</label>
                                             <input type="text" name="catatan_kurir" value="{{ old('catatan_kurir') }}"
@@ -216,7 +226,7 @@
 
                                 <input type="hidden" name="ongkir" id="ongkir" value="{{ old('ongkir', 0) }}">
                                 <input type="hidden" name="layanan_kurir" id="layanan_kurir_hidden" value="{{ old('layanan_kurir') }}">
-                                
+
                                 <div id="shippingInfo" class="hidden mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                                     <p class="text-sm text-blue-800">
                                         <i class="fas fa-info-circle mr-1"></i>
@@ -307,9 +317,9 @@
         const cartWeightKg = {{ max(1, count($cartItems)) }};
         const originVillageCode = '{{ (string) config('services.apicoid.origin_village_code', '') }}';
 
-        // Allowed couriers - only J&T, AnterAja, JNE, SiCepat, Ninja
+        // Allowed couriers
         const allowedCouriers = ['JT', 'anteraja', 'JNE', 'JNECargo', 'SiCepat', 'SiCepatCargo', 'Ninja'];
-        
+
         // Courier categories mapping
         const courierCategories = {
             'JT': 'express',
@@ -321,7 +331,7 @@
             'Ninja': 'reguler'
         };
 
-        // Old values from Laravel (untuk restore setelah validation error)
+        // Old values dari Laravel (untuk restore setelah validation error)
         const oldKurir = '{{ old('kurir') }}';
         const oldOngkir = parseInt('{{ old('ongkir', 0) }}') || 0;
         const oldLayananKurir = '{{ old('layanan_kurir') }}';
@@ -332,8 +342,8 @@
         let cities = [];
         let subdistricts = [];
         let villages = [];
-        let shippingServices = []; // Full list from API
-        let filteredServices = {}; // Services grouped by category then courier
+        let shippingServices = [];
+        let filteredServices = {};
 
         const categorySelect = document.getElementById('category');
         const provinceSelect = document.getElementById('province_id');
@@ -353,15 +363,29 @@
         const selectedAddressSelect = document.getElementById('selected_alamat_id');
         const hasSavedAddressMode = !!selectedAddressSelect;
 
+        // FIX: fungsi destinationVillageCode yang robust untuk kedua mode
         function destinationVillageCode() {
             if (hasSavedAddressMode && selectedAddressSelect) {
+                // Saved address mode: ambil dari data-village-id option yang dipilih
                 const option = selectedAddressSelect.options[selectedAddressSelect.selectedIndex];
-                return option?.dataset.villageId || '';
+                const villageId = option?.dataset.villageId || '';
+                console.log('[destinationVillageCode] saved mode, village_id:', villageId);
+                return villageId;
             }
 
+            // Manual input mode: ambil dari hidden input village_id_code
+            const villageCodeInput = document.getElementById('village_id_code');
+            if (villageCodeInput && villageCodeInput.value) {
+                console.log('[destinationVillageCode] manual mode (hidden input):', villageCodeInput.value);
+                return villageCodeInput.value;
+            }
+
+            // Fallback: ambil dari select village_id dataset
             if (villageSelect && villageSelect.tagName === 'SELECT') {
                 const option = villageSelect.options[villageSelect.selectedIndex];
-                return option?.dataset.villageId || '';
+                const villageId = option?.dataset.villageId || '';
+                console.log('[destinationVillageCode] manual mode (select dataset):', villageId);
+                return villageId;
             }
 
             return '';
@@ -386,6 +410,7 @@
             setVal('province_id_hidden', option?.dataset.provinceId);
             setVal('kabupaten', option?.dataset.kabupaten);
             setVal('city_id', option?.dataset.cityId);
+            // FIX: pastikan village_id_hidden ter-set dari data attribute
             setVal('village_id_hidden', option?.dataset.villageId);
             setVal('kecamatan_hidden', option?.dataset.kecamatan);
             setVal('kodepos_hidden', option?.dataset.kodepos);
@@ -400,22 +425,34 @@
             const previewRecipient = document.getElementById('previewRecipient');
             const previewPhone = document.getElementById('previewPhone');
             const previewAddress = document.getElementById('previewAddress');
+            const missingVillageWarning = document.getElementById('missingVillageWarning');
 
-            if (preview && previewLabel && previewRecipient && previewPhone && previewAddress) {
+            if (preview) {
                 if (hasValue) {
                     preview.classList.remove('hidden');
-                    previewLabel.textContent = option?.dataset.labelAlamat || '';
-                    previewRecipient.textContent = option?.dataset.namaPenerima || '';
-                    previewPhone.textContent = option?.dataset.noTelepon || '';
-                    previewAddress.textContent = `${option?.dataset.detail || ''}, ${option?.dataset.kecamatan || ''}, ${option?.dataset.kabupaten || ''}, ${option?.dataset.provinsi || ''} ${option?.dataset.kodepos || ''}`;
+                    if (previewLabel) previewLabel.textContent = option?.dataset.labelAlamat || '';
+                    if (previewRecipient) previewRecipient.textContent = option?.dataset.namaPenerima || '';
+                    if (previewPhone) previewPhone.textContent = option?.dataset.noTelepon || '';
+                    if (previewAddress) previewAddress.textContent = `${option?.dataset.detail || ''}, ${option?.dataset.kecamatan || ''}, ${option?.dataset.kabupaten || ''}, ${option?.dataset.provinsi || ''} ${option?.dataset.kodepos || ''}`;
                 } else {
                     preview.classList.add('hidden');
                 }
             }
 
+            // FIX: tampilkan warning jika village_id kosong
+            const villageId = option?.dataset.villageId || '';
+            if (missingVillageWarning) {
+                if (hasValue && !villageId) {
+                    missingVillageWarning.classList.remove('hidden');
+                } else {
+                    missingVillageWarning.classList.add('hidden');
+                }
+            }
+
             resetCategory();
             if (categorySelect) {
-                categorySelect.disabled = !hasValue;
+                // FIX: enable category hanya jika village_id tersedia
+                categorySelect.disabled = !hasValue || !villageId;
             }
         }
 
@@ -478,7 +515,6 @@
                 provinceSelect.appendChild(option);
             });
 
-            // Restore old province value setelah provinces dimuat
             const oldProvinceId = '{{ old('province_id') }}';
             if (oldProvinceId && provinceSelect) {
                 provinceSelect.value = oldProvinceId;
@@ -523,7 +559,6 @@
                 citySelect.appendChild(option);
             });
 
-            // Restore old city value setelah cities dimuat
             const oldCityId = '{{ old('city_id') }}';
             if (oldCityId && citySelect) {
                 citySelect.value = oldCityId;
@@ -567,12 +602,10 @@
                 subdistrictSelect.appendChild(option);
             });
 
-            // Restore old kecamatan value setelah subdistricts dimuat
             const oldKecamatan = '{{ old('kecamatan') }}';
             if (oldKecamatan && subdistrictSelect) {
                 subdistrictSelect.value = oldKecamatan;
                 if (subdistrictSelect.value) {
-                    // Cari subdistrictId berdasarkan nilai yang dipilih
                     const selectedOpt = subdistrictSelect.options[subdistrictSelect.selectedIndex];
                     const subdistrictId = selectedOpt?.dataset.subdistrictId || '';
                     if (subdistrictId) {
@@ -587,10 +620,8 @@
 
             try {
                 villageSelect.innerHTML = '<option value="">Memuat...</option>';
-                console.log('Loading villages for subdistrict:', subdistrictId);
                 const response = await fetch(`/api/apicoid/villages?subdistrict_id=${subdistrictId}`);
                 const data = await response.json();
-                console.log('Villages API response:', data);
 
                 if (data.success && data.data) {
                     villages = data.data;
@@ -608,37 +639,46 @@
         function populateVillages() {
             if (!villageSelect || villageSelect.tagName !== 'SELECT') return;
             villageSelect.innerHTML = '<option value="">Pilih Desa/Kelurahan</option>';
-            console.log('Populating villages:', villages);
             villages.forEach(village => {
                 const option = document.createElement('option');
                 const villageName = village.village_name || village.name || '';
                 const villageId = village.village_id || village.id || village.code || village.village_code;
 
-                console.log('Village:', villageName, 'ID:', villageId);
                 option.value = villageName;
                 option.textContent = villageName;
                 option.dataset.villageId = villageId;
                 villageSelect.appendChild(option);
             });
 
-            // Restore old desa value setelah villages dimuat, lalu load shipping cost
+            // Restore old desa value, set hidden village_id_code, lalu load shipping
             const oldDesa = '{{ old('desa') }}';
             if (oldDesa && villageSelect) {
                 villageSelect.value = oldDesa;
                 if (villageSelect.value) {
+                    // FIX: set hidden village_id_code saat restore
+                    const selectedOpt = villageSelect.options[villageSelect.selectedIndex];
+                    const villageIdCode = selectedOpt?.dataset.villageId || oldVillageId || '';
+                    const villageCodeInput = document.getElementById('village_id_code');
+                    if (villageCodeInput) villageCodeInput.value = villageIdCode;
+
                     loadShippingCost();
                 }
             }
         }
 
         async function loadShippingCost() {
-            try {
-                console.log('loadShippingCost called');
-                console.log('Origin village:', originVillageCode);
-                console.log('Destination village:', destinationVillageCode());
-                console.log('Weight:', cartWeightKg);
+            const destVillage = destinationVillageCode();
 
-                // Reset and disable all selection dropdowns while loading
+            console.log('[loadShippingCost] origin:', originVillageCode);
+            console.log('[loadShippingCost] destination:', destVillage);
+            console.log('[loadShippingCost] weight:', cartWeightKg);
+
+            if (!destVillage) {
+                console.warn('[loadShippingCost] destination village kosong, batalkan fetch');
+                return;
+            }
+
+            try {
                 categorySelect.innerHTML = '<option value="">Memuat layanan...</option>';
                 categorySelect.disabled = true;
                 courierSelect.innerHTML = '<option value="">Pilih Kurir</option>';
@@ -654,40 +694,28 @@
                     },
                     body: JSON.stringify({
                         origin_village_code: originVillageCode,
-                        destination_village_code: destinationVillageCode(),
+                        destination_village_code: destVillage,
                         weight: cartWeightKg
                     })
                 });
 
                 const data = await response.json();
-                console.log('API response:', data);
+                console.log('[loadShippingCost] API response:', data);
 
-                // Handle both old and new API response formats
                 let services = [];
                 if (data.result && Array.isArray(data.result)) {
-                    // New format: { status, timestamp, result: [...] }
                     services = data.result;
                 } else if (data.data && Array.isArray(data.data)) {
-                    // Old format: { success, data: [...] }
                     services = data.data;
                 } else if (Array.isArray(data)) {
-                    // Direct array format
                     services = data;
                 }
 
                 if (services.length > 0) {
-                    // Filter to only allowed couriers
                     shippingServices = services.filter(s => allowedCouriers.includes(s.courier_code));
-                    
-                    console.log('Filtered services:', shippingServices);
-                    
-                    // Group services by category
-                    filteredServices = {
-                        'reguler': {},
-                        'express': {},
-                        'kargo': {}
-                    };
-                    
+
+                    filteredServices = { 'reguler': {}, 'express': {}, 'kargo': {} };
+
                     shippingServices.forEach(service => {
                         const category = courierCategories[service.courier_code];
                         if (category) {
@@ -697,47 +725,41 @@
                             filteredServices[category][service.courier_code].push(service);
                         }
                     });
-                    
-                    console.log('Grouped services:', filteredServices);
+
                     populateCategories();
                 } else {
                     categorySelect.innerHTML = '<option value="">Tidak ada layanan tersedia</option>';
-                    console.error('No services found in response');
+                    console.error('[loadShippingCost] Tidak ada services dari response');
                 }
             } catch (error) {
-                console.error('Error loading shipping cost:', error);
+                console.error('[loadShippingCost] Error:', error);
                 categorySelect.innerHTML = '<option value="">Error memuat layanan</option>';
             }
         }
 
         function populateCategories() {
             categorySelect.innerHTML = '<option value="">Pilih Kategori</option>';
-            
+
             const categories = ['reguler', 'express', 'kargo'];
             categories.forEach(category => {
-                // Only show category if it has couriers
                 if (Object.keys(filteredServices[category]).length > 0) {
                     const option = document.createElement('option');
                     option.value = category;
-                    const categoryLabel = {
-                        'reguler': 'Reguler',
-                        'express': 'Express',
-                        'kargo': 'Kargo'
-                    };
+                    const categoryLabel = { 'reguler': 'Reguler', 'express': 'Express', 'kargo': 'Kargo' };
                     option.textContent = categoryLabel[category];
                     categorySelect.appendChild(option);
                 }
             });
-            
+
             categorySelect.disabled = false;
 
-            // Restore old category & courier setelah categories dimuat
+            // Restore old category & courier
             if (oldKurir && categorySelect) {
                 const oldCategory = courierCategories[oldKurir] || '';
                 if (oldCategory) {
                     categorySelect.value = oldCategory;
                     if (categorySelect.value) {
-                        populateCouriersByCategory(true); // true = restore mode
+                        populateCouriersByCategory(true);
                     }
                 }
             }
@@ -749,7 +771,7 @@
                 courierSelect.disabled = true;
                 return;
             }
-            
+
             const selectedCategory = categorySelect.value;
             const courierLabels = {
                 'JT': 'J&T Express',
@@ -760,13 +782,12 @@
                 'SiCepatCargo': 'SiCepat Cargo',
                 'Ninja': 'Ninja Express'
             };
-            
+
             courierSelect.innerHTML = '<option value="">Pilih Kurir</option>';
             const couriers = Object.keys(filteredServices[selectedCategory] || {});
 
             couriers.forEach(courier => {
                 const services = filteredServices[selectedCategory][courier] || [];
-
                 services.forEach(service => {
                     const option = document.createElement('option');
                     const serviceName = service.courier_name || courierLabels[courier] || courier;
@@ -784,7 +805,6 @@
 
             courierSelect.disabled = couriers.length === 0;
 
-            // Restore old courier setelah options dimuat
             if (restoreMode && oldKurir) {
                 courierSelect.value = oldKurir;
                 if (courierSelect.value) {
@@ -811,7 +831,7 @@
             courierSelect.disabled = true;
             if (layananKurirHidden) layananKurirHidden.value = '';
             updatePrice(0);
-            shippingInfo.classList.add('hidden');
+            if (shippingInfo) shippingInfo.classList.add('hidden');
         }
 
         function resetCategory() {
@@ -825,39 +845,47 @@
         function updatePrice(cost) {
             ongkirInput.value = cost;
             ongkirDisplay.textContent = 'Rp ' + cost.toLocaleString('id-ID');
-
             const total = subtotal + cost;
             totalDisplay.textContent = 'Rp ' + total.toLocaleString('id-ID');
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+
+            // =============================================
+            // SAVED ADDRESS MODE
+            // =============================================
             if (selectedAddressSelect) {
                 selectedAddressSelect.addEventListener('change', async function() {
+                    // FIX: applySelectedAddress() dulu agar hidden inputs ter-set,
+                    // baru panggil destinationVillageCode() yang membacanya
                     applySelectedAddress();
-                    // Load shipping services for the selected address
+
                     const villageCode = destinationVillageCode();
+                    console.log('[change alamat] village code:', villageCode);
+
                     if (villageCode) {
                         await loadShippingCost();
+                    } else {
+                        resetCategory();
                     }
                 });
-                
-                // Restore saved address mode setelah validation error
+
+                // Restore saat ada validation error (old value)
                 if (oldSelectedAlamatId) {
                     selectedAddressSelect.value = oldSelectedAlamatId;
                     applySelectedAddress();
                     restoreAddressPreviewFromOld();
 
-                    if (categorySelect) {
-                        categorySelect.disabled = false;
-                    }
-
-                    // Load shipping cost menggunakan village_id dari old value
                     const villageCode = destinationVillageCode();
+                    console.log('[restore old] village code:', villageCode);
+
                     if (villageCode) {
+                        // FIX: enable category sebelum load agar tidak terblokir
+                        if (categorySelect) categorySelect.disabled = false;
                         loadShippingCost();
                     }
                 } else {
-                    // Initial setup if address is already selected (non-old scenario)
+                    // Cek apakah ada address yang sudah dipilih secara default
                     const initialVillageCode = destinationVillageCode();
                     if (initialVillageCode) {
                         loadShippingCost();
@@ -865,6 +893,9 @@
                 }
             }
 
+            // =============================================
+            // MANUAL ADDRESS MODE
+            // =============================================
             if (provinceSelect && provinceSelect.tagName === 'SELECT') {
                 provinceSelect.addEventListener('change', async function() {
                     const selectedOption = this.options[this.selectedIndex];
@@ -874,16 +905,18 @@
                         citySelect.innerHTML = '<option value="">Pilih Kota</option>';
                         citySelect.disabled = true;
                     }
-
                     if (subdistrictSelect && subdistrictSelect.tagName === 'SELECT') {
                         subdistrictSelect.innerHTML = '<option value="">Pilih kecamatan terlebih dahulu</option>';
                         subdistrictSelect.disabled = true;
                     }
-
                     if (villageSelect && villageSelect.tagName === 'SELECT') {
                         villageSelect.innerHTML = '<option value="">Pilih kecamatan terlebih dahulu</option>';
                         villageSelect.disabled = true;
                     }
+
+                    // FIX: reset village_id_code saat provinsi berubah
+                    const villageCodeInput = document.getElementById('village_id_code');
+                    if (villageCodeInput) villageCodeInput.value = '';
 
                     if (kabupatenHidden) kabupatenHidden.value = '';
                     resetCategory();
@@ -905,11 +938,14 @@
                         subdistrictSelect.innerHTML = '<option value="">Pilih kecamatan terlebih dahulu</option>';
                         subdistrictSelect.disabled = true;
                     }
-
                     if (villageSelect && villageSelect.tagName === 'SELECT') {
                         villageSelect.innerHTML = '<option value="">Pilih kecamatan terlebih dahulu</option>';
                         villageSelect.disabled = true;
                     }
+
+                    // FIX: reset village_id_code saat kota berubah
+                    const villageCodeInput = document.getElementById('village_id_code');
+                    if (villageCodeInput) villageCodeInput.value = '';
 
                     resetCategory();
 
@@ -926,6 +962,10 @@
                         villageSelect.disabled = true;
                     }
 
+                    // FIX: reset village_id_code saat kecamatan berubah
+                    const villageCodeInput = document.getElementById('village_id_code');
+                    if (villageCodeInput) villageCodeInput.value = '';
+
                     resetCategory();
 
                     const selectedOption = this.options[this.selectedIndex];
@@ -938,30 +978,34 @@
 
             if (villageSelect && villageSelect.tagName === 'SELECT') {
                 villageSelect.addEventListener('change', async function() {
-                    const villageCode = destinationVillageCode();
-                    console.log('=== VILLAGE CHANGED ===');
-                    console.log('Village value:', this.value);
-                    console.log('Village code:', villageCode);
-                    
+                    const selectedOption = this.options[this.selectedIndex];
+                    // FIX: set hidden village_id_code saat desa dipilih
+                    const villageIdCode = selectedOption?.dataset.villageId || '';
+                    const villageCodeInput = document.getElementById('village_id_code');
+                    if (villageCodeInput) villageCodeInput.value = villageIdCode;
+
+                    console.log('[village change] village_id set to:', villageIdCode);
+
                     resetCategory();
-                    
+
+                    const villageCode = destinationVillageCode();
                     if (villageCode) {
                         await loadShippingCost();
                     }
                 });
             }
 
+            // =============================================
+            // COURIER & CATEGORY EVENTS
+            // =============================================
             if (courierSelect) {
                 courierSelect.addEventListener('change', function() {
-                    console.log('Courier changed:', this.value);
                     const selectedOption = this.options[this.selectedIndex];
                     const cost = parseInt(selectedOption?.dataset.cost || '0', 10) || 0;
                     const etd = selectedOption?.dataset.etd || '';
                     const serviceName = selectedOption?.dataset.serviceName || '';
 
-                    if (layananKurirHidden) {
-                        layananKurirHidden.value = serviceName;
-                    }
+                    if (layananKurirHidden) layananKurirHidden.value = serviceName;
 
                     updatePrice(cost);
                     if (cost > 0) {
@@ -975,16 +1019,11 @@
 
             if (categorySelect) {
                 categorySelect.addEventListener('change', function() {
-                    console.log('Category changed:', this.value);
                     populateCouriersByCategory();
                     if (layananKurirHidden) layananKurirHidden.value = '';
                     updatePrice(0);
-                    shippingInfo.classList.add('hidden');
+                    if (shippingInfo) shippingInfo.classList.add('hidden');
                 });
-            }
-
-            if (hasSavedAddressMode && categorySelect) {
-                categorySelect.disabled = !destinationVillageCode() && !oldSelectedAlamatId;
             }
 
             // Restore ongkir display dari old value jika ada
