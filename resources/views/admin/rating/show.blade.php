@@ -9,7 +9,7 @@
                     <h2 class="text-2xl font-bold text-gray-800">Detail Review #{{ $rating->rating_id }}</h2>
                     <p class="text-gray-600 text-sm mt-1">{{ $rating->created_at->format('d F Y, H:i') }}</p>
                 </div>
-                <a href="{{ route('admin.rating.index') }}"
+                <a href="{{ route('admin.review.index') }}"
                     class="px-4 py-2 border border-red-800 text-red-800 rounded-lg hover:bg-red-50">
                     Kembali
                 </a>
@@ -134,7 +134,7 @@
         <!-- Actions -->
         <div class="bg-white rounded-lg shadow-lg p-6">
             <div class="flex justify-end">
-                <form action="{{ route('admin.rating.destroy', $rating->rating_id) }}" method="POST"
+                <form action="{{ route('admin.review.destroy', $rating->rating_id) }}" method="POST"
                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus review ini?');">
                     @csrf
                     @method('DELETE')
